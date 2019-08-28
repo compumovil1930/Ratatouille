@@ -51,7 +51,7 @@ public class seleccionEvento extends AppCompatActivity {
         f3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(seleccionEvento.this, CreateOrderUser.class);
+                Intent intent =  new Intent(seleccionEvento.this, GestionarOfertasEntrantes.class);
                 startActivity(intent);
 
             }
