@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SingIn"></activity>
+        <activity android:name=".GestionarOfertasEntrantes"></activity>
+      
     </application>
 
 </manifest>
