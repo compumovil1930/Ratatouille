@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Ratatouille</string>
+
+
+    <string name="show_offers">Mostrar ofertas</string>
+    <string name="add_samples">Agregar Muestras</string>
+    <string name="avatar">Avatar</string>
+
 </resources>
