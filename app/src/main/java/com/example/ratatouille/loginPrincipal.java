@@ -7,31 +7,34 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Profile extends AppCompatActivity {
+public class loginPrincipal extends AppCompatActivity {
 
-    Button CS;
-    Button mostrarO;
+    Button b1;
+    Button b2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        CS = findViewById(R.id.Cs);
-        CS.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_login_principal);
+
+        b1 = findViewById(R.id.BtnIns);
+        b2 = findViewById(R.id.button);
+        b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Profile.this, loginPrincipal.class);
+                Intent intent = new Intent(loginPrincipal.this, seleccionEvento.class);
                 startActivity(intent);
             }
         });
 
-        mostrarO = findViewById(R.id.mostrarOfertas);
-        mostrarO.setOnClickListener(new View.OnClickListener() {
+        b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Profile.this, GestionarOfertasEntrantes.class);
+                Intent intent = new Intent(loginPrincipal.this, SingIn.class);
                 startActivity(intent);
             }
         });
+
+
     }
 }

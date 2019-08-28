@@ -30,20 +30,20 @@ public class seleccionEvento extends AppCompatActivity {
         f4 = findViewById(R.id.fotoPerfil);
 
         b1 = findViewById(R.id.bShow);
-        b2 = findViewById(R.id.bShow);
+        b2 = findViewById(R.id.bChef);
         b3 = findViewById(R.id.bNose);
 
         f1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(this, Hack.class);
+                Intent intent = new Intent(seleccionEvento.this, CreateOrderUser.class);
                 startActivity(intent);
             }
         });
         f2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(this, activity_gestionar_ofertas_entrantes.class);
+                Intent intent =  new Intent(seleccionEvento.this, GestionarOfertasEntrantes.class);
                 startActivity(intent);
 
             }
@@ -51,7 +51,7 @@ public class seleccionEvento extends AppCompatActivity {
         f3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(this, Hack.class);
+                Intent intent =  new Intent(seleccionEvento.this, CreateOrderUser.class);
                 startActivity(intent);
 
             }
@@ -59,7 +59,7 @@ public class seleccionEvento extends AppCompatActivity {
         f4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(this, activity_profile.class);
+                Intent intent =  new Intent(seleccionEvento.this, Profile.class);
                 startActivity(intent);
 
             }
@@ -68,7 +68,7 @@ public class seleccionEvento extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(this, Hack.class);
+                Intent intent =  new Intent(seleccionEvento.this, CreateOrderUser.class);
                 startActivity(intent);
 
             }
@@ -76,14 +76,14 @@ public class seleccionEvento extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(this, activity_gestionar_ofertas_entrantes.class);
+                Intent intent =  new Intent(seleccionEvento.this, GestionarOfertasEntrantes.class);
                 startActivity(intent);
             }
         });
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(this, Hack.class);
+                Intent intent =  new Intent(seleccionEvento.this, CreateOrderUser.class);
                 startActivity(intent);
             }
         });
