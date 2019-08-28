@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateOrderUser">
+
+    <TextView
+        android:id="@+id/txtAddr"
+        android:layout_width="272dp"
+        android:layout_height="50dp"
+        android:text="Ingresa la dirección en la que quieres el pedido"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <ImageView
+        android:id="@+id/mapView"
+        android:layout_width="302dp"
+        android:layout_height="177dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddr"
+        app:layout_constraintVertical_bias="0.028"
+        app:srcCompat="@drawable/map" />
+
+    <TextView
+        android:id="@+id/txtIngr"
+        android:layout_width="276dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="4dp"
+        android:text="Escribe los ingredientes que tienes"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapView"
+        app:layout_constraintVertical_bias="0.032" />
+
+    <EditText
+        android:id="@+id/etTxtIngr"
+        android:layout_width="277dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="textMultiLine|textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtIngr"
+        app:layout_constraintVertical_bias="0.053" />
+
+    <TextView
+        android:id="@+id/txtTmSh"
+        android:layout_width="282dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="4dp"
+        android:text="¿A qué hora necesitas que llegue el Chef?"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTxtIngr"
+        app:layout_constraintVertical_bias="0.077" />
+
+    <Button
+        android:id="@+id/dtBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="84dp"
+        android:text="Hora"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HH:MM"
+        app:layout_constraintBottom_toTopOf="@+id/dtBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTmSh"
+        app:layout_constraintVertical_bias="0.514" />
+
+    <Button
+        android:id="@+id/btnMkOrd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hacer Pedido"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dtBtn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,8 +2,47 @@
     <string name="app_name">Ratatouille</string>
 
 
+
     <string name="show_offers">Mostrar ofertas</string>
     <string name="add_samples">Agregar Muestras</string>
     <string name="avatar">Avatar</string>
 
+
+    <string-array
+        name="Ofertas_clientes_nombres">
+        <item>Abby</item>
+        <item>Luca</item>
+        <item>Pierre</item>
+        <item>Shinnosuke</item>
+        <item>Elisa</item>
+        <item>Matt</item>
+    </string-array>
+    <string-array
+        name="Ofertas_clientes_pedido">
+        <item>Comida China - 3 personas</item>
+        <item>Comida Italiana - 1 persona</item>
+        <item>Comida Mexicana - 2 personas</item>
+        <item>Comida China - 4 personas</item>
+        <item>Comida Colombiana - 5 personas</item>
+        <item>Comida China - 1 persona</item>
+    </string-array>
+    <array name="imagenes">
+        <item>@drawable/abby</item>
+        <item>@drawable/luca</item>
+        <item>@drawable/pierre</item>
+        <item>@drawable/shinnosuke</item>
+        <item>@drawable/elisa</item>
+        <item>@drawable/matt</item>
+    </array>
+    <string-array name="distancias">
+        <item>1 Km</item>
+        <item>2.5 Km</item>
+        <item>3 Km</item>
+        <item>1 Km</item>
+        <item>4 Km</item>
+        <item>3.1 Km</item>
+
+    </string-array>
+
 </resources>
+
