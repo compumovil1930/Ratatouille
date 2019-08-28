@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
+    tools:context=".seleccionEvento">
+
+    <Button
+        android:id="@+id/bShow"
+        android:layout_width="131dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="152dp"
+        android:background="#FDFFFEFE"
+        android:text="ShowCooking"
+        app:layout_constraintEnd_toEndOf="@+id/fotoShow"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="@+id/fotoShow"
+        app:layout_constraintTop_toTopOf="@+id/fotoShow" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="206dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif"
+        android:text="Ratatouille"
+        android:textColor="#FF9800"
+        android:textSize="30sp"
+        android:typeface="monospace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="161dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="16dp"
+        android:text="Listos para Cocinar"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageButton
+        android:id="@+id/fotoPerfil"
+        android:layout_width="41dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="#FFFFFF"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/user" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="230dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="8dp"
+        android:text="Tipos de Cocina"
+        android:textAlignment="center"
+        android:textColor="#020202"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/fotoShow"
+        android:layout_width="172dp"
+        android:layout_height="201dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:srcCompat="@drawable/imageresizer" />
+
+    <ImageButton
+        android:id="@+id/fotoChef"
+        android:layout_width="165dp"
+        android:layout_height="204dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="#FFFFFF"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:srcCompat="@drawable/c700x420" />
+
+    <ImageButton
+        android:id="@+id/fotoNose"
+        android:layout_width="328dp"
+        android:layout_height="165dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:background="#FFFFFF"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fotoShow"
+        app:srcCompat="@drawable/cocinar" />
+
+    <Button
+        android:id="@+id/bChef"
+        android:layout_width="131dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="152dp"
+        android:background="#FDFFFEFE"
+        android:text="AlgoNuevo"
+        app:layout_constraintEnd_toEndOf="@+id/fotoChef"
+        app:layout_constraintStart_toStartOf="@+id/fotoChef"
+        app:layout_constraintTop_toTopOf="@+id/fotoChef" />
+
+    <Button
+        android:id="@+id/bNose"
+        android:layout_width="275dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="112dp"
+        android:background="#FDFFFEFE"
+        android:text="NO SE QUE HACER"
+        app:layout_constraintEnd_toEndOf="@+id/fotoNose"
+        app:layout_constraintStart_toStartOf="@+id/fotoNose"
+        app:layout_constraintTop_toTopOf="@+id/fotoNose" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
