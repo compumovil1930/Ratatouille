@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores para las Pantallas del Cliente. -->
+    <color name="usrMainBlue">#5C6BC0</color>
+    <color name="usrLightBlue">#7C88CC</color>
+    <color name="usrDarkBlue">#404A86</color>
+    <!-- Colores para las Pantallas del Chef. -->
+    <color name="chfMainGreen">#4EAD52</color>
+    <color name="chfLightGreen">#6FBF72</color>
+    <color name="chfDarkGreen">#3C8C40</color>
+    <color name="White">#FFFFFF</color>
+
+</resources>
