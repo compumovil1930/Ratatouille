@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF9800"
+    android:background="#021033"
     tools:context=".MainActivity">
 
     <Button
@@ -26,10 +26,12 @@
         android:layout_height="55dp"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:fontFamily="sans-serif"
         android:hint="Contraseña"
         android:inputType="textPersonName"
         android:password="true"
         android:textColor="#FFFFFF"
+        android:textColorHint="#8B8A8A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/correo" />
@@ -40,9 +42,11 @@
         android:layout_height="55dp"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:fontFamily="sans-serif"
         android:hint="correo@example.com"
         android:inputType="textPersonName"
         android:textColor="#FFFFFF"
+        android:textColorHint="#8B8A8A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
