@@ -36,11 +36,8 @@ public class MainActivity extends AppCompatActivity {
         ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isEmailValid(email.getText().toString())){
-                    signInUser(email.getText().toString(),password.getText().toString());
-                }else{
-                    Toast.makeText(MainActivity.this, "Email no valido.", Toast.LENGTH_SHORT).show();
-                }
+                signInUser(email.getText().toString(),password.getText().toString());
+
             }
         });
 
@@ -85,27 +82,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signInUser(String email, String password) {
-        if (validateForm()) {
+        if (validateForm() && isEmailValid(email)) {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-    @Override
-    public void onComplete(@NonNull Task<AuthResult> task) {
-        if (task.isSuccessful()) {
-            // Sign in success, update UI
-            Log.d("TAG", "signInWithEmail:success");
-            FirebaseUser user = mAuth.getCurrentUser(); updateUI(user);
-        } else {
-            // If sign in fails, display a message to the user.
-            Log.w("TAG", "signInWithEmail:failure", task.getException());
-            Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-            updateUI(null);
-        }
-    }
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI
+                        Log.d("TAG", "signInWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser(); updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(MainActivity.this,"Correo o contraseña incorrectos",Toast.LENGTH_SHORT).show();
+                        Log.w("TAG", "signInWithEmail:failure", task.getException());
+                        Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                    }
+                }
             });
         }
     }
 
     private boolean isEmailValid(String email) {
-        if (!email.contains("@") || !email.contains(".") || email.length() < 5) return false;
+        if (!email.contains("@") || !email.contains(".") || email.length() < 5) {
+            Toast.makeText(MainActivity.this, "Email no valido.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 }
