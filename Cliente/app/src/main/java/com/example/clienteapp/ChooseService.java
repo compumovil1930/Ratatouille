@@ -3,6 +3,7 @@ package com.example.clienteapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -26,6 +28,7 @@ public class ChooseService extends AppCompatActivity {
 
     private static final String CERO = "0";
     private static final String BARRA = "/";
+    private static final String DOS_PUNTOS = ":";
 
     //Calendario para obtener fecha & hora
     public final Calendar c = Calendar.getInstance();
@@ -34,6 +37,9 @@ public class ChooseService extends AppCompatActivity {
     final int mes = c.get(Calendar.MONTH);
     final int dia = c.get(Calendar.DAY_OF_MONTH);
     final int anio = c.get(Calendar.YEAR);
+    //Variables para obtener la hora hora
+    final int hora = c.get(Calendar.HOUR_OF_DAY);
+    final int minuto = c.get(Calendar.MINUTE);
 
     TextView tipo;
     Spinner servicio;
@@ -41,6 +47,8 @@ public class ChooseService extends AppCompatActivity {
     Button buscar;
     TextView fecha;
     TextView laFecha;
+    TextView horas;
+    TextView laHora;
 
     private FirebaseAuth mAuth;
 
@@ -55,17 +63,27 @@ public class ChooseService extends AppCompatActivity {
         buscar = findViewById(R.id.btnBuscar);
         fecha = findViewById(R.id.tvFecha);
         laFecha = findViewById(R.id.lFecha);
+        horas = findViewById(R.id.tvHora);
+        laHora = findViewById(R.id.lHora);
         mAuth = FirebaseAuth.getInstance();
 
         tipo.setVisibility(View.GONE);
         comida.setVisibility(View.GONE);
         fecha.setVisibility(View.GONE);
         laFecha.setVisibility(View.GONE);
+        horas.setVisibility(View.GONE);
+        laHora.setVisibility(View.GONE);
 
         fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 obtenerFecha();
+            }
+        });
+        horas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                obtenerHora();
             }
         });
 
@@ -87,6 +105,8 @@ public class ChooseService extends AppCompatActivity {
                         comida.setVisibility(View.VISIBLE);
                         laFecha.setVisibility(View.GONE);
                         fecha.setVisibility(View.GONE);
+                        horas.setVisibility(View.GONE);
+                        laHora.setVisibility(View.GONE);
                         break;
                     }
                     case 2:{
@@ -94,6 +114,8 @@ public class ChooseService extends AppCompatActivity {
                         tipo.setVisibility(View.VISIBLE);
                         comida.setVisibility(View.VISIBLE);
                         laFecha.setVisibility(View.VISIBLE);
+                        horas.setVisibility(View.VISIBLE);
+                        laHora.setVisibility(View.VISIBLE);
                         break;
                     }
                     default:{
@@ -101,6 +123,8 @@ public class ChooseService extends AppCompatActivity {
                         comida.setVisibility(View.GONE);
                         fecha.setVisibility(View.GONE);
                         laFecha.setVisibility(View.GONE);
+                        horas.setVisibility(View.GONE);
+                        laHora.setVisibility(View.GONE);
                         break;
                     }
                 }
@@ -154,6 +178,32 @@ public class ChooseService extends AppCompatActivity {
         //Muestro el widget
         recogerFecha.show();
 
+    }
+
+    private void obtenerHora(){
+        TimePickerDialog recogerHora = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                //Formateo el hora obtenido: antepone el 0 si son menores de 10
+                String horaFormateada =  (hourOfDay < 10)? String.valueOf(CERO + hourOfDay) : String.valueOf(hourOfDay);
+                //Formateo el minuto obtenido: antepone el 0 si son menores de 10
+                String minutoFormateado = (minute < 10)? String.valueOf(CERO + minute):String.valueOf(minute);
+                //Obtengo el valor a.m. o p.m., dependiendo de la selección del usuario
+                String AM_PM;
+                if(hourOfDay < 12) {
+                    AM_PM = "AM";
+                } else {
+                    AM_PM = "PM";
+                }
+                //Muestro la hora con el formato deseado
+                horas.setText(horaFormateada + DOS_PUNTOS + minutoFormateado + " " + AM_PM);
+            }
+            //Estos valores deben ir en ese orden
+            //Al colocar en false se muestra en formato 12 horas y true en formato 24 horas
+            //Pero el sistema devuelve la hora en formato 24 horas
+        }, hora, minuto, false);
+
+        recogerHora.show();
     }
 
 }

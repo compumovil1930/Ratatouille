@@ -58,12 +58,12 @@
         android:id="@+id/btnBuscar"
         android:layout_width="242dp"
         android:layout_height="52dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:text="Buscar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFecha" />
+        app:layout_constraintTop_toBottomOf="@+id/tvHora" />
 
     <TextView
         android:id="@+id/tvComida"
@@ -94,6 +94,21 @@
         app:layout_constraintTop_toBottomOf="@+id/lFecha" />
 
     <TextView
+        android:id="@+id/tvHora"
+        android:layout_width="309dp"
+        android:layout_height="38dp"
+        android:background="#7E7E7E"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="3dp"
+        android:text="hh:mm"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lHora" />
+
+    <TextView
         android:id="@+id/lFecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -105,5 +120,18 @@
         app:layout_constraintHorizontal_bias="0.184"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spComida" />
+
+    <TextView
+        android:id="@+id/lHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Hora del Evento"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFecha" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
