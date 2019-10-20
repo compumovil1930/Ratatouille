@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser){
         if(currentUser!=null){
-            Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+            Intent intent = new Intent(getBaseContext(), ChooseService.class);
             intent.putExtra("user", currentUser.getEmail());
             startActivity(intent);
         } else {
