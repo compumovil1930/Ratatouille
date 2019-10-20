@@ -11,7 +11,7 @@
         android:id="@+id/textView"
         style="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="0dp"
-        android:layout_height="34dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/registrate_con_nosotros"
@@ -31,7 +31,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/nombre_completo"
-        app:layout_constraintBottom_toTopOf="@+id/adressInputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/biographyInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,11 +51,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/age"
-        app:layout_constraintBottom_toTopOf="@+id/emailInputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/yearsOfExpreianceInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adressInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/addressInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ageEditText"
@@ -65,7 +65,27 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/adressInputLayout"
+        android:id="@+id/yearsOfExpreianceInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/yearsOfExpreiance"
+        app:layout_constraintBottom_toTopOf="@+id/emailInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ageInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/yearsOfExpreianceEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addressInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -75,10 +95,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/biographyInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/addressEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/biographyInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/biography"
+        app:layout_constraintBottom_toTopOf="@+id/addressInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/adressEditText"
+            android:id="@+id/biographyEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
@@ -96,7 +137,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ageInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/yearsOfExpreianceInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
