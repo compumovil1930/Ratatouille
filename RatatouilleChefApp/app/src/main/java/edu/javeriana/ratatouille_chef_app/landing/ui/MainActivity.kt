@@ -1,10 +1,11 @@
-package edu.javeriana.ratatouille_chef_app.ui.landing
+package edu.javeriana.ratatouille_chef_app.landing.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import edu.javeriana.ratatouille_chef_app.R
-import edu.javeriana.ratatouille_chef_app.ui.login.LoginActivity
+import edu.javeriana.ratatouille_chef_app.authentication.ui.LoginActivity
+import edu.javeriana.ratatouille_chef_app.authentication.ui.RegisterActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,5 +19,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupButtonsToNavigate() {
         val goToLogin = Intent(this, LoginActivity::class.java)
         loginButton.setOnClickListener { startActivity(goToLogin) }
+        val goToRegister = Intent(this, RegisterActivity::class.java)
+        registerButton.setOnClickListener { startActivity(goToRegister) }
     }
 }

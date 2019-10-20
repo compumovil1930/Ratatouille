@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "780486971096",
+    "firebase_url": "https://ratatouille-9e464.firebaseio.com",
+    "project_id": "ratatouille-9e464",
+    "storage_bucket": "ratatouille-9e464.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780486971096:android:395ca21e9424eb8ef5d1ad",
+        "android_client_info": {
+          "package_name": "com.example.clienteapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780486971096-8p0iajrenteata3834di3043mqc1b39l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtrf4ZUn8d8h0yjKhzcbSvCvDWt74yeEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780486971096-8p0iajrenteata3834di3043mqc1b39l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780486971096:android:b69811f713b17da7f5d1ad",
+        "android_client_info": {
+          "package_name": "edu.javeriana.ratatouille_chef_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780486971096-ueel8b4dpakr47vevd435o6pur4vurm0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.javeriana.ratatouille_chef_app",
+            "certificate_hash": "82938d5fe0209977413d40cff289fec966bbf196"
+          }
+        },
+        {
+          "client_id": "780486971096-8p0iajrenteata3834di3043mqc1b39l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtrf4ZUn8d8h0yjKhzcbSvCvDWt74yeEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780486971096-8p0iajrenteata3834di3043mqc1b39l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
