@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         permisoNegado = findViewById(R.id.negado);
         listaChefs = findViewById(R.id.listaChefs);
 
-        Bundle datos = getIntent().getBundleExtra("datos");
+       /* Bundle datos = getIntent().getBundleExtra("datos");
         int servicio = datos.getInt("servicio");
 
         switch (servicio){
@@ -89,7 +89,7 @@ public class HomeActivity extends AppCompatActivity {
             default:{
                 break;
             }
-        }
+        }*/
 
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
