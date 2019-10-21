@@ -51,6 +51,7 @@ public class ChooseService extends AppCompatActivity {
     TextView laHora;
 
     private FirebaseAuth mAuth;
+    private int servicios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class ChooseService extends AppCompatActivity {
         laFecha.setVisibility(View.GONE);
         horas.setVisibility(View.GONE);
         laHora.setVisibility(View.GONE);
+        servicios = 0;
 
         fecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +93,24 @@ public class ChooseService extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChooseService.this, HomeActivity.class);
+                Bundle datos = new Bundle();
+                datos.putInt("servicio",servicios);
+                switch (servicios){
+                    case 0:{
+                        datos.putString("tipoComida",(String)comida.getSelectedItem());
+                        break;
+                    }
+                    case 2:{
+                        datos.putString("tipoComida",(String)comida.getSelectedItem());
+                        datos.putString("fecha",""+fecha.getText());
+                        datos.putString("hora",""+horas.getText());
+                        break;
+                    }
+                    default:{
+                        break;
+                    }
+                }
+                intent.putExtra("datos",datos);
                 startActivity(intent);
             }
         });
@@ -99,6 +119,7 @@ public class ChooseService extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d("Spinner",""+i);
+                servicios = i;
                 switch (i){
                     case 0:{
                         tipo.setVisibility(View.VISIBLE);

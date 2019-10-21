@@ -20,26 +20,24 @@
         android:id="@+id/spServicio"
         android:layout_width="306dp"
         android:layout_height="40dp"
-        android:layout_marginTop="28dp"
-        android:background="#7E7E7E"
+        android:background="#ffb343"
         android:entries="@array/servicios"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Spinner
         android:id="@+id/spComida"
         android:layout_width="306dp"
         android:layout_height="40dp"
-        android:layout_marginTop="44dp"
-        android:background="#7E7E7E"
+        android:background="#ffb343 "
         android:entries="@array/tipoComida"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spServicio" />
+        app:layout_constraintTop_toBottomOf="@+id/tvComida" />
 
     <TextView
         android:id="@+id/textView"
@@ -58,7 +56,8 @@
         android:id="@+id/btnBuscar"
         android:layout_width="242dp"
         android:layout_height="52dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="28dp"
+        android:background="#ff8200"
         android:text="Buscar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -81,9 +80,9 @@
 
     <TextView
         android:id="@+id/tvFecha"
-        android:layout_width="309dp"
-        android:layout_height="38dp"
-        android:background="#7E7E7E"
+        android:layout_width="306dp"
+        android:layout_height="40dp"
+        android:background="#ffb343 "
         android:paddingHorizontal="15dp"
         android:paddingVertical="3dp"
         android:text="dd/mm/yyyy"
@@ -95,9 +94,9 @@
 
     <TextView
         android:id="@+id/tvHora"
-        android:layout_width="309dp"
-        android:layout_height="38dp"
-        android:background="#7E7E7E"
+        android:layout_width="306dp"
+        android:layout_height="40dp"
+        android:background="#ffb343 "
         android:paddingHorizontal="15dp"
         android:paddingVertical="3dp"
         android:text="hh:mm"

@@ -47,6 +47,9 @@ public class HomeActivity extends AppCompatActivity {
     static final int REQUEST_CHECK_SETTINGS = 102;
     private double myLat;
     private double myLon;
+    private String tipoComida;
+    private String fecha;
+    private String hora;
 
     Button btnMapa;
     TextView permisoNegado;
@@ -66,6 +69,28 @@ public class HomeActivity extends AppCompatActivity {
         btnMapa = findViewById(R.id.btnMapa);
         permisoNegado = findViewById(R.id.negado);
         listaChefs = findViewById(R.id.listaChefs);
+
+        Bundle datos = getIntent().getBundleExtra("datos");
+        int servicio = datos.getInt("servicio");
+
+        switch (servicio){
+            case 0:{
+                tipoComida = datos.getString("tipoComida");
+                Log.d("servicio",tipoComida);
+                break;
+            }
+            case 2:{
+                tipoComida = datos.getString("tipoComida");
+                fecha = datos.getString("fecha");
+                Log.d("servicio",fecha);
+                hora = datos.getString("hora");
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mLocationRequest = createLocationRequest();
