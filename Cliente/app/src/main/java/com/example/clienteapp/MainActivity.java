@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private Button ingresar;
     private EditText password;
     private EditText email;
-
+    private Button reg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 signInUser(email.getText().toString(),password.getText().toString());
 
+            }
+        });
+        reg = findViewById(R.id.btnRegistro);
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(reg.getContext(), RegisterActivity.class);
+                startActivity(intent);
             }
         });
 

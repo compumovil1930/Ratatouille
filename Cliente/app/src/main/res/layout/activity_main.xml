@@ -8,6 +8,19 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/btnRegistro"
+        android:layout_width="345dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/fondoboton"
+        android:text="Registrarse"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/psw" />
+
+    <Button
         android:id="@+id/btnIngresar"
         android:layout_width="345dp"
         android:layout_height="48dp"
