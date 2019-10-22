@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TextAppearance.MaterialComponents.Headline3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profile.ProfileActivity">
+
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="0dp"
+        android:layout_height="210dp"
+        android:contentDescription="@string/profile_image_of_user"
+        app:layout_constraintBottom_toTopOf="@+id/profileTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/profileTextView"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/dummy_name"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/lorem"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/switch1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileTextView"
+        app:lineHeight="20dp" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="187dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:switchPadding="15dp"
+        android:text="@string/availability"
+        app:layout_constraintBottom_toTopOf="@+id/chipGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch1">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip6"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fire" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip7"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Water" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip8"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Psychic" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip9"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Psychic" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip10"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Psychic" />
+    </com.google.android.material.chip.ChipGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

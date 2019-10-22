@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".authentication.ui.RegisterActivity"></activity>
+        <activity android:name=".profile.ProfileActivity"></activity>
+        <activity android:name=".authentication.ui.RegisterActivity" />
         <activity android:name=".authentication.ui.LoginActivity" />
         <activity
             android:name=".landing.ui.MainActivity"
