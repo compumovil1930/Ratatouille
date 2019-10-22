@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">RatatouilleChefApp</string>
+    <string name="bienvenido_chef">¡Bienvenido Chef!</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login_message">Ingresa Tus Credendiales</string>
+    <string name="onboarding_1">Ayuda a personas con tus servicos de chef en sus eventos y genera ingresos extras.</string>
+    <string name="inicia_seci_n_o_registrate_para_empezar">¡Inicia seción o registrate para empezar!</string>
+    <string name="chef_image">Chef image.</string>
+    <string name="nombre_de_usuario">Correo electrónico.</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="registrate_con_nosotros">Registrate Con Nosotros</string>
+    <string name="nombre_completo">Nombre completo</string>
+    <string name="age">Edad</string>
+    <string name="address">Direccion</string>
+    <string name="register">Registrate</string>
+    <string name="yearsOfExpreiance">Años de experiencia</string>
+    <string name="biography">Formación Profecional</string>
 </resources>
