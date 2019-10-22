@@ -71,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                User newUser = new User(name,Integer.parseInt(edad),email,addr);
+                                User newUser = new User(name,Double.parseDouble(edad),email,addr);
                                 db.getInstance().collection("users").document(mAuth.getUid()).set(newUser);
 
                             }else {
