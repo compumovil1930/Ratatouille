@@ -9,6 +9,8 @@ import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 interface AuthenticationRepository {
     fun createNewUser(user: User): Task<AuthResult>
     fun loginUserWithEmailAndPassWord(userCredentials: User): Task<AuthResult>
+    fun isUserAuthenticated(): Boolean
+    fun logout()
 }
 
 class FirebaseAuthenticationRepository : AuthenticationRepository {
@@ -30,5 +32,13 @@ class FirebaseAuthenticationRepository : AuthenticationRepository {
             userCredentials.password
         )
 
+    }
+
+    override fun isUserAuthenticated(): Boolean {
+        return firebaseAuth.currentUser != null
+    }
+
+    override fun logout() {
+        firebaseAuth.signOut()
     }
 }

@@ -27,4 +27,8 @@ class AuthenticationViewModel : ViewModel() {
         }
     }
 
+    fun checkIfUserIsAuthenticated() {
+        if (repository.isUserAuthenticated()) isAuthenticationSuccessfulLiveData.value = true
+    }
+
 }
