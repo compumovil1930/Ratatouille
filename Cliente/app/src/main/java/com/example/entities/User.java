@@ -2,7 +2,7 @@ package com.example.entities;
 
 public class User {
     private String fullName;
-    private Double age;
+    private int age;
     private String email;
     private String address;
     private String type;
@@ -11,7 +11,7 @@ public class User {
 
     }
 
-    public User(String fullName, Double age, String email, String address) {
+    public User(String fullName, int age, String email, String address) {
         this.fullName = fullName;
         this.age = age;
         this.email = email;
@@ -36,11 +36,11 @@ public class User {
         this.fullName = fullName;
     }
 
-    public Double getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Double age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
