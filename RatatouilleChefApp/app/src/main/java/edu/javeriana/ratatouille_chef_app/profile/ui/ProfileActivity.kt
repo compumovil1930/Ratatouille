@@ -5,9 +5,9 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -47,29 +47,27 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun goToClientRequestsActivity() {
-        val goToCientRequest = Intent(this, ClientRequestsActivity::class.java)
-        startActivity(goToCientRequest)
+        val goToClientRequest = Intent(this, ClientRequestsActivity::class.java)
+        startActivity(goToClientRequest)
     }
 
     private fun setUpLiveDataListeners() {
         profileViewModel?.utensilsListLiveData?.observe(this, utensilListObserver)
         profileViewModel?.userDataLiveData?.observe(this, loggerUserInfoObserver)
         profileViewModel?.messagesLiveData?.observe(this, messagesObserver)
-        profileViewModel?.profileImageLiveData?.observe(this, profileImageUriObserver)
     }
 
     private val messagesObserver = Observer<String> { message ->
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private val profileImageUriObserver = Observer<Uri> {
-        Picasso.get().load(it).into(profileImageView)
-    }
 
     private val loggerUserInfoObserver = Observer<User> { user ->
         nameTextView.text = user.fullName
         biographyTextView.text = user.biography
         selectedUtensils = user.utensils.toMutableList()
+        Log.d("ProfileActivity", user.photoUrl ?: "")
+        user.photoUrl?.let { Picasso.get().load(it).into(profileImageView) }
     }
 
     private val utensilListObserver = Observer<List<Pair<String, Boolean>>> { utensils ->

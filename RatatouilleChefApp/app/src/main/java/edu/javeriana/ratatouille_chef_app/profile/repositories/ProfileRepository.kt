@@ -1,10 +1,8 @@
 package edu.javeriana.ratatouille_chef_app.profile.repositories
 
 import android.graphics.Bitmap
-import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -14,7 +12,6 @@ import java.io.ByteArrayOutputStream
 
 interface ProfileRepository {
     fun findLoggedUserInformation(): Task<DocumentSnapshot>
-    fun findProfileImageUrl(): Uri?
     fun changeUsersProfileImage(imageBitMap: Bitmap): UploadTask
     fun findAllUtensil(): Task<QuerySnapshot>
     fun updateUserUtensils(utensils: List<String>): Task<Void>
@@ -34,23 +31,18 @@ class FirebaseProfileRepository : ProfileRepository {
     }
 
     override fun changeUsersProfileImage(imageBitMap: Bitmap): UploadTask {
+        val loggedUserId = firebaseAuth.currentUser?.uid ?: ""
         val baos = ByteArrayOutputStream()
         imageBitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
         val imagePath = "profile/${firebaseAuth.currentUser?.uid}.jpeg"
         val profileImageRef = storage.reference.child(imagePath)
         profileImageRef.downloadUrl.addOnSuccessListener {
-            val profileUpdates = UserProfileChangeRequest.Builder()
-                .setPhotoUri(it)
-                .build()
-            firebaseAuth.currentUser?.updateProfile(profileUpdates)
+            db.collection(usersCollection).document(loggedUserId).update("photoUrl", it.toString())
         }
         return profileImageRef.putBytes(data)
     }
 
-    override fun findProfileImageUrl(): Uri? {
-        return firebaseAuth.currentUser?.photoUrl
-    }
 
     override fun findAllUtensil(): Task<QuerySnapshot> {
         return db.collection(utensilsCollection).get()
