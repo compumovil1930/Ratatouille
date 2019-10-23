@@ -30,4 +30,5 @@
     <string name="availability">¿Estás Disponible?</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="profile_image_of_user">Profile image of user.</string>
+    <string name="see_requests">Ver Pedidos</string>
 </resources>

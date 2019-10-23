@@ -1,8 +1,6 @@
 package edu.javeriana.ratatouille_chef_app.profile.viewmodels
 
 import android.graphics.Bitmap
-import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
@@ -14,14 +12,13 @@ class ProfileViewModel : ViewModel() {
     private val repository: ProfileRepository = FirebaseProfileRepository()
     val userDataLiveData = MutableLiveData<User>()
     val messagesLiveData = MutableLiveData<String>()
-    val profileImageLiveData = MutableLiveData<Uri>()
     val utensilsListLiveData = MutableLiveData<List<Pair<String, Boolean>>>()
 
     fun findLoggedUserInformation() {
         repository.findLoggedUserInformation().addOnCompleteListener {
             userDataLiveData.value = it.result?.toObject(User::class.java)
         }
-        findProfileImageUrl()
+
     }
 
     fun changeProfileImage(imageBitMap: Bitmap) {
@@ -34,11 +31,6 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    private fun findProfileImageUrl() {
-        val profileImageUri = repository.findProfileImageUrl()
-        Log.d("ProfileViewModel", profileImageUri.toString())
-        profileImageUri.let { profileImageLiveData.value = it }
-    }
 
     fun findAllUtensils() {
         repository.findAllUtensil().addOnSuccessListener {
