@@ -148,6 +148,7 @@ class ProfileActivity : AppCompatActivity() {
         when (requestCode) {
             externalStorageRequestId -> if (grantResults.isNotEmpty() && grantResults.first() == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Acceso a imágenes concedido", Toast.LENGTH_SHORT).show()
+                openPhotoGallery()
             } else {
                 Toast.makeText(this, "Acceso a imágenes denegado", Toast.LENGTH_SHORT).show()
             }
@@ -240,5 +241,9 @@ class ProfileActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+    }
 
 }
