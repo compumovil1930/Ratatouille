@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TextAppearance.MaterialComponents.Headline3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profile.ui.ProfileActivity">
+
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="0dp"
+        android:layout_height="210dp"
+        android:contentDescription="@string/profile_image_of_user"
+        app:layout_constraintBottom_toTopOf="@+id/nameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/avatar_color" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/biographyTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView"
+        tools:text="@string/dummy_name" />
+
+    <TextView
+        android:id="@+id/biographyTextView"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/switch1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+        app:lineHeight="20dp"
+        tools:text="@string/lorem" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="187dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:switchPadding="15dp"
+        android:text="@string/availability"
+        app:layout_constraintBottom_toTopOf="@+id/utensilsChipGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/biographyTextView" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/utensilsChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

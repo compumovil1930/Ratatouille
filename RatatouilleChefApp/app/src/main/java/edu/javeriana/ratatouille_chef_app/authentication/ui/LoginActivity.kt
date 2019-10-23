@@ -1,5 +1,6 @@
 package edu.javeriana.ratatouille_chef_app.authentication.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.authentication.viewmodels.AuthenticationViewModel
+import edu.javeriana.ratatouille_chef_app.profile.ui.ProfileActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -42,7 +44,8 @@ class LoginActivity : AppCompatActivity() {
 
     private val isAuthenticatedObserver = Observer<Boolean> { isAuthenticationSuccessful: Boolean ->
         if (isAuthenticationSuccessful) {
-            Toast.makeText(this, "Welcome Chef!", Toast.LENGTH_LONG).show()
+            val goToProfileIntent = Intent(this, ProfileActivity::class.java)
+            startActivity(goToProfileIntent)
         }
     }
 

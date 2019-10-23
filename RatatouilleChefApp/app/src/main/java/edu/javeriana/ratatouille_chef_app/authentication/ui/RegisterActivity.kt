@@ -66,8 +66,8 @@ class RegisterActivity : AppCompatActivity() {
         val address = geocoder.getFromLocationName(addressEditText.text.toString(), 5).first()
         return LocationAddress(
             address = address.getAddressLine(0),
-            latitude = address.latitude.toString(),
-            longitude = address.longitude.toString()
+            latitude = address.latitude,
+            longitude = address.longitude
         )
     }
 
