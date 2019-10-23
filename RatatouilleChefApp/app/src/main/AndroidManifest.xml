@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +19,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".client_requests.ui.ClientRequests" />
         <activity android:name=".authentication.ui.RegisterActivity" />
+        <activity android:name=".profile.ui.ProfileActivity" />
         <activity android:name=".authentication.ui.LoginActivity" />
         <activity
             android:name=".landing.ui.MainActivity"

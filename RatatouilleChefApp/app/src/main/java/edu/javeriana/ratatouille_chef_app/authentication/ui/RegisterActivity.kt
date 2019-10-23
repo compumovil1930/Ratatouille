@@ -1,5 +1,6 @@
 package edu.javeriana.ratatouille_chef_app.authentication.ui
 
+import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import android.widget.Toast
@@ -10,6 +11,7 @@ import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.authentication.viewmodels.AuthenticationViewModel
+import edu.javeriana.ratatouille_chef_app.profile.ui.ProfileActivity
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -51,6 +53,8 @@ class RegisterActivity : AppCompatActivity() {
     private val isAuthenticatedObserver = Observer<Boolean> { isAuthenticationSuccessful: Boolean ->
         if (isAuthenticationSuccessful) {
             Toast.makeText(this, "User Created!", Toast.LENGTH_LONG).show()
+            val goToLoginIntent = Intent(this, LoginActivity::class.java)
+            startActivity(goToLoginIntent)
         }
     }
 
