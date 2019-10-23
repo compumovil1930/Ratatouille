@@ -1,17 +1,19 @@
 package com.example.entities;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String fullName;
     private int age;
     private String email;
-    private String address;
+    private Address address;
     private String type;
 
-    public User() {
+    public User(){
 
     }
 
-    public User(String fullName, int age, String email, String address) {
+    public User(String fullName, int age, String email, Address address) {
         this.fullName = fullName;
         this.age = age;
         this.email = email;
@@ -52,11 +54,11 @@ public class User {
         this.email = email;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 }

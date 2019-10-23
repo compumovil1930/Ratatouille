@@ -1,6 +1,8 @@
 package com.example.entities;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private String address;
     private String latitude;
     private String longitude;
