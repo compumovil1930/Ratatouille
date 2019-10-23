@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="edu.javeriana.ratatouille_chef_app">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -13,8 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".profile.ui.ProfileActivity" />
+        <activity android:name=".client_requests.ui.ClientRequests" />
         <activity android:name=".authentication.ui.RegisterActivity" />
+        <activity android:name=".profile.ui.ProfileActivity" />
         <activity android:name=".authentication.ui.LoginActivity" />
         <activity
             android:name=".landing.ui.MainActivity"

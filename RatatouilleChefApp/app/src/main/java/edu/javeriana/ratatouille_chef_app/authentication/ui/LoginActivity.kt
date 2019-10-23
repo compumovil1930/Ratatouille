@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.authentication.viewmodels.AuthenticationViewModel
+import edu.javeriana.ratatouille_chef_app.client_requests.ui.ClientRequests
 import edu.javeriana.ratatouille_chef_app.profile.ui.ProfileActivity
 import kotlinx.android.synthetic.main.activity_login.*
 

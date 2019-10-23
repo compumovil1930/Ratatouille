@@ -25,6 +25,7 @@
     <string name="register">Registrate</string>
     <string name="yearsOfExpreiance">Años de experiencia</string>
     <string name="biography">Formación Profecional</string>
+    <string name="avatar">Avatar</string>
     <string name="dummy_name">John Snow</string>
     <string name="availability">¿Estás Disponible?</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
