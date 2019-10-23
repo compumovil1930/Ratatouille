@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.entities.Address;
 import com.example.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -152,11 +153,16 @@ public class ProfileActivity extends AppCompatActivity {
                         user.setFullName(document.getString("fullName"));
                         user.setAge(document.getDouble("age").intValue());
                         user.setEmail(document.getString("email"));
+                        Address add = new Address();
+                        add.setAddress(document.getString("address.address"));
+                        add.setLatitude(document.getDouble("address.latitude"));
+                        add.setLongitude(document.getDouble("address.longitude"));
+                        user.setAddress(add);
+                        address.setText(add.getAddress());
                         uris = document.getString("uri");
                         name.setText(user.getFullName());
                         mail.setText(user.getEmail());
                         age.setText(String.valueOf(user.getAge()));
-                        //address.setText(user.getAddress());
                         if(uris!="") {cargarFoto();}
                         Log.d("TAGA", "DocumentSnapshot data: " + document.getString("fullName"));
                     } else {

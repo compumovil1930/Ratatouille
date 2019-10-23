@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
 
     Button btnMapa;
     TextView permisoNegado;
-    ListView listaChefs;
+    Button btnLista;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
@@ -66,10 +66,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         mAuth = FirebaseAuth.getInstance();
-
+        btnLista = findViewById(R.id.btnLista);
         btnMapa = findViewById(R.id.btnMapa);
         permisoNegado = findViewById(R.id.negado);
-        listaChefs = findViewById(R.id.listaChefs);
 
        /* Bundle datos = getIntent().getBundleExtra("datos");
         int servicio = datos.getInt("servicio");
@@ -115,6 +114,13 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, listC.class);
+                startActivity(intent);
+            }
+        });
         requestPermission(HomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION,"Ubicacion Autorizada",LOCALIZACION);
     }
 
@@ -124,13 +130,11 @@ public class HomeActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             permisoNegado.setVisibility(View.GONE);
             btnMapa.setVisibility(View.VISIBLE);
-            listaChefs.setVisibility(View.VISIBLE);
             startLocationUpdates();
             onLocation();
         }else{
             permisoNegado.setVisibility(View.VISIBLE);
             btnMapa.setVisibility(View.GONE);
-            listaChefs.setVisibility(View.GONE);
         }
     }
 
@@ -173,12 +177,10 @@ public class HomeActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     permisoNegado.setVisibility(View.GONE);
                     btnMapa.setVisibility(View.VISIBLE);
-                    listaChefs.setVisibility(View.VISIBLE);
                     onLocation();
                 }else{
                     permisoNegado.setVisibility(View.VISIBLE);
                     btnMapa.setVisibility(View.GONE);
-                    listaChefs.setVisibility(View.GONE);
                 }
             }
         }

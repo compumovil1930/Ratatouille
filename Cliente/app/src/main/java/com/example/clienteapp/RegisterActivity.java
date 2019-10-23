@@ -140,10 +140,10 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             android.location.Address addr = geoc.getFromLocationName(address, 2, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRigthLongitude)
                     .get(0);
-            return new Address(addr.getFeatureName(), addr.getLatitude()+"", addr.getLongitude()+"");
+            return new Address(addr.getFeatureName(), addr.getLatitude(), addr.getLongitude());
         } catch (IOException e) {
             e.printStackTrace();
-            return new Address(address, "0", "0");
+            return new Address(address, 0, 0);
         }
     }
 }

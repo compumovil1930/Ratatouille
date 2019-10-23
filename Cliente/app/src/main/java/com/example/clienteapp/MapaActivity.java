@@ -86,7 +86,7 @@ public class MapaActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
                                                       for (User u: listaDatos) {
                                                           System.out.println(""+ u.getFullName());
                                                           if(u.getFullName().equals(us.getDisplayName())){
-                                                              LatLng profileLatlng = new LatLng(Float.parseFloat(u.getAddress().getLatitude()), Float.parseFloat(u.getAddress().getLongitude()));
+                                                              LatLng profileLatlng = new LatLng(u.getAddress().getLatitude(), u.getAddress().getLongitude());
                                                               mMap.addMarker(new MarkerOptions().position(profileLatlng).title(u.getFullName()));
                                                               mMap.moveCamera(CameraUpdateFactory.newLatLng((profileLatlng)));
                                                               mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
