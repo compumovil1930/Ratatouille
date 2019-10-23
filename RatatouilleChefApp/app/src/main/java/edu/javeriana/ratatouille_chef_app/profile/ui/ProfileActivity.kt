@@ -7,12 +7,17 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Looper
 import android.provider.MediaStore
+import android.util.Log
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.location.*
 import com.google.android.material.chip.Chip
+import com.google.firebase.firestore.GeoPoint
 import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
@@ -22,8 +27,12 @@ import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : AppCompatActivity() {
 
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var locationCallback: LocationCallback
     private var profileViewModel: ProfileViewModel? = null
     private val externalStorageRequestId = 10
+    private val locationRequestCode = 11
     private var selectedUtensils = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,14 +45,22 @@ class ProfileActivity : AppCompatActivity() {
         fetchViewModels()
         setUpLiveDataListeners()
         setupButtons()
+        setUpLocation()
         profileViewModel?.findAllUtensils()
         profileViewModel?.findLoggedUserInformation()
+    }
+
+    private fun setUpLocation() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        buildLocationRequest()
+        buildLocationCallBack()
     }
 
     private fun setupButtons() {
         profileImageView.setOnClickListener {
             requestExternalStoragePermissions()
         }
+        switchAvailable.setOnCheckedChangeListener { compoundButton, b -> changeSwitch(compoundButton, b) }
     }
 
     private fun setUpLiveDataListeners() {
@@ -65,6 +82,11 @@ class ProfileActivity : AppCompatActivity() {
         nameTextView.text = user.fullName
         biographyTextView.text = user.biography
         selectedUtensils = user.utensils.toMutableList()
+        if( user.available )
+        {
+            switchAvailable.isChecked = true
+            subscribeToLocationWhioutPermission()
+        }
     }
 
     private val utensilListObserver = Observer<List<Pair<String, Boolean>>> { utensils ->
@@ -81,6 +103,16 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun changeSwitch(compoundButton: CompoundButton?, isChecked: Boolean) {
+        if( !isChecked ){
+            profileViewModel?.updateUserAvailable(false)
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+        } else {
+            profileViewModel?.updateUserAvailable(true)
+            subscribeToLocationWhioutPermission()
+        }
+    }
+
 
     private fun fetchViewModels() {
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
@@ -89,7 +121,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun requestExternalStoragePermissions() {
         askPermission(
             this,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
             externalStorageRequestId
         ) { openPhotoGallery() }
     }
@@ -110,6 +142,14 @@ class ProfileActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Acceso a imágenes denegado", Toast.LENGTH_SHORT).show()
             }
+            locationRequestCode -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    subscribeToLocation()
+                } else {
+                    Toast.makeText(this, "No se pudo acceder a la localización!", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
         }
     }
 
@@ -125,7 +165,46 @@ class ProfileActivity : AppCompatActivity() {
                     val bitmap = (profileImageView.drawable as BitmapDrawable).bitmap
                     profileViewModel?.changeProfileImage(bitmap)
                 }
+
             }
         }
     }
+
+    private fun buildLocationCallBack() {
+        locationCallback = object :LocationCallback() {
+            override fun onLocationResult(p0: LocationResult?) {
+                val location = p0?.lastLocation
+                if( location != null )
+                {
+                    profileViewModel?.updateUserCurrentAddresss(GeoPoint(location.latitude, location.longitude))
+                }
+            }
+        }
+    }
+    private fun buildLocationRequest() {
+        locationRequest = LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 5000
+        locationRequest.fastestInterval = 3000
+        locationRequest.smallestDisplacement = 10f
+
+    }
+
+    private fun subscribeToLocationWhioutPermission(){
+        askPermission(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), locationRequestCode)
+        {
+            subscribeToLocation()
+        }
+    }
+
+    private fun subscribeToLocation(){
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.myLooper()
+        )
+    }
+
+
+
 }
