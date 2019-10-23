@@ -1,11 +1,15 @@
 package edu.javeriana.ratatouille_chef_app.client_requests.ui.adapters
 
 import android.content.Context
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
@@ -19,6 +23,7 @@ class RequestAdapter(
     private val locationAddress: LocationAddress
 ) : BaseAdapter() {
 
+    private val firebaseAuth = FirebaseAuth.getInstance()
     override fun getItem(p0: Int): Any {
         return items[p0]
     }
@@ -45,6 +50,7 @@ class RequestAdapter(
             holder.clientName = convertView!!.findViewById(R.id.requestClientName) as TextView
             holder.address = convertView.findViewById(R.id.requestAddress) as TextView
             holder.description = convertView.findViewById(R.id.requestDescription) as TextView
+            holder.image = convertView.findViewById(R.id.imageViewAvatar) as ImageView
 
             convertView.tag = holder
         } else {
@@ -56,6 +62,7 @@ class RequestAdapter(
         items[position].clientId?.get()?.addOnSuccessListener { document ->
             val user = document.toObject(User::class.java)
             holder.clientName!!.text = user?.fullName
+            Picasso.get().load(user?.photoUrl).into(holder.image)
         }
 
         val distance = distanceTo(
@@ -82,6 +89,7 @@ class RequestAdapter(
         var clientName: TextView? = null
         var address: TextView? = null
         var description: TextView? = null
+        var image : ImageView? = null
 
     }
 }
