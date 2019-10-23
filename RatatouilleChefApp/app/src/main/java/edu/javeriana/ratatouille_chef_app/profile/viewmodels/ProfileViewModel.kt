@@ -3,13 +3,17 @@ package edu.javeriana.ratatouille_chef_app.profile.viewmodels
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.GeoPoint
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.authentication.repositories.AuthenticationRepository
+import edu.javeriana.ratatouille_chef_app.authentication.repositories.FirebaseAuthenticationRepository
 import edu.javeriana.ratatouille_chef_app.profile.entities.Utensil
 import edu.javeriana.ratatouille_chef_app.profile.repositories.FirebaseProfileRepository
 import edu.javeriana.ratatouille_chef_app.profile.repositories.ProfileRepository
 
 class ProfileViewModel : ViewModel() {
     private val repository: ProfileRepository = FirebaseProfileRepository()
+    private val authRepository: AuthenticationRepository = FirebaseAuthenticationRepository()
     val userDataLiveData = MutableLiveData<User>()
     val messagesLiveData = MutableLiveData<String>()
     val utensilsListLiveData = MutableLiveData<List<Pair<String, Boolean>>>()
@@ -52,6 +56,22 @@ class ProfileViewModel : ViewModel() {
         repository.updateUserUtensils(utensils).addOnSuccessListener {
             messagesLiveData.value = "Utensilios modificados exitosamente."
         }
+    }
+
+    fun updateUserAvailable(state: Boolean) {
+        repository.updateStateChef(state).addOnSuccessListener {
+            messagesLiveData.value = "Estado modificado exitosamente."
+        }
+    }
+
+    fun updateUserCurrentAddresss(geoPoint: GeoPoint) {
+        repository.updateCurrentAddressChef(geoPoint).addOnSuccessListener {
+
+        }
+    }
+
+    fun logout(){
+        authRepository.logout()
     }
 
 

@@ -33,7 +33,7 @@ class ClientRequestsActivity : AppCompatActivity() {
         setupUI()
         askPermission(
             this,
-            Manifest.permission.ACCESS_FINE_LOCATION,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
             locationRequestCode
         ) { getAllRequests() }
     }

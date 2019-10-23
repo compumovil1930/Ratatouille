@@ -5,6 +5,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
@@ -15,15 +16,21 @@ interface ProfileRepository {
     fun changeUsersProfileImage(imageBitMap: Bitmap): UploadTask
     fun findAllUtensil(): Task<QuerySnapshot>
     fun updateUserUtensils(utensils: List<String>): Task<Void>
+    fun updateStateChef(state: Boolean): Task<Void>
+    fun updateCurrentAddressChef(geoPoint: GeoPoint): Task<Void>
 }
 
 class FirebaseProfileRepository : ProfileRepository {
+
+
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
     private val usersCollection = "users"
     private val utensilsCollection = "utensils"
+    private val availableField = "available"
+    private val currentAddressField = "currentAddress"
 
     override fun findLoggedUserInformation(): Task<DocumentSnapshot> {
         val loggedUserId = firebaseAuth.currentUser?.uid ?: ""
@@ -52,5 +59,17 @@ class FirebaseProfileRepository : ProfileRepository {
         val loggedUserId = firebaseAuth.currentUser?.uid ?: ""
         return db.collection(usersCollection).document(loggedUserId)
             .update(utensilsCollection, utensils)
+    }
+
+    override fun updateStateChef(state: Boolean): Task<Void> {
+        val loggedUserId = firebaseAuth.currentUser?.uid ?: ""
+        return db.collection(usersCollection).document(loggedUserId)
+            .update(availableField, state)
+    }
+
+    override fun updateCurrentAddressChef(geoPoint: GeoPoint): Task<Void> {
+        val loggedUserId = firebaseAuth.currentUser?.uid ?: ""
+        return db.collection(usersCollection).document(loggedUserId)
+            .update(currentAddressField, geoPoint)
     }
 }
