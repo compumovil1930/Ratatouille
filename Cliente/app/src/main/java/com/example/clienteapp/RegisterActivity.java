@@ -25,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText txtEmail;
     private EditText txtName;
     private EditText txtPass;
+    private EditText txtNum;
     private Button btnReg;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -48,6 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void inflateForm() {
         mAuth = FirebaseAuth.getInstance();
+        txtNum = findViewById(R.id.txtNum);
+        txtNum.setInputType(InputType.TYPE_CLASS_NUMBER);
         txtAddr = findViewById(R.id.txtAddr);
         txtEdad = findViewById(R.id.txtEdad);
         txtEdad.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -63,15 +66,16 @@ public class RegisterActivity extends AppCompatActivity {
         final String edad = txtEdad.getText().toString().trim();
         final String email = txtEmail.getText().toString().trim();
         final String name = txtName.getText().toString().trim();
+        final String num = txtNum.getText().toString().trim();
         String pass = txtPass.getText().toString().trim();
-        if (validateForm(addr,edad,email,name,pass)) {
+        if (validateForm(addr,edad,email,name,pass,num)) {
 
             mAuth.createUserWithEmailAndPassword(email, pass)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                User newUser = new User(name,Integer.parseInt(edad),email,addr);
+                                User newUser = new User(name,Integer.parseInt(edad),email,addr,num);
                                 db.getInstance().collection("users").document(mAuth.getUid()).set(newUser);
 
                             }else {
@@ -84,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private boolean validateForm(String addr, String age, String email, String name, String pass) {
+    private boolean validateForm(String addr, String age, String email, String name, String pass, String num) {
         String numRegex = "^[0-9]*$";
         String mailRegex = "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
         boolean flag = true;
@@ -103,6 +107,9 @@ public class RegisterActivity extends AppCompatActivity {
             flag = false;
         }else if (pass.isEmpty()) {
             Toast.makeText(this,"Digite Contraseña", Toast.LENGTH_LONG).show();
+            flag = false;
+        }else if (!num.matches(numRegex)){
+            Toast.makeText(this,"Digite Teléfono", Toast.LENGTH_LONG).show();
             flag = false;
         }
         return flag;

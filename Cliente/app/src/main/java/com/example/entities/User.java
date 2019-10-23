@@ -3,6 +3,7 @@ package com.example.entities;
 public class User {
     private String fullName;
     private int age;
+    private String phone;
     private String email;
     private String address;
     private String type;
@@ -11,14 +12,22 @@ public class User {
 
     }
 
-    public User(String fullName, int age, String email, String address) {
+    public User(String fullName, int age, String email, String address, String phone) {
         this.fullName = fullName;
         this.age = age;
         this.email = email;
         this.address = address;
+        this.phone = phone;
         this.type = "Client";
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getType() {
         return type;
