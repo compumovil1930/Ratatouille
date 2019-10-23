@@ -19,7 +19,7 @@ import edu.javeriana.ratatouille_chef_app.client_requests.viewmodels.ClientReque
 import edu.javeriana.ratatouille_chef_app.core.askPermission
 import kotlinx.android.synthetic.main.activity_client_requests.*
 
-class ClientRequests : AppCompatActivity() {
+class ClientRequestsActivity : AppCompatActivity() {
 
     private val locationRequestCode = 1101
     private var clientRequestsViewModel: ClientRequestsViewModel? = null

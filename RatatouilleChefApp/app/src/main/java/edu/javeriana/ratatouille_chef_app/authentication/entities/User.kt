@@ -19,4 +19,5 @@ data class User(
     val photoUrl: String? = null,
     val available: Boolean = false,
     val currentAddress: GeoPoint = GeoPoint(0.0, 0.0)
+
 )

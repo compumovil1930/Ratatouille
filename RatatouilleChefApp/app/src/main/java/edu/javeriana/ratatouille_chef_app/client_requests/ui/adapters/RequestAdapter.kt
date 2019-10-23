@@ -74,7 +74,7 @@ class RequestAdapter(
 
 
 
-        val distanceString = "${String.format("$.2f", distance)} km"
+        val distanceString = "${String.format("%.2f", distance)} km"
 
         holder.address!!.text = distanceString
 

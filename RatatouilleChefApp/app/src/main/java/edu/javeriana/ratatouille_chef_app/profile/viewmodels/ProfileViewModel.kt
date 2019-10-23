@@ -1,28 +1,28 @@
 package edu.javeriana.ratatouille_chef_app.profile.viewmodels
 
 import android.graphics.Bitmap
-import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.GeoPoint
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.authentication.repositories.AuthenticationRepository
+import edu.javeriana.ratatouille_chef_app.authentication.repositories.FirebaseAuthenticationRepository
 import edu.javeriana.ratatouille_chef_app.profile.entities.Utensil
 import edu.javeriana.ratatouille_chef_app.profile.repositories.FirebaseProfileRepository
 import edu.javeriana.ratatouille_chef_app.profile.repositories.ProfileRepository
 
 class ProfileViewModel : ViewModel() {
     private val repository: ProfileRepository = FirebaseProfileRepository()
+    private val authRepository: AuthenticationRepository = FirebaseAuthenticationRepository()
     val userDataLiveData = MutableLiveData<User>()
     val messagesLiveData = MutableLiveData<String>()
-    val profileImageLiveData = MutableLiveData<Uri>()
     val utensilsListLiveData = MutableLiveData<List<Pair<String, Boolean>>>()
 
     fun findLoggedUserInformation() {
         repository.findLoggedUserInformation().addOnCompleteListener {
             userDataLiveData.value = it.result?.toObject(User::class.java)
         }
-        findProfileImageUrl()
+
     }
 
     fun changeProfileImage(imageBitMap: Bitmap) {
@@ -35,11 +35,6 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    private fun findProfileImageUrl() {
-        val profileImageUri = repository.findProfileImageUrl()
-        Log.d("ProfileViewModel", profileImageUri.toString())
-        profileImageUri.let { profileImageLiveData.value = it }
-    }
 
     fun findAllUtensils() {
         repository.findAllUtensil().addOnSuccessListener {
@@ -73,6 +68,10 @@ class ProfileViewModel : ViewModel() {
         repository.updateCurrentAddressChef(geoPoint).addOnSuccessListener {
 
         }
+    }
+
+    fun logout(){
+        authRepository.logout()
     }
 
 

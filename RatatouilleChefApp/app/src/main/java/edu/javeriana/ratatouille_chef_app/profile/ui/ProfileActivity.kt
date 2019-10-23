@@ -5,11 +5,13 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +23,8 @@ import com.google.firebase.firestore.GeoPoint
 import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.authentication.ui.LoginActivity
+import edu.javeriana.ratatouille_chef_app.client_requests.ui.ClientRequestsActivity
 import edu.javeriana.ratatouille_chef_app.core.askPermission
 import edu.javeriana.ratatouille_chef_app.profile.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -61,27 +65,32 @@ class ProfileActivity : AppCompatActivity() {
             requestExternalStoragePermissions()
         }
         switchAvailable.setOnCheckedChangeListener { compoundButton, b -> changeSwitch(compoundButton, b) }
+        profileImageView.setOnClickListener { requestExternalStoragePermissions() }
+        goToRequests.setOnClickListener { goToClientRequestsActivity() }
+    }
+
+    private fun goToClientRequestsActivity() {
+        val goToClientRequest = Intent(this, ClientRequestsActivity::class.java)
+        startActivity(goToClientRequest)
     }
 
     private fun setUpLiveDataListeners() {
         profileViewModel?.utensilsListLiveData?.observe(this, utensilListObserver)
         profileViewModel?.userDataLiveData?.observe(this, loggerUserInfoObserver)
         profileViewModel?.messagesLiveData?.observe(this, messagesObserver)
-        profileViewModel?.profileImageLiveData?.observe(this, profileImageUriObserver)
     }
 
     private val messagesObserver = Observer<String> { message ->
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private val profileImageUriObserver = Observer<Uri> {
-        Picasso.get().load(it).into(profileImageView)
-    }
 
     private val loggerUserInfoObserver = Observer<User> { user ->
         nameTextView.text = user.fullName
         biographyTextView.text = user.biography
         selectedUtensils = user.utensils.toMutableList()
+        Log.d("ProfileActivity", user.photoUrl ?: "")
+        user.photoUrl?.let { Picasso.get().load(it).into(profileImageView) }
         if( user.available )
         {
             switchAvailable.isChecked = true
@@ -205,6 +214,31 @@ class ProfileActivity : AppCompatActivity() {
         )
     }
 
+    /// Menu
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu , menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.logout -> {
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun logout() {
+        profileViewModel?.logout()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+    }
 
 
 }
