@@ -149,11 +149,19 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int itemClicked = item.getItemId();
-        if(itemClicked == R.id.cerrarSesion){
-            mAuth.signOut();
-            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+        switch (itemClicked){
+            case R.id.cerrarSesion: {
+                mAuth.signOut();
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            }
+            case R.id.perfil: {
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
