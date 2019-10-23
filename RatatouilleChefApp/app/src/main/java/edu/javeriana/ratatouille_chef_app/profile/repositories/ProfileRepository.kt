@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import java.io.ByteArrayOutputStream
@@ -15,6 +16,8 @@ interface ProfileRepository {
     fun findLoggedUserInformation(): Task<DocumentSnapshot>
     fun findProfileImageUrl(): Uri?
     fun changeUsersProfileImage(imageBitMap: Bitmap): UploadTask
+    fun findAllUtensil(): Task<QuerySnapshot>
+    fun updateUserUtensils(utensils: List<String>): Task<Void>
 }
 
 class FirebaseProfileRepository : ProfileRepository {
@@ -23,6 +26,7 @@ class FirebaseProfileRepository : ProfileRepository {
     private val db = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
     private val usersCollection = "users"
+    private val utensilsCollection = "utensils"
 
     override fun findLoggedUserInformation(): Task<DocumentSnapshot> {
         val loggedUserId = firebaseAuth.currentUser?.uid ?: ""
@@ -46,5 +50,15 @@ class FirebaseProfileRepository : ProfileRepository {
 
     override fun findProfileImageUrl(): Uri? {
         return firebaseAuth.currentUser?.photoUrl
+    }
+
+    override fun findAllUtensil(): Task<QuerySnapshot> {
+        return db.collection(utensilsCollection).get()
+    }
+
+    override fun updateUserUtensils(utensils: List<String>): Task<Void> {
+        val loggedUserId = firebaseAuth.currentUser?.uid ?: ""
+        return db.collection(usersCollection).document(loggedUserId)
+            .update(utensilsCollection, utensils)
     }
 }

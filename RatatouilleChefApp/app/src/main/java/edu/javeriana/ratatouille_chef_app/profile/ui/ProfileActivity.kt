@@ -8,11 +8,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.chip.Chip
 import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
@@ -24,6 +24,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private var profileViewModel: ProfileViewModel? = null
     private val externalStorageRequestId = 10
+    private var selectedUtensils = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,7 @@ class ProfileActivity : AppCompatActivity() {
         fetchViewModels()
         setUpLiveDataListeners()
         setupButtons()
+        profileViewModel?.findAllUtensils()
         profileViewModel?.findLoggedUserInformation()
     }
 
@@ -44,29 +46,44 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private val messagesObserver = Observer<String> { message ->
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private val profileImageUriObserver = Observer<Uri> {
-        Log.d("ProileActivity", it.toString())
-        Picasso.get().load(it).into(profileImageView)
-    }
-
-
-    private fun fetchViewModels() {
-        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-    }
-
     private fun setUpLiveDataListeners() {
+        profileViewModel?.utensilsListLiveData?.observe(this, utensilListObserver)
         profileViewModel?.userDataLiveData?.observe(this, loggerUserInfoObserver)
         profileViewModel?.messagesLiveData?.observe(this, messagesObserver)
         profileViewModel?.profileImageLiveData?.observe(this, profileImageUriObserver)
     }
 
+    private val messagesObserver = Observer<String> { message ->
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private val profileImageUriObserver = Observer<Uri> {
+        Picasso.get().load(it).into(profileImageView)
+    }
+
     private val loggerUserInfoObserver = Observer<User> { user ->
         nameTextView.text = user.fullName
         biographyTextView.text = user.biography
+        selectedUtensils = user.utensils.toMutableList()
+    }
+
+    private val utensilListObserver = Observer<List<Pair<String, Boolean>>> { utensils ->
+        utensils.forEach {
+            val utensilChip = Chip(utensilsChipGroup.context)
+            utensilChip.text = it.first
+            utensilChip.isCheckable = true
+            utensilChip.isChecked = it.second
+            utensilChip.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) selectedUtensils.add(it.first) else selectedUtensils.remove(it.first)
+                profileViewModel?.updateUserUtensils(selectedUtensils)
+            }
+            utensilsChipGroup.addView(utensilChip)
+        }
+    }
+
+
+    private fun fetchViewModels() {
+        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
     }
 
     private fun requestExternalStoragePermissions() {

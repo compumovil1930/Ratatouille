@@ -11,5 +11,6 @@ data class User(
     val address: LocationAddress = LocationAddress(),
     val biography: String = "",
     val age: Int = 0,
-    val yearsOfExperience: Int = 0
+    val yearsOfExperience: Int = 0,
+    val utensils: List<String> = listOf()
 )

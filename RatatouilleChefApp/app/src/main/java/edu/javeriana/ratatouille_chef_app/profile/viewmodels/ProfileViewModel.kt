@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.profile.entities.Utensil
 import edu.javeriana.ratatouille_chef_app.profile.repositories.FirebaseProfileRepository
 import edu.javeriana.ratatouille_chef_app.profile.repositories.ProfileRepository
 
@@ -14,6 +15,7 @@ class ProfileViewModel : ViewModel() {
     val userDataLiveData = MutableLiveData<User>()
     val messagesLiveData = MutableLiveData<String>()
     val profileImageLiveData = MutableLiveData<Uri>()
+    val utensilsListLiveData = MutableLiveData<List<Pair<String, Boolean>>>()
 
     fun findLoggedUserInformation() {
         repository.findLoggedUserInformation().addOnCompleteListener {
@@ -36,6 +38,28 @@ class ProfileViewModel : ViewModel() {
         val profileImageUri = repository.findProfileImageUrl()
         Log.d("ProfileViewModel", profileImageUri.toString())
         profileImageUri.let { profileImageLiveData.value = it }
+    }
+
+    fun findAllUtensils() {
+        repository.findAllUtensil().addOnSuccessListener {
+            val utensils = it.toObjects(Utensil::class.java)
+            repository.findLoggedUserInformation().addOnCompleteListener {
+                val userInfo = it.result?.toObject(User::class.java)
+                val markedUtensils = utensils.map { utensil ->
+                    Pair(
+                        utensil.name,
+                        userInfo?.utensils?.contains(utensil.name) ?: false
+                    )
+                }
+                utensilsListLiveData.value = markedUtensils
+            }
+        }
+    }
+
+    fun updateUserUtensils(utensils: List<String>) {
+        repository.updateUserUtensils(utensils).addOnSuccessListener {
+            messagesLiveData.value = "Utensilios modificados exitosamente."
+        }
     }
 
 
