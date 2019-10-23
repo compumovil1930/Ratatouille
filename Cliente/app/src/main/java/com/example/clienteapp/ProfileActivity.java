@@ -31,11 +31,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -146,16 +148,16 @@ public class ProfileActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        user = new User(document.getString("fullName"),
-                                        document.getDouble("age").intValue(),
-                                        document.getString("email"),
-                                        document.getString("address"));
+                        user = new User();
+                        user.setFullName(document.getString("fullName"));
+                        user.setAge(document.getDouble("age").intValue());
+                        user.setEmail(document.getString("email"));
                         uris = document.getString("uri");
                         name.setText(user.getFullName());
                         mail.setText(user.getEmail());
                         age.setText(String.valueOf(user.getAge()));
-                        address.setText(user.getAddress());
-                        //cargarFoto();
+                        //address.setText(user.getAddress());
+                        if(uris!="") {cargarFoto();}
                         Log.d("TAGA", "DocumentSnapshot data: " + document.getString("fullName"));
                     } else {
                         Log.d("TAGA", "No such document");
@@ -212,9 +214,45 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void cargarFoto(){
         StorageReference pathReference = storageRef.child("profile/"+uris);
-        Glide.with(ProfileActivity.this /* context */)
+        /*Glide.with(this /* context )
                 .load(pathReference)
-                .into(foto);
+                .into(foto);*/
+        /*storageRef.child("profile/"+uris).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                try {
+                    final InputStream imageStream = getContentResolver().openInputStream(uri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    foto.setImageBitmap(selectedImage);
+                }catch (Exception e){
+                    Log.d("exe",e.getMessage());
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });*/
+        try {
+            final File localFile = File.createTempFile("images", "jpg");
+        pathReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                foto.setImageBitmap(bitmap);
+                // Local temp file has been created
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+        }catch (Exception e){
+
+        }
 
     }
 
