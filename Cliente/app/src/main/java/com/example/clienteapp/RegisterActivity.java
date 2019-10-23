@@ -3,6 +3,8 @@ package com.example.clienteapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -16,10 +18,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class RegisterActivity extends AppCompatActivity {
 
+import java.io.IOException;
+
+public class RegisterActivity extends AppCompatActivity {
     private EditText txtEdad;
     private EditText txtAddr;
     private EditText txtEmail;
@@ -29,6 +34,13 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private String usersCollection = "users";
+    private Geocoder geoc;
+
+    // Limits for the geocoder search  (Colombia)
+    public static final double lowerLeftLatitude = 1.396967;
+    public static final double lowerLeftLongitude= -78.903968;
+    public static final double upperRightLatitude= 11.983639;
+    public static final double upperRigthLongitude= -71.869905;
 
 
     private View.OnClickListener btnRegLis = new View.OnClickListener() {
@@ -47,7 +59,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void inflateForm() {
+        geoc = new Geocoder(getBaseContext());
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         txtAddr = findViewById(R.id.txtAddr);
         txtEdad = findViewById(R.id.txtEdad);
         txtEdad.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -66,16 +80,23 @@ public class RegisterActivity extends AppCompatActivity {
         String pass = txtPass.getText().toString().trim();
         if (validateForm(addr,edad,email,name,pass)) {
 
+
             mAuth.createUserWithEmailAndPassword(email, pass)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                User newUser = new User(name,Integer.parseInt(edad),email,addr);
+                                User newUser = new User(name,Integer.parseInt(edad),email,getFromDirectionName(addr));
                                 db.getInstance().collection("users").document(mAuth.getUid()).set(newUser);
-
+                                Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+                                startActivity(intent);
                             }else {
                                 Toast.makeText(RegisterActivity.this, "Algo Falló :(", Toast.LENGTH_LONG).show();
+                                txtAddr.setText("");
+                                txtEdad.setText("");
+                                txtEmail.setText("");
+                                txtName.setText("");
+                                txtPass.setText("");
                             }
 
                         }
@@ -108,4 +129,14 @@ public class RegisterActivity extends AppCompatActivity {
         return flag;
     }
 
+    private Address getFromDirectionName(String address){
+        try {
+            android.location.Address addr = geoc.getFromLocationName(address, 2, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRigthLongitude)
+                    .get(0);
+            return new Address(addr.getFeatureName(), addr.getLatitude()+"", addr.getLongitude()+"");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Address(address, "0", "0");
+        }
+    }
 }
