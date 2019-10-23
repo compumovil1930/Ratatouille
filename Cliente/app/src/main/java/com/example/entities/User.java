@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     private String fullName;
     private int age;
+    private String phone;
     private String email;
     private Address address;
     private String type;
@@ -13,14 +14,23 @@ public class User implements Serializable {
 
     }
 
-    public User(String fullName, int age, String email, Address address) {
+
+    public User(String fullName, int age, String email, Address address, String phone) {
         this.fullName = fullName;
         this.age = age;
         this.email = email;
         this.address = address;
+        this.phone = phone;
         this.type = "Client";
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getType() {
         return type;

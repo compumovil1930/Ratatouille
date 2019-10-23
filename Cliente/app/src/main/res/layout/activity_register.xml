@@ -11,7 +11,7 @@
     <EditText
         android:id="@+id/txtName"
         android:layout_width="297dp"
-        android:layout_height="41dp"
+        android:layout_height="45dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="textPersonName"
@@ -19,7 +19,6 @@
         android:textColorHint="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/txtEmail"
         app:layout_constraintEnd_toEndOf="@+id/txtEmail"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtEmail"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
@@ -37,21 +36,21 @@
     <EditText
         android:id="@+id/txtAddr"
         android:layout_width="297dp"
-        android:layout_height="41dp"
+        android:layout_height="45dp"
         android:ems="10"
         android:hint="Dirección Principal"
         android:inputType="textPersonName"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/txtPass"
-        app:layout_constraintEnd_toEndOf="@+id/txtPass"
-        app:layout_constraintStart_toStartOf="@+id/txtPass"
+        app:layout_constraintBottom_toTopOf="@+id/txtNum"
+        app:layout_constraintEnd_toEndOf="@+id/txtNum"
+        app:layout_constraintStart_toStartOf="@+id/txtNum"
         app:layout_constraintTop_toBottomOf="@+id/txtEdad" />
 
     <EditText
         android:id="@+id/txtEmail"
         android:layout_width="297dp"
-        android:layout_height="41dp"
+        android:layout_height="45dp"
         android:ems="10"
         android:hint="Correo"
         android:inputType="textPersonName"
@@ -78,7 +77,7 @@
     <EditText
         android:id="@+id/txtEdad"
         android:layout_width="297dp"
-        android:layout_height="41dp"
+        android:layout_height="45dp"
         android:ems="10"
         android:hint="Edad"
         android:inputType="textPersonName"
@@ -92,7 +91,7 @@
     <EditText
         android:id="@+id/txtPass"
         android:layout_width="297dp"
-        android:layout_height="41dp"
+        android:layout_height="45dp"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
@@ -101,6 +100,19 @@
         app:layout_constraintBottom_toTopOf="@+id/btnReg"
         app:layout_constraintEnd_toEndOf="@+id/btnReg"
         app:layout_constraintStart_toStartOf="@+id/btnReg"
+        app:layout_constraintTop_toBottomOf="@+id/txtNum" />
+
+    <EditText
+        android:id="@+id/txtNum"
+        android:layout_width="297dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="Teléfono"
+        android:inputType="phone"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/txtPass"
+        app:layout_constraintEnd_toEndOf="@+id/txtPass"
+        app:layout_constraintStart_toStartOf="@+id/txtPass"
         app:layout_constraintTop_toBottomOf="@+id/txtAddr" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
