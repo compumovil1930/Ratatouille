@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupUI() {
         fetchViewModels()
+        authenticationViewModel?.checkIfUserIsAuthenticated()
         setUpLiveDataListeners()
         setupButtons()
     }
