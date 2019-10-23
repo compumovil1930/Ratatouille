@@ -16,6 +16,7 @@ import com.google.android.material.chip.Chip
 import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.client_requests.ui.ClientRequestsActivity
 import edu.javeriana.ratatouille_chef_app.core.askPermission
 import edu.javeriana.ratatouille_chef_app.profile.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -41,9 +42,13 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        profileImageView.setOnClickListener {
-            requestExternalStoragePermissions()
-        }
+        profileImageView.setOnClickListener { requestExternalStoragePermissions() }
+        goToRequests.setOnClickListener { goToClientRequestsActivity() }
+    }
+
+    private fun goToClientRequestsActivity() {
+        val goToCientRequest = Intent(this, ClientRequestsActivity::class.java)
+        startActivity(goToCientRequest)
     }
 
     private fun setUpLiveDataListeners() {
