@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView phone;
     private ImageView foto;
     private User user;
+    private String uris;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -148,10 +150,12 @@ public class ProfileActivity extends AppCompatActivity {
                                         document.getDouble("age").intValue(),
                                         document.getString("email"),
                                         document.getString("address"));
+                        uris = document.getString("uri");
                         name.setText(user.getFullName());
                         mail.setText(user.getEmail());
                         age.setText(String.valueOf(user.getAge()));
                         address.setText(user.getAddress());
+                        //cargarFoto();
                         Log.d("TAGA", "DocumentSnapshot data: " + document.getString("fullName"));
                     } else {
                         Log.d("TAGA", "No such document");
@@ -187,6 +191,7 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Log.d("TAGA",taskSnapshot.getMetadata().getName());
+                                guardarFoto(taskSnapshot.getMetadata().getName());
                                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                                 // ...
                             }
@@ -203,5 +208,29 @@ public class ProfileActivity extends AppCompatActivity {
                  return;
 
         }
+    }
+
+    public void cargarFoto(){
+        StorageReference pathReference = storageRef.child("profile/"+uris);
+        Glide.with(ProfileActivity.this /* context */)
+                .load(pathReference)
+                .into(foto);
+
+    }
+
+    public void guardarFoto(String namePhoto){
+        DocumentReference docRef = db.collection("users").document(mAuth.getUid());
+        docRef.update("uri", namePhoto).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("TAGA", "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAGA", "Error updating document", e);
+                    }
+                });
     }
 }
