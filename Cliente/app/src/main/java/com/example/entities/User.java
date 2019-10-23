@@ -9,6 +9,7 @@ public class User implements Serializable {
     private String email;
     private Address address;
     private String type;
+    private String uri;
 
     public User(){
 
@@ -22,6 +23,7 @@ public class User implements Serializable {
         this.address = address;
         this.phone = phone;
         this.type = "Client";
+        this.uri = "";
     }
 
     public String getPhone() {
@@ -70,5 +72,13 @@ public class User implements Serializable {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }
