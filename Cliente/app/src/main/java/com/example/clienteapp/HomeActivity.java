@@ -55,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     Button btnMapa;
     TextView permisoNegado;
     Button btnLista;
+    Button btnElement;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
@@ -69,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         btnLista = findViewById(R.id.btnLista);
         btnMapa = findViewById(R.id.btnMapa);
         permisoNegado = findViewById(R.id.negado);
+        btnElement = findViewById(R.id.btnEle);
 
        /* Bundle datos = getIntent().getBundleExtra("datos");
         int servicio = datos.getInt("servicio");
@@ -118,6 +120,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, listC.class);
+                startActivity(intent);
+            }
+        });
+        btnElement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ElementsActivity.class);
                 startActivity(intent);
             }
         });

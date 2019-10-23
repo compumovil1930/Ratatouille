@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -95,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getBaseContext(), HomeActivity.class);
                                 startActivity(intent);
                             }else {
+                                Log.w("ERR ",task.getException());
                                 Toast.makeText(RegisterActivity.this, "Algo Falló :(", Toast.LENGTH_LONG).show();
                                 txtAddr.setText("");
                                 txtEdad.setText("");
@@ -126,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
         }else if (name.isEmpty()) {
             Toast.makeText(this,"Digite Nombre", Toast.LENGTH_LONG).show();
             flag = false;
-        }else if (pass.isEmpty()) {
+        }else if (pass.isEmpty() || pass.length() < 6) {
             Toast.makeText(this,"Digite Contraseña", Toast.LENGTH_LONG).show();
             flag = false;
         }else if (!num.matches(numRegex)){
