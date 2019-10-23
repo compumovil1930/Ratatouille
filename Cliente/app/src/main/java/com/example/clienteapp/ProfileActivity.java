@@ -263,6 +263,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void guardarFoto(String namePhoto){
+        borrarFoto();
         DocumentReference docRef = db.collection("users").document(mAuth.getUid());
         docRef.update("uri", namePhoto).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -276,5 +277,20 @@ public class ProfileActivity extends AppCompatActivity {
                         Log.w("TAGA", "Error updating document", e);
                     }
                 });
+    }
+
+    public void borrarFoto(){
+        StorageReference desertRef = storageRef.child("profile/"+uris);
+        desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+            }
+        });
     }
 }
