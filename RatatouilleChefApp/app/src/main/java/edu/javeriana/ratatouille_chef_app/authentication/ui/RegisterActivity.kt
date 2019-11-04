@@ -11,7 +11,6 @@ import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.authentication.viewmodels.AuthenticationViewModel
-import edu.javeriana.ratatouille_chef_app.profile.ui.ProfileActivity
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -31,6 +30,24 @@ class RegisterActivity : AppCompatActivity() {
         fetchViewModels()
         setUpLiveDataListeners()
         setupButtons()
+        setTextListeners()
+
+    }
+
+    private fun setTextListeners() {
+        addressEditText.setOnFocusChangeListener { _, isFocused ->
+            if (!isFocused) {
+                val address =
+                    geocoder.getFromLocationName(addressEditText.text.toString(), 5).firstOrNull()
+                if (address == null) {
+                    loginButton.isEnabled = false
+                    addressEditText.error = "Dirección no encontrada."
+                } else {
+                    loginButton.isEnabled = true
+                    addressEditText.error = null
+                }
+            }
+        }
     }
 
     private fun fetchViewModels() {
@@ -66,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCoordenatesFromAddress(): LocationAddress {
+    private fun getCoordinatesFromAddress(): LocationAddress {
         val address = geocoder.getFromLocationName(addressEditText.text.toString(), 5).first()
         return LocationAddress(
             address = address.getAddressLine(0),
@@ -75,12 +92,13 @@ class RegisterActivity : AppCompatActivity() {
         )
     }
 
+
     private fun getTypedCredentials(): User {
         return User(
             email = emailEditText.text.toString(),
             password = passwordEditText.text.toString(),
             fullName = nameEditText.text.toString(),
-            address = getCoordenatesFromAddress(),
+            address = getCoordinatesFromAddress(),
             age = ageEditText.text.toString().toIntOrNull() ?: 0,
             yearsOfExperience = yearsOfExpreianceEditText.text.toString().toIntOrNull() ?: 0,
             biography = biographyEditText.text.toString()
