@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -17,11 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.entities.User;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -34,7 +30,6 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -66,37 +61,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mAuth = FirebaseAuth.getInstance();
-        btnLista = findViewById(R.id.btnLista);
-        btnMapa = findViewById(R.id.btnMapa);
-        permisoNegado = findViewById(R.id.negado);
-        btnElement = findViewById(R.id.btnEle);
-
-       /* Bundle datos = getIntent().getBundleExtra("datos");
-        int servicio = datos.getInt("servicio");
-
-        switch (servicio){
-            case 0:{
-                tipoComida = datos.getString("tipoComida");
-                Log.d("servicio",tipoComida);
-                break;
-            }
-            case 2:{
-                tipoComida = datos.getString("tipoComida");
-                fecha = datos.getString("fecha");
-                Log.d("servicio",fecha);
-                hora = datos.getString("hora");
-                break;
-            }
-            default:{
-                break;
-            }
-        }*/
-
+        inflateForm();
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mLocationRequest = createLocationRequest();
-
         mLocationCallback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -131,6 +99,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         requestPermission(HomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION,"Ubicacion Autorizada",LOCALIZACION);
+    }
+
+    public void inflateForm(){
+        mAuth = FirebaseAuth.getInstance();
+        btnLista = findViewById(R.id.btnLista);
+        btnMapa = findViewById(R.id.btnMapa);
+        permisoNegado = findViewById(R.id.negado);
+        btnElement = findViewById(R.id.btnEle);
     }
 
     @Override

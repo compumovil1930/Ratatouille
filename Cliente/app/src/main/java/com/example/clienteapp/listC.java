@@ -2,40 +2,29 @@ package com.example.clienteapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.entities.Address;
 import com.example.entities.User;
 import com.example.entities.UserChef;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,7 +32,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,11 +42,9 @@ public class listC extends AppCompatActivity {
 
     ListView lv;
     TextView tv;
-    LinearLayout layout;
-    PopupWindow popup;
     private FirebaseFirestore db;
     private ArrayList<UserChef> listaDatos;
-    private ArrayList<UserChef> escogidos;
+    private static ArrayList<UserChef> escogidos;
     private static final String TAG = "listCActivity";
     private FirebaseAuth mAuth;
     private User user;
@@ -81,59 +67,21 @@ public class listC extends AppCompatActivity {
         storageRef = storage.getReference();
         lv = findViewById(R.id.lista);
         tv = findViewById(R.id.msgChefs);
-        getListItems();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                      @Override
-                                      public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                          Log.d(TAG, "onSuccess: profile chef");
-                                          Intent intent = new Intent(getBaseContext(), perfilChef.class);
-                                          intent.putExtra("user", escogidos.get(i));
-                                          intent.putExtra("distance", distance(user.getAddress().getLatitude(), user.getAddress().getLongitude(), escogidos.get(i).getAddress().getLatitude(), escogidos.get(i).getAddress().getLongitude()));
-                                          startActivity(intent);
-                                      }
-                                  });
-        //escogidos.addAll(getListItems());
-       // lv.setAdapter(new ChefAdapter(getBaseContext(), R.layout.layoutlista, escogidos));
-       // Log.d(TAG, "onSuccess: LIST EMPTY"+escogidos.size());
-
-    }
-
-    class CustomAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return escogidos.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            if(view==null){
-                view = getLayoutInflater().inflate(R.layout.layoutlista, viewGroup,  false);
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d(TAG, "onSuccess: profile chef");
+                Intent intent = new Intent(getBaseContext(), perfilChef.class);
+                intent.putExtra("user", escogidos.get(i));
+                intent.putExtra("distance", distance(user.getAddress().getLatitude(), user.getAddress().getLongitude(), escogidos.get(i).getAddress().getLatitude(), escogidos.get(i).getAddress().getLongitude()));
+                startActivity(intent);
             }
-            TextView tname = view.findViewById(R.id.Nombre);
-            TextView tdesc = view.findViewById(R.id.desc);
-            TextView tdis = view.findViewById(R.id.distance);
-            ImageView im = findViewById(R.id.imagenPersonas);
-            Log.d(TAG, "onSuccess: LIST EMPTY");
-            Log.d(TAG, "onSuccess: LIST EMPTY");
-            Log.d(TAG, "onSuccess: LIST EMPTY");
-            cargarFoto(escogidos.get(i).getUri(), view);
-            tname.setText(escogidos.get(i).getFullName());
-            tdesc.setText(escogidos.get(i).getBiography());
-            tdis.setText("Se encuentra a: "+distance(user.getAddress().getLatitude(), user.getAddress().getLongitude(), escogidos.get(i).getAddress().getLatitude(), escogidos.get(i).getAddress().getLongitude()));
-            return view;
-        }
+        });
+        Log.d(TAG, "onSuccess: Click Listener of List View has been set up succesfully");
+        //getListItems();
+        Log.d(TAG, "onSuccess: chosen list size is "+getListChefs().size());
+        lv.setAdapter(new ChefAdapter(getBaseContext(), R.layout.layoutlista, escogidos));
+        Log.d(TAG, "onSuccess: chosen list size is "+escogidos.size());
     }
 
     public class ChefAdapter extends ArrayAdapter<UserChef> {
@@ -150,21 +98,17 @@ public class listC extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             View v = convertView;
-
             if (v == null) {
                 LayoutInflater vi;
                 vi = LayoutInflater.from(mContext);
                 v = vi.inflate(resourceLayout, null);
             }
-
             UserChef p = getItem(position);
-
             if (p != null) {
                 TextView tname = v.findViewById(R.id.Nombre);
                 TextView tdesc = v.findViewById(R.id.desc);
                 TextView tdis = v.findViewById(R.id.distance);
                 cargarFoto(p.getUri(), v);
-
                 tname.setText(p.getFullName());
                 tdesc.setText(p.getBiography());
                 tdis.setText("a " + distance(user.getAddress().getLatitude(), user.getAddress().getLongitude(), p.getAddress().getLatitude(), p.getAddress().getLongitude())+"km");
@@ -173,7 +117,7 @@ public class listC extends AppCompatActivity {
         }
     }
 
-    private ArrayList<UserChef> getListItems() {
+    private ArrayList<UserChef> getListChefs() {
         db.collection("users").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -187,7 +131,6 @@ public class listC extends AppCompatActivity {
                             // of objects directly! No need to fetch each
                             // document.
                             List<UserChef> types = documentSnapshots.toObjects(UserChef.class);
-
                             // Add all to your list
                             listaDatos.addAll(types);
                             Log.d(TAG, "onSuccess: " + listaDatos);
@@ -216,24 +159,16 @@ public class listC extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show();
             }
         });
-        Log.d(TAG, "onSuccess: LIST EMPTY"+escogidos.size());
+        Log.d(TAG, "onSuccess: chosen list size is "+escogidos.size());
         return escogidos;
     }
 
     public void getUser(){
-        Log.d("TAGA", "No such document");
-        Log.d("TAGA", "No such document");
-        Log.d("TAGA", "No such document");
-        Log.d("TAGA", "No such document");
         DocumentReference docRef = db.collection("users").document(mAuth.getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                Log.d("TAGA", "No such documents");
-                Log.d("TAGA", "No such documents");
                 if (task.isSuccessful()) {
-                    Log.d("TAGA", "No such document1");
-                    Log.d("TAGA", "No such document1");
                     DocumentSnapshot document = task.getResult();
                     System.out.println("User search...");
                     if (document.exists()) {
@@ -246,7 +181,6 @@ public class listC extends AppCompatActivity {
                         add.setLongitude(document.getDouble("address.longitude"));
                         System.out.println("address: "+add.getAddress()+add.getLatitude()+add.getLongitude());
                         user.setAddress(add);
-                        Log.d("TAGA", "DocumentSnapshot data: " + document.getString("fullName"));
                     } else {
                         Log.d("TAGA", "No such document");
                     }
@@ -255,7 +189,6 @@ public class listC extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     public double distance(double lat1, double long1, double lat2, double long2) {
@@ -268,7 +201,6 @@ public class listC extends AppCompatActivity {
     }
 
     public void cargarFoto(String uris, final View v){
-
         final StorageReference pathReference = storageRef.child("profile/"+uris);
         try {
             final File localFile = File.createTempFile("images", "jpg");
@@ -295,7 +227,6 @@ public class listC extends AppCompatActivity {
             System.out.println("Listado lleno!");
             Collections.sort(escogidos, new Comparator<UserChef>(){
                 public int compare(UserChef obj1, UserChef obj2) {
-
                     Double distancia1 = distance(user.getAddress().getLatitude(), user.getAddress().getLongitude(), obj1.getAddress().getLatitude(), obj1.getAddress().getLongitude());
                     Double distancia2 = distance(user.getAddress().getLatitude(), user.getAddress().getLongitude(), obj2.getAddress().getLatitude(), obj2.getAddress().getLongitude());
                     return distancia1.compareTo(distancia2);
