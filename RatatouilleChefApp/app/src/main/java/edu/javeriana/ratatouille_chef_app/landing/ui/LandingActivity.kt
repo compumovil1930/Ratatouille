@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.ui.LoginActivity
 import edu.javeriana.ratatouille_chef_app.authentication.ui.RegisterActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_landing.*
 
-class MainActivity : AppCompatActivity() {
+class LandingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_landing)
         setupButtonsToNavigate()
     }
 

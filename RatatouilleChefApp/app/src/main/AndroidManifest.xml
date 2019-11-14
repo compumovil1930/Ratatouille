@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -17,18 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".client_requests.ui.ClientRequestsActivity" />
-        <activity android:name=".authentication.ui.RegisterActivity" />
-        <activity android:name=".profile.ui.ProfileActivity" />
-        <activity android:name=".authentication.ui.LoginActivity" />
-        <activity
-            android:name=".landing.ui.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".core.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".client_requests.ui.ClientRequestsActivity" />
+        <activity android:name=".authentication.ui.RegisterActivity" />
+        <activity android:name=".profile.ui.ProfileActivity" />
+        <activity android:name=".authentication.ui.LoginActivity" />
+        <activity
+            android:name=".landing.ui.LandingActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 
