@@ -6,7 +6,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 fun askPermission(
-    context: Activity,
+    activity: Activity,
     permissionArray: Array<String>,
     permission_code: Int,
     onPermissionGranted: () -> Unit
@@ -14,7 +14,7 @@ fun askPermission(
     var havePermission = true
     for (permission in permissionArray) {
         havePermission = havePermission && (ContextCompat.checkSelfPermission(
-            context,
+            activity,
             permission
         ) != PackageManager.PERMISSION_GRANTED)
     }
@@ -22,7 +22,7 @@ fun askPermission(
     ) {
 
         ActivityCompat.requestPermissions(
-            context,
+            activity,
             permissionArray,
             permission_code
         )
