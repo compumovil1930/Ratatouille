@@ -24,14 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".client_requests.ui.ClientRequestsActivity" />
-        <activity android:name=".authentication.ui.RegisterActivity" />
         <activity android:name=".profile.ui.ProfileActivity" />
         <activity android:name=".authentication.ui.LoginActivity" />
-        <activity
-            android:name=".landing.ui.LandingActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
     </application>
 
 </manifest>
