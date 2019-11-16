@@ -17,17 +17,18 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.google.android.gms.location.*
 import com.google.android.material.chip.Chip
 import com.google.firebase.firestore.GeoPoint
 import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
-import edu.javeriana.ratatouille_chef_app.client_requests.ui.ClientRequestsActivity
 import edu.javeriana.ratatouille_chef_app.core.askPermission
 import edu.javeriana.ratatouille_chef_app.profile.viewmodels.ProfileViewModel
-import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 
+@Suppress("DEPRECATION")
 class ProfileFragment : Fragment() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -76,8 +77,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun goToClientRequestsActivity() {
-        val goToClientRequest = Intent(requireContext(), ClientRequestsActivity::class.java)
-        startActivity(goToClientRequest)
+        view?.findNavController()?.navigate(R.id.action_profileFragment_to_clientRequestsFragment)
     }
 
     private fun setUpLiveDataListeners() {

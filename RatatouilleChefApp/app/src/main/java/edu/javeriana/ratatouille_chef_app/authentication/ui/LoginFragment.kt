@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.authentication.viewmodels.AuthenticationViewModel
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment() {
 

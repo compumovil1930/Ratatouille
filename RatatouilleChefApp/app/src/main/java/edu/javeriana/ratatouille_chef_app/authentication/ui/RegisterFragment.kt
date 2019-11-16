@@ -15,7 +15,7 @@ import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.authentication.viewmodels.AuthenticationViewModel
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment : Fragment() {
 

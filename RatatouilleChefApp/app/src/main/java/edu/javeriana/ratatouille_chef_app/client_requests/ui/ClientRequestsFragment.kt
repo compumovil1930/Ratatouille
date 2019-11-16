@@ -1,12 +1,16 @@
 package edu.javeriana.ratatouille_chef_app.client_requests.ui
 
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -17,9 +21,9 @@ import edu.javeriana.ratatouille_chef_app.client_requests.entities.Request
 import edu.javeriana.ratatouille_chef_app.client_requests.ui.adapters.RequestAdapter
 import edu.javeriana.ratatouille_chef_app.client_requests.viewmodels.ClientRequestsViewModel
 import edu.javeriana.ratatouille_chef_app.core.askPermission
-import kotlinx.android.synthetic.main.activity_client_requests.*
+import kotlinx.android.synthetic.main.fragment_client_requests.*
 
-class ClientRequestsActivity : AppCompatActivity() {
+class ClientRequestsFragment : Fragment() {
 
     private val locationRequestCode = 1101
     private var clientRequestsViewModel: ClientRequestsViewModel? = null
@@ -27,17 +31,17 @@ class ClientRequestsActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var currentLocation: LocationAddress? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_client_requests)
-        setupUI()
-        askPermission(
-            this,
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            locationRequestCode
-        ) { getAllRequests() }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_client_requests, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupUI()
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -49,7 +53,11 @@ class ClientRequestsActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getAllRequests()
                 } else {
-                    Toast.makeText(this, "No se pudo acceder a la localización!", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        requireContext(),
+                        "No se pudo acceder a la localización!",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             }
@@ -60,10 +68,15 @@ class ClientRequestsActivity : AppCompatActivity() {
         fetchViewModels()
         setUpLiveDataListeners()
         setUpLocation()
+        askPermission(
+            requireActivity(),
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            locationRequestCode
+        ) { getAllRequests() }
     }
 
     private fun setUpLocation() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
     }
 
     private fun fetchViewModels() {
@@ -80,7 +93,7 @@ class ClientRequestsActivity : AppCompatActivity() {
     }
 
     private val errorMessageObserver = Observer<String> { errorMessage: String ->
-        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show()
     }
 
     private val requestsSuccessfulObserver =
@@ -90,7 +103,7 @@ class ClientRequestsActivity : AppCompatActivity() {
                 Log.d("CLIENT_REQUEST", request.toString())
             }
 
-            requestAdapter = RequestAdapter(this, requests, currentLocation!!)
+            requestAdapter = RequestAdapter(requireContext(), requests, currentLocation!!)
             requestsListView.adapter = requestAdapter
         }
 
@@ -98,7 +111,11 @@ class ClientRequestsActivity : AppCompatActivity() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 if (location == null) {
-                    Toast.makeText(this, "No se pudo obtener la localización", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        requireContext(),
+                        "No se pudo obtener la localización",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 } else {
                     currentLocation = LocationAddress(
@@ -113,4 +130,6 @@ class ClientRequestsActivity : AppCompatActivity() {
             }
 
     }
+
+
 }
