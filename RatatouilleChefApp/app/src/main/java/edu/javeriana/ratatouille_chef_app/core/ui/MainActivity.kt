@@ -1,7 +1,7 @@
 package edu.javeriana.ratatouille_chef_app.core.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import edu.javeriana.ratatouille_chef_app.R
 
 class MainActivity : AppCompatActivity() {
