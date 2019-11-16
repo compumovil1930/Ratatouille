@@ -1,7 +1,6 @@
 package edu.javeriana.ratatouille_chef_app.authentication.ui
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.authentication.viewmodels.AuthenticationViewModel
-import edu.javeriana.ratatouille_chef_app.profile.ui.ProfileActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginFragment : Fragment() {
@@ -55,8 +54,7 @@ class LoginFragment : Fragment() {
 
     private val isAuthenticatedObserver = Observer<Boolean> { isAuthenticationSuccessful: Boolean ->
         if (isAuthenticationSuccessful) {
-            val goToProfileIntent = Intent(requireContext(), ProfileActivity::class.java)
-            startActivity(goToProfileIntent)
+            view?.findNavController()?.navigate(R.id.action_loginFragment_to_profileFragment)
         }
     }
 

@@ -1,5 +1,6 @@
 package edu.javeriana.ratatouille_chef_app.profile.ui
 
+
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -9,12 +10,11 @@ import android.os.Bundle
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.widget.CompoundButton
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.*
@@ -23,13 +23,12 @@ import com.google.firebase.firestore.GeoPoint
 import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
-import edu.javeriana.ratatouille_chef_app.authentication.ui.LoginActivity
 import edu.javeriana.ratatouille_chef_app.client_requests.ui.ClientRequestsActivity
 import edu.javeriana.ratatouille_chef_app.core.askPermission
 import edu.javeriana.ratatouille_chef_app.profile.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.activity_profile.*
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileFragment : Fragment() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
@@ -39,9 +38,15 @@ class ProfileActivity : AppCompatActivity() {
     private val locationRequestCode = 11
     private var selectedUtensils = mutableListOf<String>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_profile, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupUI()
     }
 
@@ -55,7 +60,8 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setUpLocation() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
         buildLocationRequest()
         buildLocationCallBack()
     }
@@ -64,13 +70,13 @@ class ProfileActivity : AppCompatActivity() {
         profileImageView.setOnClickListener {
             requestExternalStoragePermissions()
         }
-        switchAvailable.setOnCheckedChangeListener { compoundButton, b -> changeSwitch(compoundButton, b) }
+        switchAvailable.setOnCheckedChangeListener { _, b -> changeSwitch(b) }
         profileImageView.setOnClickListener { requestExternalStoragePermissions() }
         goToRequests.setOnClickListener { goToClientRequestsActivity() }
     }
 
     private fun goToClientRequestsActivity() {
-        val goToClientRequest = Intent(this, ClientRequestsActivity::class.java)
+        val goToClientRequest = Intent(requireContext(), ClientRequestsActivity::class.java)
         startActivity(goToClientRequest)
     }
 
@@ -81,7 +87,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private val messagesObserver = Observer<String> { message ->
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
 
@@ -91,8 +97,7 @@ class ProfileActivity : AppCompatActivity() {
         selectedUtensils = user.utensils.toMutableList()
         Log.d("ProfileActivity", user.photoUrl ?: "")
         user.photoUrl?.let { Picasso.get().load(it).into(profileImageView) }
-        if( user.available )
-        {
+        if (user.available) {
             switchAvailable.isChecked = true
             subscribeToLocationWhioutPermission()
         }
@@ -112,8 +117,8 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun changeSwitch(compoundButton: CompoundButton?, isChecked: Boolean) {
-        if( !isChecked ){
+    private fun changeSwitch(isChecked: Boolean) {
+        if (!isChecked) {
             profileViewModel?.updateUserAvailable(false)
             fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         } else {
@@ -129,7 +134,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun requestExternalStoragePermissions() {
         askPermission(
-            this,
+            requireActivity(),
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
             externalStorageRequestId
         ) { openPhotoGallery() }
@@ -147,16 +152,22 @@ class ProfileActivity : AppCompatActivity() {
     ) {
         when (requestCode) {
             externalStorageRequestId -> if (grantResults.isNotEmpty() && grantResults.first() == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Acceso a imágenes concedido", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Acceso a imágenes concedido", Toast.LENGTH_SHORT)
+                    .show()
                 openPhotoGallery()
             } else {
-                Toast.makeText(this, "Acceso a imágenes denegado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Acceso a imágenes denegado", Toast.LENGTH_SHORT)
+                    .show()
             }
             locationRequestCode -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     subscribeToLocation()
                 } else {
-                    Toast.makeText(this, "No se pudo acceder a la localización!", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        requireContext(),
+                        "No se pudo acceder a la localización!",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             }
@@ -181,16 +192,21 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun buildLocationCallBack() {
-        locationCallback = object :LocationCallback() {
+        locationCallback = object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult?) {
                 val location = p0?.lastLocation
-                if( location != null )
-                {
-                    profileViewModel?.updateUserCurrentAddresss(GeoPoint(location.latitude, location.longitude))
+                if (location != null) {
+                    profileViewModel?.updateUserCurrentAddresss(
+                        GeoPoint(
+                            location.latitude,
+                            location.longitude
+                        )
+                    )
                 }
             }
         }
     }
+
     private fun buildLocationRequest() {
         locationRequest = LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -200,14 +216,21 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun subscribeToLocationWhioutPermission(){
-        askPermission(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), locationRequestCode)
+    private fun subscribeToLocationWhioutPermission() {
+        askPermission(
+            requireActivity(),
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
+            locationRequestCode
+        )
         {
             subscribeToLocation()
         }
     }
 
-    private fun subscribeToLocation(){
+    private fun subscribeToLocation() {
         fusedLocationProviderClient.requestLocationUpdates(
             locationRequest,
             locationCallback,
@@ -215,35 +238,11 @@ class ProfileActivity : AppCompatActivity() {
         )
     }
 
-    /// Menu
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu , menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
-        return when (item.itemId) {
-            R.id.logout -> {
-                logout()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun logout() {
-        profileViewModel?.logout()
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-    }
 
     override fun onDestroy() {
         super.onDestroy()
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
     }
+
 
 }

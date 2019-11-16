@@ -23,7 +23,12 @@
         android:id="@+id/loginFragment"
         android:name="edu.javeriana.ratatouille_chef_app.authentication.ui.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="edu.javeriana.ratatouille_chef_app.authentication.ui.RegisterFragment"
@@ -33,4 +38,9 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="edu.javeriana.ratatouille_chef_app.profile.ui.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
