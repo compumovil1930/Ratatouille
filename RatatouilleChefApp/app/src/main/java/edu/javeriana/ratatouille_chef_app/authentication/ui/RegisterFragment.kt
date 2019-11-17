@@ -3,6 +3,7 @@ package edu.javeriana.ratatouille_chef_app.authentication.ui
 
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,16 +47,19 @@ class RegisterFragment : Fragment() {
 
     private fun setTextListeners() {
         addressEditText.setOnFocusChangeListener { _, isFocused ->
-            if (!isFocused) {
-                val address =
-                    geocoder.getFromLocationName(addressEditText.text.toString(), 5).firstOrNull()
-                if (address == null) {
-                    loginButton.isEnabled = false
-                    addressEditText.error = "Dirección no encontrada."
-                } else {
-                    loginButton.isEnabled = true
-                    addressEditText.error = null
-                }
+            if (isFocused) {
+                Log.d("REGISTER", "setOnFocusChangeListener")
+                view?.findNavController()?.navigate(R.id.action_registerFragment_to_mapFragment)
+//                startActivity(Intent(requireContext(), MapsActivity::class.java))
+//                val address =
+//                    geocoder.getFromLocationName(addressEditText.text.toString(), 5).firstOrNull()
+//                if (address == null) {
+//                    loginButton.isEnabled = false
+//                    addressEditText.error = "Dirección no encontrada."
+//                } else {
+//                    loginButton.isEnabled = true
+//                    addressEditText.error = null
+//                }
             }
         }
     }
