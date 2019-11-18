@@ -1,7 +1,5 @@
 package edu.javeriana.ratatouille_chef_app.authentication.entities
 
-import android.net.Uri
-import android.provider.ContactsContract
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.IgnoreExtraProperties
 

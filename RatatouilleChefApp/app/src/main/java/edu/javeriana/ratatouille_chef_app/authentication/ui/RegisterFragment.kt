@@ -50,6 +50,16 @@ class RegisterFragment : Fragment() {
 
     }
 
+    private fun isValidForm(): Boolean {
+        if (emailEditText.text.isNullOrEmpty()) return false
+        if (passwordEditText.text.isNullOrEmpty()) return false
+        if (biographyEditText.text.isNullOrEmpty()) return false
+        if (addressEditText.text.isNullOrEmpty()) return false
+        if (ageEditText.text.isNullOrEmpty()) return false
+        if (yearsOfExpreianceEditText.text.isNullOrEmpty()) return false
+        return true
+    }
+
     private fun setLocationAddressField() {
         val address: Address? = args.address
         address?.let {
@@ -91,8 +101,13 @@ class RegisterFragment : Fragment() {
 
     private fun setupButtons() {
         loginButton.setOnClickListener {
-            val userCredentials = getTypedCredentials()
-            authenticationViewModel?.createNewUser(userCredentials)
+            if (isValidForm()) {
+                val userCredentials = getTypedCredentials()
+                authenticationViewModel?.createNewUser(userCredentials)
+            } else {
+                authenticationViewModel?.errorMessageLiveData?.value =
+                    "Todos los campos son requeridos."
+            }
 
         }
     }
