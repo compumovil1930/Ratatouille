@@ -20,6 +20,7 @@ class AuthenticationViewModel : ViewModel() {
         }
     }
 
+
     fun loginUserWithEmailAndPassWord(userCredentials: User) {
         repository.loginUserWithEmailAndPassWord(userCredentials).addOnCompleteListener {
             isAuthenticationSuccessfulLiveData.value = it.isSuccessful

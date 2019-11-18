@@ -65,10 +65,19 @@ class LoginFragment : Fragment() {
 
     private fun setupButtons() {
         loginButton.setOnClickListener {
-            val userCredentials = getTypedCredentials()
-            authenticationViewModel?.loginUserWithEmailAndPassWord(userCredentials)
-
+            if (isValidForm()) {
+                val userCredentials = getTypedCredentials()
+                authenticationViewModel?.loginUserWithEmailAndPassWord(userCredentials)
+            } else {
+                authenticationViewModel?.errorMessageLiveData?.value = "Todos los campos son requeridos."
+            }
         }
+    }
+
+    private fun isValidForm(): Boolean {
+        if (emailEditText.text.isNullOrEmpty()) return false
+        if (passwordEditText.text.isNullOrEmpty()) return false
+        return true
     }
 
     private fun getTypedCredentials(): User {
