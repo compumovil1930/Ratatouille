@@ -1,8 +1,10 @@
 package edu.javeriana.ratatouille_chef_app.authentication.ui
 
 
+import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
+import com.google.firebase.firestore.GeoPoint
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
@@ -21,18 +25,20 @@ class RegisterFragment : Fragment() {
 
     private var authenticationViewModel: AuthenticationViewModel? = null
     private lateinit var geocoder: Geocoder
+    private val args: RegisterFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
+        Log.d("RegisterFragment", args.address.toString())
+        setLocationAddressField()
     }
 
     private fun setupUI() {
@@ -44,18 +50,17 @@ class RegisterFragment : Fragment() {
 
     }
 
+    private fun setLocationAddressField() {
+        val address: Address? = args.address
+        address?.let {
+            addressEditText.setText(it.getAddressLine(0))
+        }
+    }
+
     private fun setTextListeners() {
         addressEditText.setOnFocusChangeListener { _, isFocused ->
-            if (!isFocused) {
-                val address =
-                    geocoder.getFromLocationName(addressEditText.text.toString(), 5).firstOrNull()
-                if (address == null) {
-                    loginButton.isEnabled = false
-                    addressEditText.error = "Dirección no encontrada."
-                } else {
-                    loginButton.isEnabled = true
-                    addressEditText.error = null
-                }
+            if (isFocused) {
+                view?.findNavController()?.navigate(R.id.action_registerFragment_to_mapFragment)
             }
         }
     }
@@ -93,11 +98,10 @@ class RegisterFragment : Fragment() {
     }
 
     private fun getCoordinatesFromAddress(): LocationAddress {
-        val address = geocoder.getFromLocationName(addressEditText.text.toString(), 5).first()
+        val address = args.address
         return LocationAddress(
-            address = address.getAddressLine(0),
-            latitude = address.latitude,
-            longitude = address.longitude
+            address = address?.getAddressLine(0) ?: "No address",
+            location = GeoPoint(address?.latitude ?: 0.0, address?.latitude ?: 0.0)
         )
     }
 

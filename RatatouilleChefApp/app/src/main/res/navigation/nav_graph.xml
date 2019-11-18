@@ -37,6 +37,14 @@
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <argument
+            android:name="address"
+            android:defaultValue="@null"
+            app:argType="android.location.Address"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -53,4 +61,13 @@
         android:name="edu.javeriana.ratatouille_chef_app.client_requests.ui.ClientRequestsFragment"
         android:label="fragment_client_requests"
         tools:layout="@layout/fragment_client_requests" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="edu.javeriana.ratatouille_chef_app.core.ui.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map">
+        <action
+            android:id="@+id/action_mapFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
 </navigation>
