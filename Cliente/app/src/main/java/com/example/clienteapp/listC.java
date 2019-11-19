@@ -118,6 +118,7 @@ public class listC extends AppCompatActivity {
     }
 
     private ArrayList<UserChef> getListChefs() {
+        tv.setText("Buscando...");
         db.collection("users").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -135,22 +136,31 @@ public class listC extends AppCompatActivity {
                             listaDatos.addAll(types);
                             Log.d(TAG, "onSuccess: " + listaDatos);
                             //recorre la lista de todos los users
-                            for (UserChef uc :listaDatos){
-                                //filtro por chefs
-                                if(uc.getType().equals("Chef")){
-                                    if(distance(user.getAddress().getLatitude(), user.getAddress().getLongitude(), uc.getAddress().getLatitude(), uc.getAddress().getLongitude())<=5){
-                                        //chefs en menos de 5km, todos
-                                        System.out.println("CERCA!!");
-                                        escogidos.add(uc);
-                                    }
-                                    else{
-                                        System.out.println("LEJOS!!");
+                            if(listaDatos.size()!=0){
+                                for (UserChef uc :listaDatos){
+                                    //filtro por chefs
+                                    if(uc.getType()!=null){
+                                        if(uc.getType().equals("Chef")){
+                                            if(distance(user.getAddress().getLatitude(), user.getAddress().getLongitude(), uc.getAddress().getLatitude(), uc.getAddress().getLongitude())<=5){
+                                                //chefs en menos de 5km, todos
+                                                System.out.println("CERCA!!");
+                                                escogidos.add(uc);
+                                            }
+                                            else{
+                                                System.out.println("LEJOS!!");
+                                            }
+                                        }
                                     }
                                 }
+                                tv.setText("Hay "+escogidos.size()+" chefs cerca de ti!");
+                                ordenarChefs(escogidos);
+                                lv.setAdapter(new ChefAdapter(getBaseContext(), R.layout.layoutlista, escogidos));
                             }
-                            tv.setText("Hay "+escogidos.size()+" chefs cerca de ti!");
-                            ordenarChefs(escogidos);
-                            lv.setAdapter(new ChefAdapter(getBaseContext(), R.layout.layoutlista, escogidos));
+                            else{
+                                tv.setText("No hay chefs cercanos a tu ubicacion!! :(");
+                            }
+
+
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
