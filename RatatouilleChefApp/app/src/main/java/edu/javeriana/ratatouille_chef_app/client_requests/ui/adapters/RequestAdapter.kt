@@ -1,7 +1,6 @@
 package edu.javeriana.ratatouille_chef_app.client_requests.ui.adapters
 
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddres
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Request
 import edu.javeriana.ratatouille_chef_app.core.distanceTo
-import kotlin.math.round
 
 class RequestAdapter(
     private val context: Context,
@@ -66,8 +64,8 @@ class RequestAdapter(
         }
 
         val distance = distanceTo(
-            items[position].clientLocation.latitude,
-            items[position].clientLocation.longitude,
+            items[position].address.latitude,
+            items[position].address.longitude,
             locationAddress.latitude,
             locationAddress.longitude
         ) / 1000.0
@@ -78,8 +76,8 @@ class RequestAdapter(
 
         holder.address!!.text = distanceString
 
-        items[position].clientLocation
-        holder.description!!.text = items[position].description
+        items[position].address
+        holder.description!!.text = items[position].comment
 
         return convertView
     }
