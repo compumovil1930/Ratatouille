@@ -1,5 +1,6 @@
 package edu.javeriana.ratatouille_chef_app.client_requests.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
@@ -20,9 +21,10 @@ class ClientRequestsViewModel : ViewModel() {
             val tempRequests = it.toObjects(Request::class.java)
             val requests = mutableListOf<Request>()
             for (request in tempRequests) {
+                // Log.d("DISTANCE", request.toString())
                 if (distanceTo(
-                        request.clientLocation.latitude,
-                        request.clientLocation.longitude,
+                        request.address.latitude,
+                        request.address.longitude,
                         locationAddress.latitude,
                         locationAddress.longitude
                     ) <= 5000
