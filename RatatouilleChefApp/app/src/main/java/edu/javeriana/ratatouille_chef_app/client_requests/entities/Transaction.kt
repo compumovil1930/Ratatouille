@@ -4,7 +4,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.GeoPoint
 import java.util.*
 
-data class Request(
+data class Transaction(
     val id: String = "",
     val chefId: DocumentReference? = null,
     val clientId: DocumentReference? = null,
@@ -12,5 +12,7 @@ data class Request(
     val cost: Int = 0,
     val time: Date? = null,
     val rating: Int = 0,
-    val comment: String = ""
+    val comment: String = "",
+    val state: String = "",
+    val recipe: DocumentReference? = null
 )

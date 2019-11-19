@@ -17,7 +17,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
-import edu.javeriana.ratatouille_chef_app.client_requests.entities.Request
+import edu.javeriana.ratatouille_chef_app.client_requests.entities.Transaction
 import edu.javeriana.ratatouille_chef_app.client_requests.ui.adapters.RequestAdapter
 import edu.javeriana.ratatouille_chef_app.client_requests.viewmodels.ClientRequestsViewModel
 import edu.javeriana.ratatouille_chef_app.core.askPermission
@@ -97,13 +97,13 @@ class ClientRequestsFragment : Fragment() {
     }
 
     private val requestsSuccessfulObserver =
-        Observer<List<Request>> { requests: List<Request> ->
+        Observer<List<Transaction>> { transactions: List<Transaction> ->
 
-            for (request in requests) {
+            for (request in transactions) {
                 Log.d("CLIENT_REQUEST", request.toString())
             }
 
-            requestAdapter = RequestAdapter(requireContext(), requests, currentLocation!!)
+            requestAdapter = RequestAdapter(requireContext(), transactions, currentLocation!!)
             requestsListView.adapter = requestAdapter
         }
 
