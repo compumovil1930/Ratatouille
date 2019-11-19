@@ -97,7 +97,7 @@ class ProfileFragment : Fragment() {
         selectedUtensils = user.utensils.toMutableList()
         Log.d("ProfileActivity", user.photoUrl ?: "")
         user.photoUrl?.let { Picasso.get().load(it).into(profileImageView) }
-        if (user.available) {
+        if (user.isAvailable) {
             switchAvailable.isChecked = true
             subscribeToLocationWhioutPermission()
         }
