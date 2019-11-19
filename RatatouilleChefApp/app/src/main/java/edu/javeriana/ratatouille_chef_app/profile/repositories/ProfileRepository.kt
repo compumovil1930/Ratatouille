@@ -29,7 +29,7 @@ class FirebaseProfileRepository : ProfileRepository {
     private val storage = FirebaseStorage.getInstance()
     private val usersCollection = "users"
     private val utensilsCollection = "utensils"
-    private val availableField = "isAvailable"
+    private val availableField = "available"
     private val currentAddressField = "currentAddress"
 
     override fun findLoggedUserInformation(): Task<DocumentSnapshot> {
