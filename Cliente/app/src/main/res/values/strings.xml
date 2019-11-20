@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Ratatouille</string>
     <string name="title_activity_mapa">Map</string>
-
+    <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="titlulo_pickers">Obtener fecha y hora</string>
-
+    <string name="registro">Registrarse</string>
+    <string name="nombre_de_usuario">Correo</string>
     <string name="formato_fecha">dd/mm/yyyy</string>
     <string name="formato_hora">hh:mm</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="login_message">Inciar Sesión</string>
 </resources>
