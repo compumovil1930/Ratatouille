@@ -47,4 +47,16 @@ class ClientRequestsViewModel : ViewModel() {
             requestsSuccessfulLiveDataSingle.value = transaction
         }
     }
+
+    fun updateStateTransaction(state: String, id: String){
+        repository.updateStateTransaction(state, id).addOnCompleteListener {
+            if (!it.isSuccessful) errorMessageLiveData.value = it.exception?.message
+        }
+    }
+
+    fun updateCostTransaction(cost: Float, id: String){
+        repository.updateCostTransaction(cost, id).addOnCompleteListener {
+            if (!it.isSuccessful) errorMessageLiveData.value = it.exception?.message
+        }
+    }
 }

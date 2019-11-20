@@ -23,6 +23,7 @@ import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.authentication.ui.RegisterFragmentArgs
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Ingredient
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Recipe
+import edu.javeriana.ratatouille_chef_app.client_requests.entities.StateTransaction
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Transaction
 import edu.javeriana.ratatouille_chef_app.client_requests.ui.adapters.RequestAdapter
 import edu.javeriana.ratatouille_chef_app.client_requests.viewmodels.ClientRequestsViewModel
@@ -81,7 +82,17 @@ class NewRequestDetailFragment : Fragment() {
             val value = first +  second
             totalTextView.text = value.toString()
         }
+        acceptButton.setOnClickListener { acceptTransaction() }
+    }
 
+    private fun acceptTransaction() {
+        clientRequestsViewModel?.updateStateTransaction(StateTransaction.ACCEPTED.value, args.transactionId)
+        var totalCost = 0.0f
+        if( totalTextView.text.toString().toFloatOrNull() != null )
+        {
+            totalCost = totalTextView.text.toString().toFloat()
+        }
+        clientRequestsViewModel?.updateCostTransaction(totalCost, args.transactionId)
     }
 
     private fun fetchData() {

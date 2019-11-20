@@ -1,5 +1,6 @@
 package edu.javeriana.ratatouille_chef_app.client_requests.repositories
 
+import android.graphics.Bitmap
 import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -8,11 +9,16 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.storage.UploadTask
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
+import java.io.ByteArrayOutputStream
 
 interface ClientRequestsRepository {
     fun getAllRequestByPosition(locationAddress: LocationAddress): Task<QuerySnapshot>
     fun getTransactionById(id: String): Task<DocumentSnapshot>
+    fun updateStateTransaction(state: String, id: String): Task<Void>
+    fun updateCostTransaction(cost: Float, id: String): Task<Void>
+
 }
 
 class FireBaseClientRequestsRepository : ClientRequestsRepository {
@@ -21,6 +27,8 @@ class FireBaseClientRequestsRepository : ClientRequestsRepository {
     private val db = FirebaseFirestore.getInstance()
     private val requestCollection = "transactions"
     private val TAG = "CLIENT_REQUESTS"
+    private val stateField = "state"
+    private val costField = "cost"
 
     override fun getAllRequestByPosition(locationAddress: LocationAddress): Task<QuerySnapshot> {
 
@@ -50,7 +58,17 @@ class FireBaseClientRequestsRepository : ClientRequestsRepository {
         }
     }
 
-    
+    override fun updateStateTransaction(state: String, id: String): Task<Void> {
+
+        return db.collection(requestCollection).document(id)
+            .update(stateField, state)
+    }
+
+    override fun updateCostTransaction(cost: Float, id: String): Task<Void> {
+
+        return db.collection(requestCollection).document(id)
+            .update(costField, cost)
+    }
 
 
 }
