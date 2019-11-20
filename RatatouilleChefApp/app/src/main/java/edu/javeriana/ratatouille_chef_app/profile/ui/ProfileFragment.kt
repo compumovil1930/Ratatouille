@@ -24,6 +24,7 @@ import com.google.firebase.firestore.GeoPoint
 import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.authentication.viewmodels.AuthenticationViewModel
 import edu.javeriana.ratatouille_chef_app.core.askPermission
 import edu.javeriana.ratatouille_chef_app.profile.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -38,6 +39,7 @@ class ProfileFragment : Fragment() {
     private val externalStorageRequestId = 10
     private val locationRequestCode = 11
     private var selectedUtensils = mutableListOf<String>()
+    private var authenticationViewModel: AuthenticationViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +75,10 @@ class ProfileFragment : Fragment() {
         }
         switchAvailable.setOnCheckedChangeListener { _, b -> changeSwitch(b) }
         profileImageView.setOnClickListener { requestExternalStoragePermissions() }
-        goToRequests.setOnClickListener { goToClientRequestsActivity() }
+        logout.setOnClickListener {
+            authenticationViewModel?.logout()
+            view?.findNavController()?.navigate(R.id.action_profileFragment_to_landingFragment)
+        }
     }
 
     private fun goToClientRequestsActivity() {
@@ -130,6 +135,8 @@ class ProfileFragment : Fragment() {
 
     private fun fetchViewModels() {
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
+        authenticationViewModel =
+            ViewModelProviders.of(this).get(AuthenticationViewModel::class.java)
     }
 
     private fun requestExternalStoragePermissions() {

@@ -32,4 +32,8 @@ class AuthenticationViewModel : ViewModel() {
         if (repository.isUserAuthenticated()) isAuthenticationSuccessfulLiveData.value = true
     }
 
+    fun logout() {
+        repository.logout()
+    }
+
 }
