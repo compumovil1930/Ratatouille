@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.Biography
+import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.client_requests.entities.Recipe
 import edu.javeriana.ratatouille_chef_app.profile.viewmodels.BiographyViewModel
 import kotlinx.android.synthetic.main.fragment_biography.*
 
@@ -44,6 +47,25 @@ class BiographyFragment : Fragment() {
         fetchViewModels()
         setUpLiveDataListeners()
         biographyViewModel?.findUserBiography()
+        setupRecipes()
+        setupButtons()
+    }
+    
+    private fun setupButtons() {
+        createRecipe.setOnClickListener { view?.findNavController()?.navigate(R.id.action_biographyFragment_to_newRecipeFormFragment) }
+    }
+
+    private fun setupRecipes() {
+        biographyViewModel?.findUserReference()?.addOnCompleteListener { it ->
+            val user = it.result?.toObject(User::class.java)
+            user?.recipes?.forEach {
+                it.get().addOnSuccessListener { recipe ->
+                    val chipItem = Chip(recepieChipGroup.context)
+                    chipItem.text = recipe.toObject(Recipe::class.java)?.name
+                    recepieChipGroup.addView(chipItem)
+                }
+            }
+        }
     }
 
     private fun fetchViewModels() {

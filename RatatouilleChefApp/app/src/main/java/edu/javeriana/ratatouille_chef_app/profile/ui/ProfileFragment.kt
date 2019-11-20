@@ -82,12 +82,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun goToClientRequestsActivity() {
-        view?.findNavController()?.navigate(R.id.action_profileFragment_to_clientRequestsFragment)
-    }
-
     private fun setUpLiveDataListeners() {
-        profileViewModel?.utensilsListLiveData?.observe(this, utensilListObserver)
         profileViewModel?.userDataLiveData?.observe(this, loggerUserInfoObserver)
         profileViewModel?.messagesLiveData?.observe(this, messagesObserver)
     }

@@ -65,5 +65,8 @@
     <string name="no_comment">No comment</string>
     <string name="complete">Completar</string>
     <string name="total_with_space">Total: $</string>
+    <string name="description">Descripción</string>
+    <string name="create">Crear</string>
+    <string name="utensils_title">Utensilios</string>
 
 </resources>

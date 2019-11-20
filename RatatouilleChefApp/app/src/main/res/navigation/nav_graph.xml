@@ -122,5 +122,18 @@
         android:id="@+id/biographyFragment"
         android:name="edu.javeriana.ratatouille_chef_app.profile.ui.BiographyFragment"
         android:label="fragment_biography"
-        tools:layout="@layout/fragment_biography" />
+        tools:layout="@layout/fragment_biography" >
+        <action
+            android:id="@+id/action_biographyFragment_to_newRecipeFormFragment"
+            app:destination="@id/newRecipeFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newRecipeFormFragment"
+        android:name="edu.javeriana.ratatouille_chef_app.profile.ui.NewRecipeFormFragment"
+        android:label="fragment_new_recipe_form"
+        tools:layout="@layout/fragment_new_recipe_form" >
+        <action
+            android:id="@+id/action_newRecipeFormFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>
