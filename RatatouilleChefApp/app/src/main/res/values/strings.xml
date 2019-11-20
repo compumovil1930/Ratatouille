@@ -48,5 +48,7 @@
     <string name="cost_service">Tarifa servicio:</string>
     <string name="dummy_cost">3000</string>
     <string name="cost">Costos</string>
+    <string name="no_comment">No comment</string>
+    <string name="complete">Completar</string>
 
 </resources>

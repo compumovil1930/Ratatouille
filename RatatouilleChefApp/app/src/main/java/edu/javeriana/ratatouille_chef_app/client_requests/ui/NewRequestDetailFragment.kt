@@ -15,6 +15,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.google.android.material.chip.Chip
 import com.google.firebase.firestore.DocumentReference
 
@@ -93,6 +94,8 @@ class NewRequestDetailFragment : Fragment() {
             totalCost = totalTextView.text.toString().toFloat()
         }
         clientRequestsViewModel?.updateCostTransaction(totalCost, args.transactionId)
+        val action = ClientRequestsFragmentDirections.actionClientRequestsFragmentToMapRequestFragment(args.transactionId)
+        view?.findNavController()?.navigate(action)
     }
 
     private fun fetchData() {
