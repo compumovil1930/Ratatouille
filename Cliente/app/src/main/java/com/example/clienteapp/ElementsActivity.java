@@ -7,21 +7,30 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.entities.KitchenElement;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ElementsActivity extends AppCompatActivity {
 
-    private EditText txtName;
-    private EditText txtBrand;
-    private EditText txtQu;
+    private LinearLayout auxScrlLyt;
     private Button btnAddEl;
 
     private FirebaseAuth mAuth;
@@ -30,7 +39,7 @@ public class ElementsActivity extends AppCompatActivity {
     private View.OnClickListener btnAddLis = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            addNewElement();
+            System.out.println("No");
         }
     };
 
@@ -38,58 +47,46 @@ public class ElementsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elements);
-
         inflate();
+        getElementsDB();
     }
 
     private void inflate() {
-        txtName = findViewById(R.id.txtNameIt);
-        txtBrand = findViewById(R.id.txtBrand);
-        txtQu = findViewById(R.id.txtQu);
-        txtQu.setInputType(InputType.TYPE_CLASS_NUMBER);
+        auxScrlLyt = findViewById(R.id.auxScrlLyt);
         btnAddEl = findViewById(R.id.btnAddEl);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         btnAddEl.setOnClickListener(btnAddLis);
     }
 
-    private void addNewElement(){
-        final String name = txtName.getText().toString().trim();
-        final String brand = txtBrand.getText().toString().trim();
-        final String qu = txtQu.getText().toString().trim();
+    private void getElementsDB(){
+        db.collection("utensils").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                fillCheckboxes(map);
+                            }
+                        } else {
+                            Toast.makeText(btnAddEl.getContext(),"Algo Falló :( complete", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
 
-        if(valiidateForm(name,brand,qu)){
-            KitchenElement kitchenElement = new KitchenElement(mAuth.getUid(),name,brand,Integer.parseInt(qu));
-            db.collection("elements")
-                    .add(kitchenElement)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(btnAddEl.getContext(),"Éxito al crear elemento", Toast.LENGTH_LONG).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(btnAddEl.getContext(),"Algo Falló :( ", Toast.LENGTH_LONG).show();
-                        }
-                    });
+    private void fillCheckboxes(Map<String, Object> map){
+        Map<String, CheckBox> filler = new HashMap<>();
+        for(Map.Entry<String, Object> entry : map.entrySet()){
+            CheckBox tmp = new CheckBox(auxScrlLyt.getContext());
+            tmp.setText(entry.getValue().toString());
+            filler.put(entry.getKey(), tmp);
+        }
+
+        for(Map.Entry<String, CheckBox> entry : filler.entrySet()){
+            auxScrlLyt.addView(entry.getValue());
         }
     }
 
-    private boolean valiidateForm(String name, String brand, String qu) {
-        boolean flag = true;
-        String numRegex = "^[0-9]*$";
-        if(name.isEmpty()){
-            Toast.makeText(this,"Digite Nombre", Toast.LENGTH_LONG).show();
-            flag = false;
-        }if(brand.isEmpty()){
-            Toast.makeText(this,"Digite Marca", Toast.LENGTH_LONG).show();
-            flag = false;
-        }if(!qu.matches(numRegex)){
-            Toast.makeText(this,"Digite Cantidad", Toast.LENGTH_LONG).show();
-            flag = false;
-        }
-        return  flag;
-    }
 }

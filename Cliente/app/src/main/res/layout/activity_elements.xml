@@ -4,73 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#021033"
     tools:context=".ElementsActivity">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="307dp"
-        android:layout_height="121dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/txtNameIt"
-        app:layout_constraintEnd_toEndOf="@+id/txtNameIt"
-        app:layout_constraintStart_toStartOf="@+id/txtNameIt"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+    <TextView
+        android:id="@+id/textView"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="458dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/add_ele"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/scrollView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/txtNameIt"
-        android:layout_width="297dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:hint="Nombre del elemento"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/txtBrand"
-        app:layout_constraintEnd_toEndOf="@+id/txtBrand"
-        app:layout_constraintStart_toStartOf="@+id/txtBrand"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
-    <EditText
-        android:id="@+id/txtBrand"
-        android:layout_width="297dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:hint="Marca del elemento"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/txtQu"
-        app:layout_constraintEnd_toEndOf="@+id/txtQu"
-        app:layout_constraintStart_toStartOf="@+id/txtQu"
-        app:layout_constraintTop_toBottomOf="@+id/txtNameIt" />
-
-    <EditText
-        android:id="@+id/txtQu"
-        android:layout_width="297dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:hint="Cantidad que posees"
-        android:inputType="number"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="90dp"
         app:layout_constraintBottom_toTopOf="@+id/btnAddEl"
-        app:layout_constraintEnd_toEndOf="@+id/btnAddEl"
-        app:layout_constraintStart_toStartOf="@+id/btnAddEl"
-        app:layout_constraintTop_toBottomOf="@+id/txtBrand" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
-    <Button
+        <LinearLayout
+            android:id="@+id/auxScrlLyt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddEl"
         android:layout_width="345dp"
         android:layout_height="48dp"
-        android:background="@drawable/fondoboton"
-        android:text="Añadir Elemento"
-        android:textColor="#FFFFFF"
+        android:text="@string/add_elests"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtQu"
-        tools:layout_editor_absoluteX="46dp" />
+        app:backgroundTint="@color/colorPrimary"
+        app:iconTint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView3"
+        tools:layout_editor_absoluteY="629dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
