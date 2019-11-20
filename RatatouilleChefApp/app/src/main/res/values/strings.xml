@@ -26,7 +26,6 @@
     <string name="yearsOfExpreiance">Años de experiencia</string>
     <string name="biography">Formación Profesional</string>
     <string name="avatar">Avatar</string>
-    <string name="dummy_name">John Snow</string>
     <string name="availability">¿Estás Disponible?</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="profile_image_of_user">Profile image of user.</string>
@@ -50,4 +49,21 @@
     <string name="create_recipe">Crear Receta</string>
     <string name="see_formation">Ver formación del Chef</string>
     <string name="formation_menu">Mi Formación</string>
+
+    <!-- dummies -->
+    <string name="dummy_name">John Snow</string>
+    <string name="dummy_address">Bogota</string>
+    <string name="dummy_recipe_name">Huevos</string>
+    <string name="ingredients">Ingredientes:</string>
+    <string name="utensils">Utencilios:</string>
+    <string name="accept">Aceptar</string>
+    <string name="dummy_total">6000</string>
+    <string name="total">Total</string>
+    <string name="cost_service">Tarifa servicio:</string>
+    <string name="dummy_cost">3000</string>
+    <string name="cost">Costos</string>
+    <string name="no_comment">No comment</string>
+    <string name="complete">Completar</string>
+    <string name="total_with_space">Total:</string>
+
 </resources>

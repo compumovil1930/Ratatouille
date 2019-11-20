@@ -34,17 +34,20 @@ class ProfileViewModel : ViewModel() {
 
 
     fun findAllUtensils() {
+
         repository.findAllUtensil().addOnSuccessListener {
             val utensils = it.toObjects(Utensil::class.java)
             repository.findLoggedUserInformation().addOnCompleteListener {
                 val userInfo = it.result?.toObject(User::class.java)
-                val markedUtensils = utensils.map { utensil ->
+                /*val markedUtensils = utensils.map { utensil ->
                     Pair(
                         utensil.name,
                         userInfo?.utensils?.contains(utensil.name) ?: false
                     )
-                }
+
                 utensilsListLiveData.value = markedUtensils
+                }*/
+
             }
         }
     }
