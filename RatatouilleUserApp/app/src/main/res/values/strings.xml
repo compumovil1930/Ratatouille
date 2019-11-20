@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">RatatouillUserApp</string>
+    <string name="bienvenido_chef">¡Bienvenido Chef!</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login_message">Ingresa Tus Credendiales</string>
+    <string name="onboarding_1">Ayuda a personas con tus servicos de chef en sus eventos y genera ingresos extras.</string>
+    <string name="inicia_seci_n_o_registrate_para_empezar">¡Inicia seción o registrate para empezar!</string>
+    <string name="chef_image">Chef image.</string>
+    <string name="nombre_de_usuario">Correo electrónico.</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="registrate_con_nosotros">Registrate Con Nosotros</string>
+    <string name="nombre_completo">Nombre completo</string>
+    <string name="age">Edad</string>
+    <string name="address">Direccion</string>
+    <string name="register">Registrate</string>
+    <string name="yearsOfExpreiance">Años de experiencia</string>
+    <string name="biography">Formación Profesional</string>
+    <string name="avatar">Avatar</string>
+    <string name="availability">¿Estás Disponible?</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="profile_image_of_user">Profile image of user.</string>
+    <string name="see_requests">Ver Pedidos</string>
+    <string name="logout">Logout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="cerrar_sesion">Cerrar Sesion</string>
+    <string name="profile">Perfil</string>
+    <string name="requests">Pedidos</string>
+    <string name="specialities">Especialidades (Separe por comas)</string>
+    <string name="certifications">Certificados (Separe por comas)</string>
+    <string name="formation">Formación del Chef</string>
+    <string name="dymy_year">6</string>
+    <string name="years_of_experience">Años de Experiencia</string>
+    <string name="certificaciones">Certificaciones</string>
+    <string name="especialidades_title">Especialidades</string>
+    <string name="recetas">Recetas</string>
+    <string name="create_recipe">Crear Receta</string>
+    <string name="see_formation">Ver formación del Chef</string>
+    <string name="formation_menu">Mi Formación</string>
+
+    <!-- dummies -->
+    <string name="dummy_name">John Snow</string>
+    <string name="dummy_address">Bogota</string>
+    <string name="dummy_recipe_name">Huevos</string>
+    <string name="ingredients">Ingredientes:</string>
+    <string name="utensils">Utencilios:</string>
+    <string name="accept">Aceptar</string>
+    <string name="dummy_total">6000</string>
+    <string name="total">Total</string>
+    <string name="cost_service">Tarifa servicio:</string>
+    <string name="dummy_cost">3000</string>
+    <string name="cost">Costos</string>
+    <string name="no_comment">No comment</string>
+    <string name="complete">Completar</string>
+    <string name="total_with_space">Total: $</string>
+    <string name="description">Descripción</string>
+    <string name="create">Crear</string>
+    <string name="utensils_title">Utensilios</string>
+    <string name="see_chefs">Ver Chefs</string>
+
+</resources>
