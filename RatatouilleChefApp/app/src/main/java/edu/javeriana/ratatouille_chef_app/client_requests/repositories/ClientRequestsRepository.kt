@@ -3,6 +3,7 @@ package edu.javeriana.ratatouille_chef_app.client_requests.repositories
 import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -15,15 +16,20 @@ interface ClientRequestsRepository {
     fun updateStateTransaction(state: String, id: String): Task<Void>
     fun updateCostTransaction(cost: Float, id: String): Task<Void>
     fun updateRatapointUser(cost: Float)
+    fun updateRatapointUser(cost: Float, clientId: DocumentReference?)
+    fun updateChefTransaction(transactionId: String): Task<Void>
 }
 
 class FireBaseClientRequestsRepository : ClientRequestsRepository {
+
+
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private val requestCollection = "transactions"
     private val TAG = "CLIENT_REQUESTS"
     private val stateField = "state"
+    val usersCollection = "users"
     private val costField = "cost"
 
     override fun getAllRequestByPosition(locationAddress: LocationAddress): Task<QuerySnapshot> {
@@ -60,6 +66,12 @@ class FireBaseClientRequestsRepository : ClientRequestsRepository {
             .update(stateField, state)
     }
 
+    override fun updateChefTransaction(transactionId: String): Task<Void> {
+        val chefId = db.collection(usersCollection).document(firebaseAuth.uid!!)
+        return db.collection(requestCollection).document(transactionId)
+            .update("chefId", chefId)
+    }
+
     override fun updateCostTransaction(cost: Float, id: String): Task<Void> {
 
         return db.collection(requestCollection).document(id)
@@ -67,12 +79,21 @@ class FireBaseClientRequestsRepository : ClientRequestsRepository {
     }
 
     override fun updateRatapointUser(cost: Float) {
-        val usersCollection = "users"
+
         db.collection(usersCollection).document(firebaseAuth.currentUser?.uid ?: "").get()
             .addOnSuccessListener {
                 val currUser = it.toObject(User::class.java)
                 db.collection(usersCollection).document(firebaseAuth.currentUser?.uid ?: "")
                     .update("ratapoints", cost + currUser!!.ratapoints)
+            }
+    }
+
+    override fun updateRatapointUser(cost: Float, clientId: DocumentReference?) {
+        clientId!!.get()
+            .addOnSuccessListener {
+                val currUser = it.toObject(User::class.java)
+                db.collection(usersCollection).document(firebaseAuth.currentUser?.uid ?: "")
+                    .update("ratapoints", currUser!!.ratapoints - cost  )
             }
     }
 
