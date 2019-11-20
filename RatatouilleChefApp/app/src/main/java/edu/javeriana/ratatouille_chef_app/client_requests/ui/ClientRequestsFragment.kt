@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,6 +18,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.firestore.GeoPoint
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.StateTransaction
@@ -26,8 +26,6 @@ import edu.javeriana.ratatouille_chef_app.client_requests.entities.Transaction
 import edu.javeriana.ratatouille_chef_app.client_requests.ui.adapters.RequestAdapter
 import edu.javeriana.ratatouille_chef_app.client_requests.viewmodels.ClientRequestsViewModel
 import edu.javeriana.ratatouille_chef_app.core.askPermission
-import edu.javeriana.ratatouille_chef_app.core.ui.MapFragment
-import edu.javeriana.ratatouille_chef_app.core.ui.MapFragmentDirections
 import kotlinx.android.synthetic.main.fragment_client_requests.*
 
 class ClientRequestsFragment : Fragment() {
@@ -81,8 +79,8 @@ class ClientRequestsFragment : Fragment() {
             locationRequestCode
         ) { getAllRequests() }
 
-        requestsListView.setOnItemClickListener { parent, view, position, id ->
-            goToRequestDetailFragment(parent, view, position, id)
+        requestsListView.setOnItemClickListener { parent, view, position, _ ->
+            goToRequestDetailFragment(parent, view, position)
         }
 
     }
@@ -132,8 +130,7 @@ class ClientRequestsFragment : Fragment() {
                         .show()
                 } else {
                     currentLocation = LocationAddress(
-                        latitude = location.latitude,
-                        longitude = location.longitude
+                        location = GeoPoint(location.latitude, location.longitude)
                     )
                     Log.d("CLIENT_REQUESTS", currentLocation.toString())
                     clientRequestsViewModel?.getAllRequests(
@@ -144,22 +141,21 @@ class ClientRequestsFragment : Fragment() {
 
     }
 
-    private fun goToRequestDetailFragment(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+    private fun goToRequestDetailFragment(parent: AdapterView<*>, view: View, position: Int) {
         val element: Transaction =
             parent.getItemAtPosition(position) as Transaction // The item that was clicked
         Log.d("GO_TO_REQUEST", element.id)
         val action: NavDirections?
-        if( element.state == StateTransaction.ACCEPTED.value )
-        {
-            action = ClientRequestsFragmentDirections.actionClientRequestsFragmentToMapRequestFragment(element.id)
-
-        } else if( element.state == StateTransaction.COMPLETE.value )
-        {
-
-            action = ClientRequestsFragmentDirections.actionClientRequestsFragmentToCompleteRequestFragment(element.id)
-        } else
-        {
-            action = ClientRequestsFragmentDirections.actionClientRequestsFragmentToNewRequestDetail(element.id)
+        action = when {
+            element.state == StateTransaction.ACCEPTED.value -> ClientRequestsFragmentDirections.actionClientRequestsFragmentToMapRequestFragment(
+                element.id
+            )
+            element.state == StateTransaction.COMPLETE.value -> ClientRequestsFragmentDirections.actionClientRequestsFragmentToCompleteRequestFragment(
+                element.id
+            )
+            else -> ClientRequestsFragmentDirections.actionClientRequestsFragmentToNewRequestDetail(
+                element.id
+            )
         }
 
         view.findNavController().navigate(action)

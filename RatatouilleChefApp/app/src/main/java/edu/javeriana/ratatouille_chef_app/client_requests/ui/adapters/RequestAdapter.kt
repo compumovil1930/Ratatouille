@@ -66,8 +66,8 @@ class RequestAdapter(
         val distance = distanceTo(
             items[position].address.latitude,
             items[position].address.longitude,
-            locationAddress.latitude,
-            locationAddress.longitude
+            locationAddress.location?.latitude ?: 0.0,
+            locationAddress.location?.longitude ?: 0.0
         ) / 1000.0
 
 

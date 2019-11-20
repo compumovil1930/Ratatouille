@@ -13,7 +13,7 @@ class BiographyViewModel  : ViewModel() {
 
     fun findUserBiography() {
         repository.findLoggedUserInformation().addOnCompleteListener {
-            biographyLiveData.value = it.result?.toObject(User::class.java)?.biographytemp
+            biographyLiveData.value = it.result?.toObject(User::class.java)?.biography
         }
     }
 }

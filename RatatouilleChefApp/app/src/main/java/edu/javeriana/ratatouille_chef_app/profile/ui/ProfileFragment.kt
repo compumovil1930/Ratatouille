@@ -99,7 +99,7 @@ class ProfileFragment : Fragment() {
 
     private val loggerUserInfoObserver = Observer<User> { user ->
         nameTextView.text = user.fullName
-        biographyTextView.text = user.biography
+        biographyTextView.text = user.biography?.formation
         // selectedUtensils = user.utensils.toMutableList()
         Log.d("ProfileActivity", user.photoUrl ?: "")
         user.photoUrl?.let { Picasso.get().load(it).into(profileImageView) }

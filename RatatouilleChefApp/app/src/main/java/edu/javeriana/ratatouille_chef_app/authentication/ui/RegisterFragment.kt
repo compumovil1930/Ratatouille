@@ -142,9 +142,7 @@ class RegisterFragment : Fragment() {
             fullName = nameEditText.text.toString(),
             address = getCoordinatesFromAddress(),
             age = ageEditText.text.toString().toIntOrNull() ?: 0,
-            yearsOfExperience = yearsOfExpreianceEditText.text.toString().toIntOrNull() ?: 0,
-            biography = biographyEditText.text.toString(),
-            biographytemp = getBiography()
+            biography = getBiography()
         )
     }
 

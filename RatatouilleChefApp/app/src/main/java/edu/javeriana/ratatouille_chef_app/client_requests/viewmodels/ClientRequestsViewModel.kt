@@ -28,8 +28,8 @@ class ClientRequestsViewModel : ViewModel() {
                 if (distanceTo(
                         request.address.latitude,
                         request.address.longitude,
-                        locationAddress.latitude,
-                        locationAddress.longitude
+                        locationAddress.location?.latitude ?: 0.0,
+                        locationAddress.location?.longitude ?: 0.0
                     ) <= 5000
                 ) {
                     requests += request

@@ -11,14 +11,12 @@ data class User(
     val password: String = "",
     val fullName: String = "",
     val address: LocationAddress = LocationAddress(),
-    val biography: String = "",
     val age: Int = 0,
-    val yearsOfExperience: Int = 0,
     val utensils: List<DocumentReference> = emptyList(),
     val photoUrl: String? = null,
     val available: Boolean = false,
     val currentAddress: GeoPoint = GeoPoint(0.0, 0.0),
-    val biographytemp: Biography? = null,
-    val isChef: Boolean = true
-
+    val biography: Biography? = null,
+    val isChef: Boolean = true,
+    val recipes: List<DocumentReference> = emptyList()
 )
