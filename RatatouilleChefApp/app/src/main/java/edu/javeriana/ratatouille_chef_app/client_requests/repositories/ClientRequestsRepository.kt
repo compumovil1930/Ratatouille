@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.core.toObjectWithId
 
 interface ClientRequestsRepository {
     fun getAllRequestByPosition(locationAddress: LocationAddress): Task<QuerySnapshot>
@@ -91,9 +92,9 @@ class FireBaseClientRequestsRepository : ClientRequestsRepository {
     override fun updateRatapointUser(cost: Float, clientId: DocumentReference?) {
         clientId!!.get()
             .addOnSuccessListener {
-                val currUser = it.toObject(User::class.java)
-                db.collection(usersCollection).document(firebaseAuth.currentUser?.uid ?: "")
-                    .update("ratapoints", currUser!!.ratapoints - cost  )
+                val currUser = it.toObjectWithId<User>()
+                db.collection(usersCollection).document(currUser.id)
+                    .update("ratapoints", currUser.ratapoints - cost  )
             }
     }
 
