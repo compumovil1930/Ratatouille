@@ -50,6 +50,6 @@
     <string name="cost">Costos</string>
     <string name="no_comment">No comment</string>
     <string name="complete">Completar</string>
-    <string name="total_with_space">Total:</string>
+    <string name="total_with_space">Total: $</string>
 
 </resources>
