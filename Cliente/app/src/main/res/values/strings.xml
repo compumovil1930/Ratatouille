@@ -9,4 +9,8 @@
     <string name="formato_hora">hh:mm</string>
     <string name="contrasenia">Contraseña</string>
     <string name="login_message">Inciar Sesión</string>
+    <string name="nombre">Nombre</string>
+    <string name="direccion_txt">Dirección</string>
+    <string name="edad">Edad</string>
+    <string name="tel"># Teléfono</string>
 </resources>

@@ -63,24 +63,27 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegistro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="345dp"
+        android:layout_height="65dp"
         android:text="@string/registro"
         app:layout_constraintBottom_toTopOf="@+id/btnIngresar"
-        app:layout_constraintEnd_toEndOf="@+id/btnIngresar"
-        app:layout_constraintStart_toStartOf="@+id/btnIngresar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnIngresar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="345dp"
+        android:layout_height="65dp"
         android:text="@string/iniciar_sesion"
         app:backgroundTint="@color/colorPrimary"
         app:iconTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegistro"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistro" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
