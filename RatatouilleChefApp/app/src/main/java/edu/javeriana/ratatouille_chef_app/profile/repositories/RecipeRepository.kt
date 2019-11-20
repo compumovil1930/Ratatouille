@@ -1,0 +1,3 @@
+package edu.javeriana.ratatouille_chef_app.profile.repositories
+
+class FirebaseRecipeRepo

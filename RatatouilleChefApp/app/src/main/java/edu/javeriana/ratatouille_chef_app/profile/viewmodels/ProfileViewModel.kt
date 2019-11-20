@@ -3,8 +3,12 @@ package edu.javeriana.ratatouille_chef_app.profile.viewmodels
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.GeoPoint
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.client_requests.entities.Ingredient
+import edu.javeriana.ratatouille_chef_app.client_requests.entities.Recipe
+import edu.javeriana.ratatouille_chef_app.core.toObjectsWithId
 import edu.javeriana.ratatouille_chef_app.profile.entities.Utensil
 import edu.javeriana.ratatouille_chef_app.profile.repositories.FirebaseProfileRepository
 import edu.javeriana.ratatouille_chef_app.profile.repositories.ProfileRepository
@@ -13,7 +17,14 @@ class ProfileViewModel : ViewModel() {
     private val repository: ProfileRepository = FirebaseProfileRepository()
     val userDataLiveData = MutableLiveData<User>()
     val messagesLiveData = MutableLiveData<String>()
-    val utensilsListLiveData = MutableLiveData<List<Pair<String, Boolean>>>()
+
+    val utensilsListLiveData = MutableLiveData<List<Utensil>>()
+    val ingredientsListLiveData = MutableLiveData<List<Ingredient>>()
+
+    val selectedIngredientsLiveData = MutableLiveData<MutableList<DocumentReference>>(mutableListOf())
+    val selectedUtensilsLiveData = MutableLiveData<MutableList<DocumentReference>>(mutableListOf())
+
+
 
     fun findLoggedUserInformation() {
         repository.findLoggedUserInformation().addOnCompleteListener {
@@ -35,17 +46,7 @@ class ProfileViewModel : ViewModel() {
 
     fun findAllUtensils() {
         repository.findAllUtensil().addOnSuccessListener {
-            val utensils = it.toObjects(Utensil::class.java)
-            repository.findLoggedUserInformation().addOnCompleteListener {
-                val userInfo = it.result?.toObject(User::class.java)
-                val markedUtensils = utensils.map { utensil ->
-                    Pair(
-                        utensil.name,
-                        userInfo?.utensils?.contains(utensil.name) ?: false
-                    )
-                }
-                utensilsListLiveData.value = markedUtensils
-            }
+            utensilsListLiveData.value = it.toObjectsWithId()
         }
     }
 
@@ -61,10 +62,20 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    fun updateUserCurrentAddresss(geoPoint: GeoPoint) {
+    fun updateUserCurrentAddress(geoPoint: GeoPoint) {
         repository.updateCurrentAddressChef(geoPoint).addOnSuccessListener {
 
         }
+    }
+
+    fun findAllIngredients() {
+        repository.findAllIngredients().addOnSuccessListener {
+            ingredientsListLiveData.value = it.toObjectsWithId()
+        }
+    }
+
+    fun createRecipe(recipe: Recipe) {
+        return repository.createRecipe(recipe)
     }
 
 

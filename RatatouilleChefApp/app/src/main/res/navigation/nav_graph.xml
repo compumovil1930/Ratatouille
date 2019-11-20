@@ -58,12 +58,25 @@
         <action
             android:id="@+id/action_profileFragment_to_landingFragment"
             app:destination="@id/landingFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_biographyFragment"
+            app:destination="@id/biographyFragment" />
     </fragment>
     <fragment
         android:id="@+id/clientRequestsFragment"
         android:name="edu.javeriana.ratatouille_chef_app.client_requests.ui.ClientRequestsFragment"
         android:label="fragment_client_requests"
-        tools:layout="@layout/fragment_client_requests" />
+        tools:layout="@layout/fragment_client_requests" >
+        <action
+            android:id="@+id/action_clientRequestsFragment_to_newRequestDetail"
+            app:destination="@id/newRequestDetail" />
+        <action
+            android:id="@+id/action_clientRequestsFragment_to_mapRequestFragment"
+            app:destination="@+id/mapRequestFragment" />
+        <action
+            android:id="@+id/action_clientRequestsFragment_to_completeRequestFragment"
+            app:destination="@id/completeRequestFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="edu.javeriana.ratatouille_chef_app.core.ui.MapFragment"
@@ -72,5 +85,55 @@
         <action
             android:id="@+id/action_mapFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newRequestDetail"
+        android:name="edu.javeriana.ratatouille_chef_app.client_requests.ui.NewRequestDetailFragment"
+        android:label="fragment_new_request_detail"
+        tools:layout="@layout/fragment_new_request_detail" >
+        <argument
+            android:name="transactionId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_newRequestDetail_to_mapRequestFragment"
+            app:destination="@+id/mapRequestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapRequestFragment"
+        android:name="edu.javeriana.ratatouille_chef_app.client_requests.ui.MapRequestFragment"
+        android:label="fragment_map_request"
+        tools:layout="@layout/fragment_map_request" >
+        <action
+            android:id="@+id/action_mapRequestFragment_to_completeRequestFragment"
+            app:destination="@id/completeRequestFragment" />
+        <argument
+            android:name="transactionId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/completeRequestFragment"
+        android:name="edu.javeriana.ratatouille_chef_app.client_requests.ui.CompleteRequestFragment"
+        android:label="CompleteRequestFragment" >
+        <argument
+            android:name="transactionId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/biographyFragment"
+        android:name="edu.javeriana.ratatouille_chef_app.profile.ui.BiographyFragment"
+        android:label="fragment_biography"
+        tools:layout="@layout/fragment_biography" >
+        <action
+            android:id="@+id/action_biographyFragment_to_newRecipeFormFragment"
+            app:destination="@id/newRecipeFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newRecipeFormFragment"
+        android:name="edu.javeriana.ratatouille_chef_app.profile.ui.NewRecipeFormFragment"
+        android:label="fragment_new_recipe_form"
+        tools:layout="@layout/fragment_new_recipe_form" >
+        <action
+            android:id="@+id/action_newRecipeFormFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

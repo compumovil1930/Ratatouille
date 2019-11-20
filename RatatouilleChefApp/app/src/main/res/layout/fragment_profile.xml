@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/TextAppearance.MaterialComponents.Headline3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".profile.ui.ProfileFragment">
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="210dp"
         android:contentDescription="@string/profile_image_of_user"
         app:layout_constraintBottom_toTopOf="@+id/nameTextView"
@@ -38,7 +40,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/switchAvailable"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView"
@@ -54,31 +55,55 @@
         android:text="@string/availability"
         app:layout_constraintBottom_toTopOf="@+id/utensilsChipGroup"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/biographyTextView" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/utensilsChipGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
+    <TextView
+        android:id="@+id/ratapoints"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/logout"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchAvailable" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+        app:lineHeight="20dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/logout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/cerrar_sesion"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/seeFormation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/utensilsChipGroup" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/seeFormation"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/see_formation"
+        android:textColor="@color/colorPrimary"
+        app:iconTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logout"
+        app:rippleColor="@color/colorPrimary" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
