@@ -94,7 +94,7 @@ class NewRequestDetailFragment : Fragment() {
             totalCost = totalTextView.text.toString().toFloat()
         }
         clientRequestsViewModel?.updateCostTransaction(totalCost, args.transactionId)
-        val action = ClientRequestsFragmentDirections.actionClientRequestsFragmentToMapRequestFragment(args.transactionId)
+        val action = NewRequestDetailFragmentDirections.actionNewRequestDetailToMapRequestFragment(args.transactionId)
         view?.findNavController()?.navigate(action)
     }
 

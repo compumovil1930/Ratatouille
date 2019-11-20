@@ -96,8 +96,6 @@ class CompleteRequestFragment : Fragment() {
         transaction.recipe?.get()?.addOnSuccessListener { document ->
             val recipe = document.toObject(Recipe::class.java)
             recipeNameTextView.text = recipe?.name
-            recipeDescriptionTextView.text = recipe?.description
-
 
         }
         ratingTextView.text = transaction.rating.toString()
