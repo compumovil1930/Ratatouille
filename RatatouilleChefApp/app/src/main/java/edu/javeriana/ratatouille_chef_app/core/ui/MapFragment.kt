@@ -35,6 +35,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerDragListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupUI()
         mapView.onCreate(savedInstanceState)
         mapView.onResume()
         mapView.getMapAsync(this)
@@ -85,7 +86,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerDragListen
                     currentLocation = LatLng(it.latitude, it.longitude)
                     googleMap?.addMarker(MarkerOptions().position(currentLocation!!).draggable(true))
                     googleMap?.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
-                    setupUI()
+
                 }
 
             }
