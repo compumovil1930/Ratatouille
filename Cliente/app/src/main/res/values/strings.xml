@@ -13,4 +13,7 @@
     <string name="direccion_txt">Dirección</string>
     <string name="edad">Edad</string>
     <string name="tel"># Teléfono</string>
+    <string name="chef_cerca">Ver Chefs Cerca</string>
+    <string name="add_ele">Añadir Elemento</string>
+    <string name="ver_mapa">Ver Mapa de Chefs</string>
 </resources>

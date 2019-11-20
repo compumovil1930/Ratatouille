@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6A98989B"
     tools:context=".HomeActivity">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLista"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/botonmap"
-        android:text="VER CHEFS CERCA"
+        android:text="@string/chef_cerca"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/btnMapa"
@@ -21,12 +20,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnEle" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/botonmap"
-        android:text="AÑADIR ITEM DE COCINA"
+        android:text="@string/add_ele"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/btnLista"
@@ -39,10 +37,8 @@
         android:id="@+id/negado"
         android:layout_width="321dp"
         android:layout_height="74dp"
-        android:background="#00FF0000"
         android:text="Localizacion Denegada, se necesita la autorizacion para acceder a la funcionalidad de la aplicacion"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,12 +46,11 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="27dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMapa"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/botonmap"
-        android:text="Mapa"
+        android:text="@string/ver_mapa"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
