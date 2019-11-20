@@ -23,6 +23,7 @@ interface ProfileRepository {
     fun updateCurrentAddressChef(geoPoint: GeoPoint): Task<Void>
     fun findAllIngredients(): Task<QuerySnapshot>
     fun createRecipe(recipe: Recipe)
+    fun findChefBiographyById(id: String): Task<DocumentSnapshot>
 }
 
 class FirebaseProfileRepository : ProfileRepository {
@@ -95,5 +96,9 @@ class FirebaseProfileRepository : ProfileRepository {
                 db.collection(usersCollection).document(firebaseAuth.currentUser?.uid ?: "").update("recipes", recepies)
             }
         }
+    }
+
+    override fun findChefBiographyById(id: String): Task<DocumentSnapshot> {
+        return db.collection(usersCollection).document(id).get()
     }
 }

@@ -3,30 +3,23 @@ package edu.javeriana.ratatouille_chef_app.client_requests.ui
 
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.chip.Chip
-import androidx.lifecycle.Observer
-
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
-import edu.javeriana.ratatouille_chef_app.client_requests.entities.Ingredient
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Recipe
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Transaction
 import edu.javeriana.ratatouille_chef_app.client_requests.viewmodels.ClientRequestsViewModel
 import kotlinx.android.synthetic.main.fragment_complete_request.*
-import kotlinx.android.synthetic.main.fragment_new_request_detail.*
 import kotlinx.android.synthetic.main.fragment_new_request_detail.addressTextView
 import kotlinx.android.synthetic.main.fragment_new_request_detail.clientNameTextView
 import kotlinx.android.synthetic.main.fragment_new_request_detail.recipeNameTextView
-import kotlinx.android.synthetic.main.fragment_new_request_detail.totalTextView
 import java.util.*
 
 /**
@@ -59,8 +52,8 @@ class CompleteRequestFragment : Fragment() {
     }
 
     private fun fetchData() {
-        Log.d("GO_TO_REQUEST", args.transactionId)
-        clientRequestsViewModel?.getTransactionById(args.transactionId)
+        //Log.d("GO_TO_REQUEST", args.transactionId)
+        //clientRequestsViewModel?.getTransactionById(args.transactionId)
     }
 
     private fun fetchViewModels() {
@@ -104,10 +97,10 @@ class CompleteRequestFragment : Fragment() {
     }
 
     private fun setUpLiveDataListeners() {
-        clientRequestsViewModel?.requestsSuccessfulLiveDataSingle?.observe(
-            this, requestsSuccessfulObserver
+        //clientRequestsViewModel?.requestsSuccessfulLiveDataSingle?.observe(
+        //  this, requestsSuccessfulObserver
 
-        )
+//        )
         clientRequestsViewModel?.errorMessageLiveData?.observe(this, errorMessageObserver)
     }
 }

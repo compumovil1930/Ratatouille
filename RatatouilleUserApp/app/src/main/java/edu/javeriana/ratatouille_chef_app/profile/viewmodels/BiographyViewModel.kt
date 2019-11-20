@@ -3,7 +3,6 @@ package edu.javeriana.ratatouille_chef_app.profile.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.javeriana.ratatouille_chef_app.authentication.entities.Biography
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
@@ -22,7 +21,14 @@ class BiographyViewModel  : ViewModel() {
         }
     }
 
-    fun findUserReference(): Task<DocumentSnapshot> {
-        return repository.findLoggedUserInformation()
+    fun findUserReference(id: String): Task<DocumentSnapshot> {
+        return repository.findChefBiographyById(id)
+    }
+
+    fun findChefBiographyById(id: String) {
+        repository.findChefBiographyById(id).addOnSuccessListener {
+            val biography = it.toObject(User::class.java)?.biography
+            biographyLiveData.value = biography
+        }
     }
 }

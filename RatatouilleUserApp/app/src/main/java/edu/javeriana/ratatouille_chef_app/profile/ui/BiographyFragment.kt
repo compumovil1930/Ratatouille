@@ -2,26 +2,29 @@ package edu.javeriana.ratatouille_chef_app.profile.ui
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.Biography
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Recipe
+import edu.javeriana.ratatouille_chef_app.core.toObjectWithId
 import edu.javeriana.ratatouille_chef_app.profile.viewmodels.BiographyViewModel
 import kotlinx.android.synthetic.main.fragment_biography.*
+import org.jetbrains.anko.onClick
 
 class BiographyFragment : Fragment() {
 
     private var biographyViewModel: BiographyViewModel? = null
+    private val args: BiographyFragmentArgs by navArgs()
 
     private val biographyObserver = Observer<Biography> { biography ->
         formationText.text = biography.formation
@@ -46,22 +49,27 @@ class BiographyFragment : Fragment() {
     private fun setupUI() {
         fetchViewModels()
         setUpLiveDataListeners()
-        biographyViewModel?.findUserBiography()
+        biographyViewModel?.findChefBiographyById(args.chefId!!)
         setupRecipes()
-        setupButtons()
-    }
-    
-    private fun setupButtons() {
-        createRecipe.setOnClickListener { view?.findNavController()?.navigate(R.id.action_biographyFragment_to_newRecipeFormFragment) }
     }
 
+
     private fun setupRecipes() {
-        biographyViewModel?.findUserReference()?.addOnCompleteListener { it ->
+        biographyViewModel?.findUserReference(args.chefId!!)?.addOnCompleteListener { it ->
             val user = it.result?.toObject(User::class.java)
             user?.recipes?.forEach {
                 it.get().addOnSuccessListener { recipe ->
                     val chipItem = Chip(recepieChipGroup.context)
+                    val re = recipe.toObjectWithId<Recipe>()
                     chipItem.text = recipe.toObject(Recipe::class.java)?.name
+                    chipItem.onClick {
+                        val action =
+                            BiographyFragmentDirections.actionBiographyFragmentToNewRequestDetail(
+                                re.id,
+                                args.address
+                            )
+                        view?.findNavController()?.navigate(action)
+                    }
                     recepieChipGroup.addView(chipItem)
                 }
             }

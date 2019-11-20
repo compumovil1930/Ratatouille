@@ -1,38 +1,31 @@
 package edu.javeriana.ratatouille_chef_app.client_requests.ui
 
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.navArgs
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
-
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
-import edu.javeriana.ratatouille_chef_app.authentication.ui.RegisterFragmentArgs
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Ingredient
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Recipe
-import edu.javeriana.ratatouille_chef_app.client_requests.entities.StateTransaction
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Transaction
-import edu.javeriana.ratatouille_chef_app.client_requests.ui.adapters.RequestAdapter
 import edu.javeriana.ratatouille_chef_app.client_requests.viewmodels.ClientRequestsViewModel
-import edu.javeriana.ratatouille_chef_app.core.askPermission
 import edu.javeriana.ratatouille_chef_app.profile.entities.Utensil
-import kotlinx.android.synthetic.main.fragment_client_requests.*
 import kotlinx.android.synthetic.main.fragment_new_request_detail.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -44,6 +37,9 @@ class NewRequestDetailFragment : Fragment() {
     private var clientRequestsViewModel: ClientRequestsViewModel? = null
     private val args: NewRequestDetailFragmentArgs by navArgs()
     private var utensilsMarks: HashMap<String, Chip>? = null
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
+    private var transactionGlobal: Transaction? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,39 +64,27 @@ class NewRequestDetailFragment : Fragment() {
     }
 
     private fun configViews() {
-        costServiceEditText.doAfterTextChanged { it ->
-            var first = 0.0f
-            var second = 0.0f
-            if( it.toString().toFloatOrNull() != null )
-            {
-                first = it.toString().toFloat()
-            }
-            if( totalIngredientsTextView.text.toString().toFloatOrNull() != null )
-            {
-                second = totalIngredientsTextView.text.toString().toFloat()
-            }
-
-            val value = first +  second
-            totalTextView.text = value.toString()
-        }
         acceptButton.setOnClickListener { acceptTransaction() }
     }
 
     private fun acceptTransaction() {
-        clientRequestsViewModel?.updateStateTransaction(StateTransaction.ACCEPTED.value, args.transactionId)
+        //clientRequestsViewModel?.updateStateTransaction(StateTransaction.ACCEPTED.value, args.transactionId)
         var totalCost = 0.0f
-        if( totalTextView.text.toString().toFloatOrNull() != null )
-        {
-            totalCost = totalTextView.text.toString().toFloat()
-        }
-        clientRequestsViewModel?.updateCostTransaction(totalCost, args.transactionId)
-        val action = NewRequestDetailFragmentDirections.actionNewRequestDetailToMapRequestFragment(args.transactionId)
-        view?.findNavController()?.navigate(action)
+        //clientRequestsViewModel?.updateCostTransaction(totalCost, args.transactionId)
+        clientRequestsViewModel?.createTransaction(transactionGlobal!!)
+
+        view?.findNavController()?.navigate(R.id.action_newRequestDetail_to_clientRequestsFragment)
     }
 
     private fun fetchData() {
-        Log.d("GO_TO_REQUEST", args.transactionId)
-        clientRequestsViewModel?.getTransactionById(args.transactionId)
+        Log.d("GO_TO_REQUEST", args.recepieId)
+        val clientID = db.collection("users").document(firebaseAuth.currentUser!!.uid)
+        val repipe = db.collection("recipe").document(args.recepieId)
+        val geopoint = GeoPoint(args.address!!.latitude, args.address!!.longitude)
+        val transaction: Transaction =
+            Transaction(clientId = clientID, recipe = repipe, address = geopoint)
+        transactionGlobal = transaction
+        putDataInUI(transaction)
     }
 
     private fun fetchViewModels() {
@@ -113,7 +97,13 @@ class NewRequestDetailFragment : Fragment() {
     }
 
     private val requestsSuccessfulObserver =
-        Observer<Transaction> { transaction: Transaction ->
+        Observer<Recipe> { recipe: Recipe ->
+            val clientID = db.collection("users").document(firebaseAuth.currentUser!!.uid)
+            val repipe = db.collection("recipe").document(args.recepieId)
+            val geopoint = GeoPoint(args.address!!.latitude, args.address!!.longitude)
+            val transaction: Transaction =
+                Transaction(clientId = clientID, recipe = repipe, address = geopoint)
+            transactionGlobal = transaction
             putDataInUI(transaction)
         }
 
@@ -136,7 +126,6 @@ class NewRequestDetailFragment : Fragment() {
 
         var costIngredient = 0
         totalIngredientsTextView.text = costIngredient.toString()
-        totalTextView.text = costIngredient.toString()
         transaction.recipe?.get()?.addOnSuccessListener { document ->
             val recipe = document.toObject(Recipe::class.java)
             recipeNameTextView.text = recipe?.name
@@ -148,7 +137,6 @@ class NewRequestDetailFragment : Fragment() {
                     val ing = documentI.toObject(Ingredient::class.java)
                     costIngredient += ing!!.cost
                     totalIngredientsTextView.text = costIngredient.toString()
-                    totalTextView.text = costIngredient.toString()
                     val chips = Chip(ingredientsChipGroup.context)
                     chips.text = ing.name + ": " + ing.cost + "$"
                     chips.isCheckable = false

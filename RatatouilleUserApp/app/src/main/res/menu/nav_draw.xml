@@ -7,9 +7,6 @@
         android:id="@id/clientRequestsFragment"
         android:title="@string/requests" />
     <item
-        android:id="@id/biographyFragment"
-        android:title="@string/formation_menu" />
-    <item
         android:id="@id/chefsListFragment"
         android:title="@string/see_chefs" />
 </menu>

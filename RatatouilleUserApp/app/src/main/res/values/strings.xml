@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RatatouilleChefApp</string>
+    <string name="app_name">RatatouillUserApp</string>
     <string name="bienvenido_chef">¡Bienvenido Chef!</string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="registrarse">Registrarse</string>
@@ -68,6 +68,6 @@
     <string name="description">Descripción</string>
     <string name="create">Crear</string>
     <string name="utensils_title">Utensilios</string>
-    <string name="see_chefs"><![CDATA[Ver Chefs /> </menu>]]></string>
+    <string name="see_chefs">Ver Chefs</string>
 
 </resources>

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
+import edu.javeriana.ratatouille_chef_app.client_requests.entities.Recipe
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Transaction
 import edu.javeriana.ratatouille_chef_app.client_requests.repositories.ClientRequestsRepository
 import edu.javeriana.ratatouille_chef_app.client_requests.repositories.FireBaseClientRequestsRepository
@@ -14,8 +15,10 @@ import edu.javeriana.ratatouille_chef_app.core.toObjectsWithId
 class ClientRequestsViewModel : ViewModel() {
     private val repository: ClientRequestsRepository = FireBaseClientRequestsRepository()
     val requestsSuccessfulLiveData = MutableLiveData<List<User>>()
+    val requestsSuccessfulLiveDataTransaction = MutableLiveData<List<Transaction>>()
     val errorMessageLiveData = MutableLiveData<String>()
-    val requestsSuccessfulLiveDataSingle = MutableLiveData<Transaction>()
+    val requestsSuccessfulLiveDataSingle = MutableLiveData<Recipe>()
+    val requestsSuccessfulLiveDataSingleTransaction = MutableLiveData<Transaction>()
 
     fun getAllRequests(locationAddress: LocationAddress) {
         repository.getAllRequestByPosition(locationAddress).addOnCompleteListener {
@@ -50,11 +53,11 @@ class ClientRequestsViewModel : ViewModel() {
         }
     }
 
-    fun getTransactionById(id: String) {
-        repository.getTransactionById(id).addOnCompleteListener {
+    fun getRecepiById(id: String) {
+        repository.getRecepiById(id).addOnCompleteListener {
             if (!it.isSuccessful) errorMessageLiveData.value = it.exception?.message
         }.addOnSuccessListener {
-            val transaction = it.toObject(Transaction::class.java)
+            val transaction = it.toObject(Recipe::class.java)
             requestsSuccessfulLiveDataSingle.value = transaction
         }
     }
@@ -71,13 +74,29 @@ class ClientRequestsViewModel : ViewModel() {
         }
     }
 
-    fun updateCostUser(idTransaction: String) {
-        repository.getTransactionById(idTransaction).addOnCompleteListener {
+    fun createTransaction(transaction: Transaction) {
+        repository.createTransaction(transaction).addOnSuccessListener {
+
+        }
+    }
+
+    fun getAllRequestsClient() {
+        repository.getAllRequestByClient().addOnCompleteListener {
+            if (!it.isSuccessful) errorMessageLiveData.value = it.exception?.message
+        }.addOnSuccessListener {
+            val tempRequests = it.toObjectsWithId<Transaction>()
+            requestsSuccessfulLiveDataTransaction.value = tempRequests
+        }
+    }
+
+    fun getTransactionById(transactionId: String) {
+        repository.getTransactionById(transactionId).addOnCompleteListener {
             if (!it.isSuccessful) errorMessageLiveData.value = it.exception?.message
         }.addOnSuccessListener {
             val transaction = it.toObject(Transaction::class.java)
-            repository.updateRatapointUser(transaction!!.cost)
+            requestsSuccessfulLiveDataSingleTransaction.value = transaction
         }
-
     }
+
+
 }

@@ -95,12 +95,5 @@
     </com.google.android.material.chip.ChipGroup>
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/createRecipe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/create_recipe" />
-
 
 </LinearLayout>
