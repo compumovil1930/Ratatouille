@@ -95,9 +95,7 @@ class ClientRequestsFragment : Fragment() {
             element.state == StateTransaction.ACCEPTED.value -> ClientRequestsFragmentDirections.actionClientRequestsFragmentToMapRequestFragment(
                 element.id
             )
-            element.state == StateTransaction.COMPLETE.value -> ClientRequestsFragmentDirections.actionClientRequestsFragmentToCompleteRequestFragment(
-                element.id
-            )
+            element.state == StateTransaction.COMPLETE.value ->  null
             else -> null
         }
         if (action != null) {
