@@ -55,6 +55,9 @@
             android:id="@+id/action_profileFragment_to_clientRequestsFragment"
             app:destination="@id/clientRequestsFragment"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_profileFragment_to_landingFragment"
+            app:destination="@id/landingFragment" />
     </fragment>
     <fragment
         android:id="@+id/clientRequestsFragment"
