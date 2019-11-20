@@ -19,7 +19,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.google.android.gms.location.*
-import com.google.android.material.chip.Chip
 import com.google.firebase.firestore.GeoPoint
 import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
@@ -95,6 +94,7 @@ class ProfileFragment : Fragment() {
     private val loggerUserInfoObserver = Observer<User> { user ->
         nameTextView.text = user.fullName
         biographyTextView.text = user.biography?.formation
+        ratapoints.text = ("Ratapoints:  ${user.ratapoints}")
         // selectedUtensils = user.utensils.toMutableList()
         Log.d("ProfileActivity", user.photoUrl ?: "")
         user.photoUrl?.let { Picasso.get().load(it).into(profileImageView) }
@@ -104,19 +104,6 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private val utensilListObserver = Observer<List<Pair<String, Boolean>>> { utensils ->
-        utensils.forEach {
-            val utensilChip = Chip(utensilsChipGroup.context)
-            utensilChip.text = it.first
-            utensilChip.isCheckable = true
-            utensilChip.isChecked = it.second
-            utensilChip.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) selectedUtensils.add(it.first) else selectedUtensils.remove(it.first)
-                profileViewModel?.updateUserUtensils(selectedUtensils)
-            }
-            utensilsChipGroup.addView(utensilChip)
-        }
-    }
 
     private fun changeSwitch(isChecked: Boolean) {
         if (!isChecked) {

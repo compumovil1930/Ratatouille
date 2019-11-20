@@ -59,4 +59,14 @@ class ClientRequestsViewModel : ViewModel() {
             if (!it.isSuccessful) errorMessageLiveData.value = it.exception?.message
         }
     }
+
+    fun updateCostUser(idTransaction: String) {
+        repository.getTransactionById(idTransaction).addOnCompleteListener {
+            if (!it.isSuccessful) errorMessageLiveData.value = it.exception?.message
+        }.addOnSuccessListener {
+            val transaction = it.toObject(Transaction::class.java)
+            repository.updateRatapointUser(transaction!!.cost)
+        }
+
+    }
 }

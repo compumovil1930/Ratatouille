@@ -7,16 +7,15 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.location.Address
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -26,18 +25,13 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.GeoPoint
-
-
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.StateTransaction
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Transaction
 import edu.javeriana.ratatouille_chef_app.client_requests.viewmodels.ClientRequestsViewModel
 import edu.javeriana.ratatouille_chef_app.core.askPermission
-import kotlinx.android.synthetic.main.fragment_map.*
-import kotlinx.android.synthetic.main.fragment_map.mapView
 import kotlinx.android.synthetic.main.fragment_map_request.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
@@ -85,13 +79,14 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
 
     private fun goToCompleteRequestFragment() {
         clientRequestsViewModel?.updateStateTransaction(StateTransaction.COMPLETE.value, args.transactionId)
+        clientRequestsViewModel?.updateCostUser(args.transactionId)
+
         val action = MapRequestFragmentDirections.actionMapRequestFragmentToCompleteRequestFragment(args.transactionId)
         view?.findNavController()?.navigate(action)
     }
 
     override fun onMapReady(map: GoogleMap?) {
         googleMap = map
-        googleMap?.setMinZoomPreference(15f)
         setUpLocation()
         subscribeToLocationWithPermission()
     }
@@ -234,7 +229,7 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
                 {
 
 
-                    val points = routes!!["legs"]["steps"][0] as JsonArray<JsonObject>
+                    val points = routes["legs"]["steps"][0] as JsonArray<JsonObject>
                     // For every element in the JsonArray, decode the polyline string and pass all points to a List
                     val polypts = points.flatMap { decodePoly(it.obj("polyline")?.string("points")!!)  }
                     val distances = points["distance"]["value"]
@@ -277,7 +272,7 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun bitmapDescriptorFromVector(context: Context?, vectorResId: Int): BitmapDescriptor {
-        val vectorDrawable = ContextCompat.getDrawable(context!!, vectorResId)
+        val vectorDrawable = ContextCompat.getDrawable(requireContext(), vectorResId)
         vectorDrawable!!.setBounds(
             0,
             0,
@@ -350,6 +345,10 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
     private val requestsSuccessfulObserver =
         Observer<Transaction> { transaction: Transaction ->
             positionToGo = transaction.address
+            if (currentLocation != null) {
+                drawInPoint(currentLocation!!.latitude, currentLocation!!.longitude)
+            }
+
         }
 
     private fun setUpLiveDataListeners() {

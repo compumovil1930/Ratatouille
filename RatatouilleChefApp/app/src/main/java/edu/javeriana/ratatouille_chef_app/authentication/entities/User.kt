@@ -18,5 +18,6 @@ data class User(
     val currentAddress: GeoPoint = GeoPoint(0.0, 0.0),
     val biography: Biography? = null,
     val isChef: Boolean = true,
-    val recipes: List<DocumentReference> = emptyList()
+    val recipes: List<DocumentReference> = emptyList(),
+    val ratapoints: Int = 0
 )
