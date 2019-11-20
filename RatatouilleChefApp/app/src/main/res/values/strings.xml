@@ -39,4 +39,6 @@
     <string name="cerrar_sesion">Cerrar Sesion</string>
     <string name="profile">Perfil</string>
     <string name="requests">Pedidos</string>
+    <string name="specialities">Especialidades (Separe por comas)</string>
+    <string name="certifications">Certificados (Separe por comas)</string>
 </resources>

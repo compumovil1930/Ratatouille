@@ -16,6 +16,8 @@ data class User(
     val utensils: List<String> = listOf(),
     val photoUrl: String? = null,
     val available: Boolean = false,
-    val currentAddress: GeoPoint = GeoPoint(0.0, 0.0)
+    val currentAddress: GeoPoint = GeoPoint(0.0, 0.0),
+    val biographytemp: Biography? = null,
+    val isChef: Boolean = true
 
 )

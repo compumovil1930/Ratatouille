@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.firestore.GeoPoint
 import edu.javeriana.ratatouille_chef_app.R
+import edu.javeriana.ratatouille_chef_app.authentication.entities.Biography
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.authentication.viewmodels.AuthenticationViewModel
@@ -51,12 +52,15 @@ class RegisterFragment : Fragment() {
     }
 
     private fun isValidForm(): Boolean {
-        if (emailEditText.text.isNullOrEmpty()) return false
-        if (passwordEditText.text.isNullOrEmpty()) return false
+        if (nameEditText.text.isNullOrEmpty()) return false
         if (biographyEditText.text.isNullOrEmpty()) return false
+        if (specialitiesEditText.text.isNullOrEmpty()) return false
+        if (certificationsEditText.text.isNullOrEmpty()) return false
         if (addressEditText.text.isNullOrEmpty()) return false
         if (ageEditText.text.isNullOrEmpty()) return false
         if (yearsOfExpreianceEditText.text.isNullOrEmpty()) return false
+        if (emailEditText.text.isNullOrEmpty()) return false
+        if (passwordEditText.text.isNullOrEmpty()) return false
         return true
     }
 
@@ -112,6 +116,16 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    private fun getBiography(): Biography {
+        return Biography(
+            formation = biographyEditText.text.toString(),
+            yearsOfExperience = yearsOfExpreianceEditText.text.toString().toIntOrNull() ?: 0,
+            certificates = certificationsEditText.text.toString().split(","),
+            specialities = specialitiesEditText.text.toString().split(",")
+        )
+
+    }
+
     private fun getCoordinatesFromAddress(): LocationAddress {
         val address = args.address
         return LocationAddress(
@@ -129,7 +143,8 @@ class RegisterFragment : Fragment() {
             address = getCoordinatesFromAddress(),
             age = ageEditText.text.toString().toIntOrNull() ?: 0,
             yearsOfExperience = yearsOfExpreianceEditText.text.toString().toIntOrNull() ?: 0,
-            biography = biographyEditText.text.toString()
+            biography = biographyEditText.text.toString(),
+            biographytemp = getBiography()
         )
     }
 
