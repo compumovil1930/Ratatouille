@@ -18,7 +18,7 @@ data class User(
     val available: Boolean = false,
     val currentAddress: GeoPoint = GeoPoint(0.0, 0.0),
     val biography: Biography? = null,
-    val isChef: Boolean = false,
+    val chef: Boolean = false,
     val recipes: List<DocumentReference> = emptyList(),
     val ratapoints: Int = 0, override var id: String = ""
 ): HasId

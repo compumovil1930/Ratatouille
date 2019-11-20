@@ -36,7 +36,7 @@ class FireBaseClientRequestsRepository : ClientRequestsRepository {
 
 
         val transactionsRef = db.collection("users")
-        val transactions = transactionsRef.whereEqualTo("isChef", true)
+        val transactions = transactionsRef.whereEqualTo("chef", true)
 
 
         return transactions.get().addOnFailureListener { exception ->
