@@ -36,8 +36,8 @@ class NewRecipeFormFragment : Fragment() {
             chipItem.isCheckable = true
             chipItem.onCheckedChange { _, isChecked ->
                 val ref = db.collection("ingredients").document(it.id)
-                if (isChecked) selectedUtensil.add(ref)
-                else selectedUtensil.remove(ref)
+                if (isChecked) selectedIngredients.add(ref)
+                else selectedIngredients.remove(ref)
             }
             ingredientsChipGroup.addView(chipItem)
         }
@@ -50,8 +50,8 @@ class NewRecipeFormFragment : Fragment() {
             chipItem.isCheckable = true
             chipItem.onCheckedChange { _, isChecked ->
                 val ref = db.collection("utensils").document(it.id)
-                if (isChecked) selectedIngredients.add(ref)
-                else selectedIngredients.remove(ref)
+                if (isChecked) selectedUtensil.add(ref)
+                else selectedUtensil.remove(ref)
 
             }
             utensilsChipGroup.addView(chipItem)

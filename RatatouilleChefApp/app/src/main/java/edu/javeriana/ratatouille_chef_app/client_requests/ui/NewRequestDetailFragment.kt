@@ -88,6 +88,7 @@ class NewRequestDetailFragment : Fragment() {
 
     private fun acceptTransaction() {
         clientRequestsViewModel?.updateStateTransaction(StateTransaction.ACCEPTED.value, args.transactionId)
+        clientRequestsViewModel?.updateChefTransaction(args.transactionId)
         var totalCost = 0.0f
         if( totalTextView.text.toString().toFloatOrNull() != null )
         {

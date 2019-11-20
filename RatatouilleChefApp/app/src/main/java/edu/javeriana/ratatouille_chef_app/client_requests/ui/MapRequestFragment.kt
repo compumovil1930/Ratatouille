@@ -80,6 +80,7 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
     private fun goToCompleteRequestFragment() {
         clientRequestsViewModel?.updateStateTransaction(StateTransaction.COMPLETE.value, args.transactionId)
         clientRequestsViewModel?.updateCostUser(args.transactionId)
+        clientRequestsViewModel?.updateCostUserMenus(args.transactionId)
 
         val action = MapRequestFragmentDirections.actionMapRequestFragmentToCompleteRequestFragment(args.transactionId)
         view?.findNavController()?.navigate(action)
