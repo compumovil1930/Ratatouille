@@ -116,7 +116,7 @@ class RegisterFragment : Fragment() {
         val address = args.address
         return LocationAddress(
             address = address?.getAddressLine(0) ?: "No address",
-            location = GeoPoint(address?.latitude ?: 0.0, address?.latitude ?: 0.0)
+            location = GeoPoint(address?.latitude ?: 0.0, address?.longitude ?: 0.0)
         )
     }
 

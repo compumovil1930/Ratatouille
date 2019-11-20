@@ -28,36 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/biographyTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageView"
         tools:text="@string/dummy_name" />
-
-    <TextView
-        android:id="@+id/biographyTextView"
-        android:layout_width="352dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
-        app:lineHeight="20dp"
-        tools:text="@string/lorem" />
-
-    <Switch
-        android:id="@+id/switchAvailable"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:switchPadding="15dp"
-        android:text="@string/availability"
-        app:layout_constraintBottom_toTopOf="@+id/utensilsChipGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/biographyTextView" />
 
 
     <TextView
@@ -79,31 +50,7 @@
         android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/cerrar_sesion"
-        app:layout_constraintBottom_toTopOf="@+id/seeFormation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/utensilsChipGroup" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/seeFormation"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/see_formation"
-        android:textColor="@color/colorPrimary"
-        app:iconTint="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logout"
-        app:rippleColor="@color/colorPrimary" />
+        android:text="@string/cerrar_sesion" />
 
 
 </LinearLayout>

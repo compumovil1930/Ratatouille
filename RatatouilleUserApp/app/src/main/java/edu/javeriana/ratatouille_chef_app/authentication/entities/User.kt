@@ -3,6 +3,7 @@ package edu.javeriana.ratatouille_chef_app.authentication.entities
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.IgnoreExtraProperties
+import edu.javeriana.ratatouille_chef_app.core.HasId
 
 
 @IgnoreExtraProperties
@@ -19,5 +20,5 @@ data class User(
     val biography: Biography? = null,
     val isChef: Boolean = false,
     val recipes: List<DocumentReference> = emptyList(),
-    val ratapoints: Int = 0
-)
+    val ratapoints: Int = 0, override var id: String = ""
+): HasId

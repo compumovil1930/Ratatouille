@@ -12,12 +12,11 @@ import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
-import edu.javeriana.ratatouille_chef_app.client_requests.entities.Transaction
 import edu.javeriana.ratatouille_chef_app.core.distanceTo
 
 class RequestAdapter(
     private val context: Context,
-    private val items: List<Transaction>,
+    private val items: List<User>,
     private val locationAddress: LocationAddress
 ) : BaseAdapter() {
 
@@ -56,16 +55,19 @@ class RequestAdapter(
             holder = convertView.tag as ViewHolder
         }
 
-
+        /*
         items[position].clientId?.get()?.addOnSuccessListener { document ->
             val user = document.toObject(User::class.java)
             holder.clientName!!.text = user?.fullName
             Picasso.get().load(user?.photoUrl).into(holder.image)
-        }
+        }*/
+
+        holder.clientName!!.text = items[position].fullName
+        Picasso.get().load(items[position].photoUrl).into(holder.image)
 
         val distance = distanceTo(
-            items[position].address.latitude,
-            items[position].address.longitude,
+            items[position].currentAddress.latitude,
+            items[position].currentAddress.longitude,
             locationAddress.location?.latitude ?: 0.0,
             locationAddress.location?.longitude ?: 0.0
         ) / 1000.0
@@ -77,7 +79,7 @@ class RequestAdapter(
         holder.address!!.text = distanceString
 
         items[position].address
-        holder.description!!.text = items[position].comment
+        holder.description!!.text = ""
 
         return convertView
     }

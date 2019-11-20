@@ -29,13 +29,11 @@ class FireBaseClientRequestsRepository : ClientRequestsRepository {
     override fun getAllRequestByPosition(locationAddress: LocationAddress): Task<QuerySnapshot> {
 
 
-        val transactionsRef = db.collection(requestCollection)
-        val chefId = firebaseAuth.currentUser?.uid ?: ""
-        //val refChef =  db.collection("users").document(chefId)
-        //val transactions = transactionsRef.whereEqualTo("chefId", refChef)
+        val transactionsRef = db.collection("users")
+        val transactions = transactionsRef.whereEqualTo("isChef", true)
 
 
-        return transactionsRef.get().addOnFailureListener { exception ->
+        return transactions.get().addOnFailureListener { exception ->
             Log.w(TAG, "Error getting documents: ", exception)
         }
     }

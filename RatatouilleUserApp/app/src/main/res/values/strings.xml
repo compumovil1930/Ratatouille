@@ -68,5 +68,6 @@
     <string name="description">Descripción</string>
     <string name="create">Crear</string>
     <string name="utensils_title">Utensilios</string>
+    <string name="see_chefs"><![CDATA[Ver Chefs /> </menu>]]></string>
 
 </resources>

@@ -21,6 +21,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.firestore.GeoPoint
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddress
+import edu.javeriana.ratatouille_chef_app.authentication.entities.User
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.StateTransaction
 import edu.javeriana.ratatouille_chef_app.client_requests.entities.Transaction
 import edu.javeriana.ratatouille_chef_app.client_requests.ui.adapters.RequestAdapter
@@ -107,7 +108,7 @@ class ClientRequestsFragment : Fragment() {
     }
 
     private val requestsSuccessfulObserver =
-        Observer<List<Transaction>> { transactions: List<Transaction> ->
+        Observer<List<User>> { transactions: List<User> ->
 
             for (request in transactions) {
                 Log.d("CLIENT_REQUEST", request.toString())

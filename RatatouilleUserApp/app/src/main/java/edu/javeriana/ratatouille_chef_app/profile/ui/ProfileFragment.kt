@@ -7,9 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.os.Looper
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.google.android.gms.location.*
-import com.google.firebase.firestore.GeoPoint
 import com.squareup.picasso.Picasso
 import edu.javeriana.ratatouille_chef_app.R
 import edu.javeriana.ratatouille_chef_app.authentication.entities.User
@@ -31,13 +27,8 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 @Suppress("DEPRECATION")
 class ProfileFragment : Fragment() {
 
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var locationRequest: LocationRequest
-    private lateinit var locationCallback: LocationCallback
     private var profileViewModel: ProfileViewModel? = null
     private val externalStorageRequestId = 10
-    private val locationRequestCode = 11
-    private var selectedUtensils = mutableListOf<String>()
     private var authenticationViewModel: AuthenticationViewModel? = null
 
     override fun onCreateView(
@@ -56,24 +47,15 @@ class ProfileFragment : Fragment() {
         fetchViewModels()
         setUpLiveDataListeners()
         setupButtons()
-        setUpLocation()
         profileViewModel?.findAllUtensils()
         profileViewModel?.findLoggedUserInformation()
     }
 
-    private fun setUpLocation() {
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireActivity())
-        buildLocationRequest()
-        buildLocationCallBack()
-    }
-
     private fun setupButtons() {
-        seeFormation.setOnClickListener { view?.findNavController()?.navigate(R.id.action_profileFragment_to_biographyFragment) }
+//        seeFormation.setOnClickListener { view?.findNavController()?.navigate(R.id.action_profileFragment_to_biographyFragment) }
         profileImageView.setOnClickListener {
             requestExternalStoragePermissions()
         }
-        switchAvailable.setOnCheckedChangeListener { _, b -> changeSwitch(b) }
         profileImageView.setOnClickListener { requestExternalStoragePermissions() }
         logout.setOnClickListener {
             authenticationViewModel?.logout()
@@ -93,26 +75,8 @@ class ProfileFragment : Fragment() {
 
     private val loggerUserInfoObserver = Observer<User> { user ->
         nameTextView.text = user.fullName
-        biographyTextView.text = user.biography?.formation
         ratapoints.text = ("Ratapoints:  ${user.ratapoints}")
-        // selectedUtensils = user.utensils.toMutableList()
-        Log.d("ProfileActivity", user.photoUrl ?: "")
         user.photoUrl?.let { Picasso.get().load(it).into(profileImageView) }
-        if (user.available) {
-            switchAvailable.isChecked = true
-            subscribeToLocationWhioutPermission()
-        }
-    }
-
-
-    private fun changeSwitch(isChecked: Boolean) {
-        if (!isChecked) {
-            profileViewModel?.updateUserAvailable(false)
-            fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-        } else {
-            profileViewModel?.updateUserAvailable(true)
-            subscribeToLocationWhioutPermission()
-        }
     }
 
 
@@ -149,18 +113,7 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(requireContext(), "Acceso a imágenes denegado", Toast.LENGTH_SHORT)
                     .show()
             }
-            locationRequestCode -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    subscribeToLocation()
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "No se pudo acceder a la localización!",
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                }
-            }
+
         }
     }
 
@@ -179,59 +132,6 @@ class ProfileFragment : Fragment() {
 
             }
         }
-    }
-
-    private fun buildLocationCallBack() {
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult?) {
-                val location = p0?.lastLocation
-                if (location != null) {
-                    profileViewModel?.updateUserCurrentAddress(
-                        GeoPoint(
-                            location.latitude,
-                            location.longitude
-                        )
-                    )
-                }
-            }
-        }
-    }
-
-    private fun buildLocationRequest() {
-        locationRequest = LocationRequest()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 5000
-        locationRequest.fastestInterval = 3000
-        locationRequest.smallestDisplacement = 10f
-
-    }
-
-    private fun subscribeToLocationWhioutPermission() {
-        askPermission(
-            requireActivity(),
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ),
-            locationRequestCode
-        )
-        {
-            subscribeToLocation()
-        }
-    }
-
-    private fun subscribeToLocation() {
-        fusedLocationProviderClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            Looper.myLooper()
-        )
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
     }
 
 

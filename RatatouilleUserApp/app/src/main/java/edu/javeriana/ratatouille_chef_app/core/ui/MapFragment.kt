@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -32,6 +33,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerDragListen
     private lateinit var locationCallback: LocationCallback
     private val locationRequestCode = 110
     private var currentLocation: LatLng? = null
+    private val args: MapFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,8 +72,15 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerDragListen
                 currentLocation?.longitude ?: 0.0,
                 1
             )
+            if(args.isFromChefs) {
+                val action = MapFragmentDirections.actionMapFragmentToChefsListFragment(location.first())
+                view?.findNavController()?.navigate(action)
+
+            } else {
             val action = MapFragmentDirections.actionMapFragmentToRegisterFragment(location.first())
-            view?.findNavController()?.navigate(action)
+                view?.findNavController()?.navigate(action)
+
+            }
 
         }
     }
