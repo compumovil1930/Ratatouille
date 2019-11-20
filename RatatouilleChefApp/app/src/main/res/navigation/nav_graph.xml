@@ -60,7 +60,11 @@
         android:id="@+id/clientRequestsFragment"
         android:name="edu.javeriana.ratatouille_chef_app.client_requests.ui.ClientRequestsFragment"
         android:label="fragment_client_requests"
-        tools:layout="@layout/fragment_client_requests" />
+        tools:layout="@layout/fragment_client_requests" >
+        <action
+            android:id="@+id/action_clientRequestsFragment_to_newRequestDetail"
+            app:destination="@id/newRequestDetail" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="edu.javeriana.ratatouille_chef_app.core.ui.MapFragment"
@@ -69,5 +73,14 @@
         <action
             android:id="@+id/action_mapFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newRequestDetail"
+        android:name="edu.javeriana.ratatouille_chef_app.client_requests.ui.NewRequestDetailFragment"
+        android:label="fragment_new_request_detail"
+        tools:layout="@layout/fragment_new_request_detail" >
+        <argument
+            android:name="transactionId"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.QuerySnapshot
@@ -11,6 +12,7 @@ import edu.javeriana.ratatouille_chef_app.authentication.entities.LocationAddres
 
 interface ClientRequestsRepository {
     fun getAllRequestByPosition(locationAddress: LocationAddress): Task<QuerySnapshot>
+    fun getTransactionById(id: String): Task<DocumentSnapshot>
 }
 
 class FireBaseClientRequestsRepository : ClientRequestsRepository {
@@ -33,6 +35,22 @@ class FireBaseClientRequestsRepository : ClientRequestsRepository {
             Log.w(TAG, "Error getting documents: ", exception)
         }
     }
+
+    override fun getTransactionById(id: String): Task<DocumentSnapshot> {
+        val transactionsRef = db.collection(requestCollection)
+
+        // val refChef =  db.collection("users").document(chefId)
+        // val transactions = transactionsRef.whereEqualTo("chefId", id)
+        Log.d(TAG, id)
+        val transactions = transactionsRef.document(id)
+
+
+        return transactions.get().addOnFailureListener{ exception ->
+            Log.w(TAG, "Error getting documents: ", exception)
+        }
+    }
+
+    
 
 
 }

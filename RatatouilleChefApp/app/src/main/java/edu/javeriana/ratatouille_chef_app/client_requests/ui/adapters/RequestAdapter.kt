@@ -90,4 +90,6 @@ class RequestAdapter(
         var image : ImageView? = null
 
     }
+
+
 }
