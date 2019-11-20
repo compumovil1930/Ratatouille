@@ -70,6 +70,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupButtons() {
+        seeFormation.setOnClickListener { view?.findNavController()?.navigate(R.id.action_profileFragment_to_biographyFragment) }
         profileImageView.setOnClickListener {
             requestExternalStoragePermissions()
         }
@@ -203,7 +204,7 @@ class ProfileFragment : Fragment() {
             override fun onLocationResult(p0: LocationResult?) {
                 val location = p0?.lastLocation
                 if (location != null) {
-                    profileViewModel?.updateUserCurrentAddresss(
+                    profileViewModel?.updateUserCurrentAddress(
                         GeoPoint(
                             location.latitude,
                             location.longitude

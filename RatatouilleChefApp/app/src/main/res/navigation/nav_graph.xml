@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_profileFragment_to_landingFragment"
             app:destination="@id/landingFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_biographyFragment"
+            app:destination="@id/biographyFragment" />
     </fragment>
     <fragment
         android:id="@+id/clientRequestsFragment"
@@ -73,4 +76,9 @@
             android:id="@+id/action_mapFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/biographyFragment"
+        android:name="edu.javeriana.ratatouille_chef_app.profile.ui.BiographyFragment"
+        android:label="fragment_biography"
+        tools:layout="@layout/fragment_biography" />
 </navigation>

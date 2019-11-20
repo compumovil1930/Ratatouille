@@ -6,4 +6,7 @@
     <item
         android:id="@id/clientRequestsFragment"
         android:title="@string/requests" />
+    <item
+        android:id="@id/biographyFragment"
+        android:title="@string/formation_menu" />
 </menu>

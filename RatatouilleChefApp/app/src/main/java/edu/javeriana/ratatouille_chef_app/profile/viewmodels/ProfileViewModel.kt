@@ -61,7 +61,7 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    fun updateUserCurrentAddresss(geoPoint: GeoPoint) {
+    fun updateUserCurrentAddress(geoPoint: GeoPoint) {
         repository.updateCurrentAddressChef(geoPoint).addOnSuccessListener {
 
         }

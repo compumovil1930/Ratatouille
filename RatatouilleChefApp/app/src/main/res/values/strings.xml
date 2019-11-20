@@ -41,4 +41,13 @@
     <string name="requests">Pedidos</string>
     <string name="specialities">Especialidades (Separe por comas)</string>
     <string name="certifications">Certificados (Separe por comas)</string>
+    <string name="formation">Formación del Chef</string>
+    <string name="dymy_year">6</string>
+    <string name="years_of_experience">Años de Experiencia</string>
+    <string name="certificaciones">Certificaciones</string>
+    <string name="especialidades_title">Especialidades</string>
+    <string name="recetas">Recetas</string>
+    <string name="create_recipe">Crear Receta</string>
+    <string name="see_formation">Ver formación del Chef</string>
+    <string name="formation_menu">Mi Formación</string>
 </resources>
