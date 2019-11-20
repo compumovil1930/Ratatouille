@@ -73,9 +73,9 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mapView.onCreate(savedInstanceState)
-        mapView.onResume()
-        mapView.getMapAsync(this)
+        mapViewRoute.onCreate(savedInstanceState)
+        mapViewRoute.onResume()
+        mapViewRoute.getMapAsync(this)
 
         fetchViewModels()
         setUpLiveDataListeners()
@@ -110,8 +110,8 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
                 Log.d("MapFragment", location.toString())
                 location?.let {
                     currentLocation = LatLng(it.latitude, it.longitude)
-                    googleMap?.addMarker(MarkerOptions().position(currentLocation!!).draggable(true))
                     googleMap?.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
+                    drawInPoint(it.latitude, it.longitude)
 
                 }
 
@@ -174,10 +174,7 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
 
 
     private fun drawInPoint(lat: Double, lon: Double) {
-        val mapFragment =
-            childFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment?  //use SuppoprtMapFragment for using in fragment instead of activity  MapFragment = activity   SupportMapFragment = fragment
-
-        mapFragment!!.getMapAsync { mMap ->
+        val mMap = googleMap!!
             mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
 
             mMap.clear() //clear old markers
@@ -195,7 +192,7 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
                 MarkerOptions()
                     .position(LatLng(lat, lon))
                     .title("Posición actual")
-                    //.icon(bitmapDescriptorFromVector(activity, R.drawable.icons_sk))
+                    .icon(bitmapDescriptorFromVector(activity, R.drawable.ic_room_service_black_24dp))
             )
 
 
@@ -209,7 +206,6 @@ class MapRequestFragment : Fragment(), OnMapReadyCallback {
                 drawPath(mMap)
             }
 
-        }
     }
 
     private fun drawPath(mMap: GoogleMap) {
